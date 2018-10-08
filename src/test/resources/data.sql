@@ -1,0 +1,28 @@
+insert into instructor(id,name,surname) values(1,'Manuel','Perez');
+insert into instructor(id,name,surname) values(2,'Emilio','Moraleda');
+insert into instructor(id,name,surname) values(3,'Agustina','Benavente');
+insert into instructor(id,name,surname) values(4,'Rafael','Casado Dominguez');
+insert into instructor(id,name,surname) values(5,'Horacio','Garcia');
+insert into instructor(id,name,surname) values(6,'Maria','Jimenez');
+
+insert into lesson(title,instructor_id,hours,isActive,level) values('Buenas practicas',1,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Spring Boot with REST',1,20,0,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Polymer 3.0',1,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Java 9',2,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Android',2,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',2,20,0,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',3,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',3,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',3,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',4,20,0,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',4,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',4,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',5,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',5,20,0,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',5,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',6,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',6,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',6,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',1,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',3,20,1,'A');
+insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',5,20,1,'A');
