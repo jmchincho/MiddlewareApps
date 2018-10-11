@@ -1,6 +1,8 @@
 package com.middleware.app.cow.repository;
 
 import com.middleware.app.cow.CowApplicationTests;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -12,5 +14,29 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @Import(CowApplicationTests.class)
 public class AdministratorsRepositoryTestIT {
+
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @Test
+    public void testFindAll() {
+    }
+
+    @Test
+    public void testFindById() {
+    }
+
+    @Test
+    public void testInsert() {
+    }
+
+    @Test
+    public void testtestUpdate() {
+    }
+
+    @Test
+    public void testtestDelete() {
+    }
 
 }
