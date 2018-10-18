@@ -34,8 +34,6 @@ import javax.persistence.Table;
 } )
 public class AuditClass extends AbstractBase implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
 
 	/**
 	 * Clave primaria de la entidad  

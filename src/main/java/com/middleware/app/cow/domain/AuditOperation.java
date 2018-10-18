@@ -46,8 +46,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 } )
 public class AuditOperation extends AbstractBase implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
 
 	/**
 	 * Clave primaria de la entity  
