@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements CategoryService {
 
     @Override
-    public Page<Category> find(Integer index, Integer totalCount,Category Category) throws CowException {
+    public Page<Category> find(Integer index, Integer totalCount,Category category) throws CowException {
         return null;
     }
 
@@ -20,17 +20,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void create(Category Category) throws CowException {
+    public void create(Category category) throws CowException {
 
     }
 
     @Override
-    public void update(Category Category) throws CowException {
+    public void update(Category category) throws CowException {
 
     }
 
     @Override
-    public void delete(Category Category) throws CowException {
+    public void delete(Long id) throws CowException {
 
     }
 }
