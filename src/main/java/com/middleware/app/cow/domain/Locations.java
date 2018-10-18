@@ -26,20 +26,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Locations.java.</p>
+ * <p>Class Location.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:22 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Locations"
+ * Clase de persistencia para la entidad almacenada en la tabla "Location"
  */
 @Entity
-@Table(name="Locations")
+@Table(name="Location")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Locations.findAll", query="SELECT x FROM Locations x" ),
-  @NamedQuery ( name="Locations.countAll", query="SELECT COUNT(x) FROM Locations x" )
+  @NamedQuery ( name="Location.findAll", query="SELECT x FROM Location x" ),
+  @NamedQuery ( name="Location.countAll", query="SELECT COUNT(x) FROM Location x" )
 } )
-public class Locations extends AbstractManaged implements Serializable {
+public class Location extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,8 +48,8 @@ public class Locations extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_LocationsEntity")
-	@SequenceGenerator(name = "cow_generator_LocationsEntity", sequenceName = "sq_Locations", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_LocationEntity")
+	@SequenceGenerator(name = "cow_generator_LocationEntity", sequenceName = "sq_Location", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -68,12 +68,12 @@ public class Locations extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
 	@JsonIgnore
-    @OneToMany(mappedBy="locations", targetEntity=Address.class)
+    @OneToMany(mappedBy="Location", targetEntity=Address.class)
     private List<Address> listOfAddress;
 	
     @ManyToOne
-    @JoinColumn(name="provinces_id", referencedColumnName="id")
-    private Provinces provinces;
+    @JoinColumn(name="Province_id", referencedColumnName="id")
+    private Province Province;
 	
 
 
@@ -83,14 +83,14 @@ public class Locations extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Locations() {
+	public Location() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Locations(Long id) {
+	public Location(Long id) {
 		super(id, false);
 	}
 
@@ -164,16 +164,16 @@ public class Locations extends AbstractManaged implements Serializable {
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Provinces'
+	 * @return Se devuelve la lista de objetos de tipo 'Province'
 	 */
-	public Provinces getProvinces() {
-        return this.provinces;
+	public Province getProvince() {
+        return this.Province;
     }
 	/**
-	 * @param provinces<Provinces> - La lista de objetos de tipo 'Provinces' a establecer
+	 * @param Province<Province> - La lista de objetos de tipo 'Province' a establecer
 	 */
-	public void setProvinces( Provinces provinces ) {
-        this.provinces = provinces;
+	public void setProvince( Province Province ) {
+        this.Province = Province;
     }
 
 
@@ -191,7 +191,7 @@ public class Locations extends AbstractManaged implements Serializable {
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
     	result = prime * result + ((name == null) ? 0 : name.hashCode());
     	result = prime * result + ((state == null) ? 0 : state.hashCode());
-		result = prime * result + ((provinces == null) ? 0 : provinces.hashCode());
+		result = prime * result + ((Province == null) ? 0 : Province.hashCode());
 		return result;
 	}
 
@@ -211,10 +211,10 @@ public class Locations extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Locations)) {
+		if (!(obj instanceof Location)) {
 			return false;
 		}
-		Locations other = (Locations) obj;
+		Location other = (Location) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -249,11 +249,11 @@ public class Locations extends AbstractManaged implements Serializable {
 		} else if (other.listOfAddress != null && !(other.listOfAddress instanceof List)) {
 			return false;
 		}
-		if (provinces == null) {
-			if (other.provinces != null) {
+		if (Province == null) {
+			if (other.Province != null) {
 				return false;
 			}
-		} else if (!provinces.equals(other.provinces)) {
+		} else if (!Province.equals(other.Province)) {
 			return false;
 		}
 
@@ -293,9 +293,9 @@ public class Locations extends AbstractManaged implements Serializable {
 			builder.append(toString(listOfAddress, maxLen));
 			builder.append(", ");
 		}		
-		if (provinces != null) {
-			builder.append("provinces=");
-			builder.append(provinces);
+		if (Province != null) {
+			builder.append("Province=");
+			builder.append(Province);
 			builder.append(", ");
 		}		
 		builder.append("]");

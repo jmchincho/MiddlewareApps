@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 
 
 /**
- * <p>Class Bannerads.java.</p>
+ * <p>Class BannerAds.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 9 abr 2017 ( Hora: 18:33:29 ).
  * @author jmchincho
@@ -31,10 +31,10 @@ import javax.persistence.TemporalType;
 @Table(name="Banner_Ads")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Bannerads.findAll", query="SELECT x FROM Bannerads x" ),
-  @NamedQuery ( name="Bannerads.countAll", query="SELECT COUNT(x) FROM Bannerads x" )
+  @NamedQuery ( name="BannerAds.findAll", query="SELECT x FROM BannerAds x" ),
+  @NamedQuery ( name="BannerAds.countAll", query="SELECT COUNT(x) FROM BannerAds x" )
 } )
-public class Bannerads extends AbstractManaged implements Serializable {
+public class BannerAds extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -43,8 +43,8 @@ public class Bannerads extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_BanneradsEntity")
-	@SequenceGenerator(name = "cow_generator_BanneradsEntity", sequenceName = "sq_BannerAds", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_BannerAdsEntity")
+	@SequenceGenerator(name = "cow_generator_BannerAdsEntity", sequenceName = "sq_BannerAds", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -58,8 +58,8 @@ public class Bannerads extends AbstractManaged implements Serializable {
     @Column(name="description", nullable=false, length=120)
     private String description;
 
-    @Column(name="orders", nullable=false)
-    private Integer orders;
+    @Column(name="Order", nullable=false)
+    private Integer Order;
 
     @Column(name="state", nullable=false, length=1)
     private String state;
@@ -94,14 +94,14 @@ public class Bannerads extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Bannerads() {
+	public BannerAds() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Bannerads(Long id) {
+	public BannerAds(Long id) {
 		super(id, false);
 	}
 
@@ -157,16 +157,16 @@ public class Bannerads extends AbstractManaged implements Serializable {
     }
 
 	/**
-	 * @return Se devuelve el campo 'orders'
+	 * @return Se devuelve el campo 'Order'
 	 */
-	public Integer getOrders() {
-        return this.orders;
+	public Integer getOrder() {
+        return this.Order;
     }
 	/**
-	 * @param orders<Integer> - El campo 'orders' a establecer
+	 * @param Order<Integer> - El campo 'Order' a establecer
 	 */
-	public void setOrders( Integer orders ) {
-        this.orders = orders;
+	public void setOrder( Integer Order ) {
+        this.Order = Order;
     }
 
 	/**
@@ -267,7 +267,7 @@ public class Bannerads extends AbstractManaged implements Serializable {
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
     	result = prime * result + ((title == null) ? 0 : title.hashCode());
     	result = prime * result + ((description == null) ? 0 : description.hashCode());
-    	result = prime * result + ((orders == null) ? 0 : orders.hashCode());
+    	result = prime * result + ((Order == null) ? 0 : Order.hashCode());
     	result = prime * result + ((state == null) ? 0 : state.hashCode());
     	result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
     	result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
@@ -293,10 +293,10 @@ public class Bannerads extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Bannerads)) {
+		if (!(obj instanceof BannerAds)) {
 			return false;
 		}
-		Bannerads other = (Bannerads) obj;
+		BannerAds other = (BannerAds) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -318,11 +318,11 @@ public class Bannerads extends AbstractManaged implements Serializable {
 		} else if (!description.equals(other.description)) {
 			return false;
 		}
-		if (orders == null) {
-			if (other.orders != null) {
+		if (Order == null) {
+			if (other.Order != null) {
 				return false;
 			}
-		} else if (!orders.equals(other.orders)) {
+		} else if (!Order.equals(other.Order)) {
 			return false;
 		}
 		if (state == null) {
@@ -399,9 +399,9 @@ public class Bannerads extends AbstractManaged implements Serializable {
 			builder.append(description);
 			builder.append(", ");
 		}		
-		if (orders != null) {
-			builder.append("orders=");
-			builder.append(orders);
+		if (Order != null) {
+			builder.append("Order=");
+			builder.append(Order);
 			builder.append(", ");
 		}		
 		if (state != null) {

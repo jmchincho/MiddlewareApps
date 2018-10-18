@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class SubcriptionServiceImpl implements SubcriptionService {
 
     @Override
-    public Page<Subcription> find(Subcription subcription) throws CowException {
+    public Page<Subcription> find(Integer index, Integer totalCount,Subcription subcription) throws CowException {
         return null;
     }
 
@@ -30,7 +30,7 @@ public class SubcriptionServiceImpl implements SubcriptionService {
     }
 
     @Override
-    public void delete(Subcription subcription) throws CowException {
+    public void delete(Long id) throws CowException {
 
     }
 }

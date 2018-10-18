@@ -24,20 +24,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Categories.java.</p>
+ * <p>Class Category.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:21 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Categories"
+ * Clase de persistencia para la entidad almacenada en la tabla "Category"
  */
 @Entity
-@Table(name="Categories")
+@Table(name="Category")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Categories.findAll", query="SELECT x FROM Categories x" ),
-  @NamedQuery ( name="Categories.countAll", query="SELECT COUNT(x) FROM Categories x" )
+  @NamedQuery ( name="Category.findAll", query="SELECT x FROM Category x" ),
+  @NamedQuery ( name="Category.countAll", query="SELECT COUNT(x) FROM Category x" )
 } )
-public class Categories extends AbstractManaged implements Serializable {
+public class Category extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,8 +46,8 @@ public class Categories extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_CategoriesEntity")
-	@SequenceGenerator(name = "cow_generator_CategoriesEntity", sequenceName = "sq_Categories", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_CategoryEntity")
+	@SequenceGenerator(name = "cow_generator_CategoryEntity", sequenceName = "sq_Category", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -58,8 +58,8 @@ public class Categories extends AbstractManaged implements Serializable {
     @Column(name="name", nullable=false, length=100)
     private String name;
 
-    @Column(name="orders", nullable=false)
-    private Integer orders;
+    @Column(name="Order", nullable=false)
+    private Integer Order;
 
     @Column(name="state", nullable=false, length=1)
     private String state;
@@ -69,8 +69,8 @@ public class Categories extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
 	@JsonIgnore
-    @OneToMany(mappedBy="categories", targetEntity=Subcategories.class)
-    private List<Subcategories> listOfSubcategories;
+    @OneToMany(mappedBy="Category", targetEntity=Subcategory.class)
+    private List<Subcategory> listOfSubcategory;
 	
 
 
@@ -80,14 +80,14 @@ public class Categories extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Categories() {
+	public Category() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Categories(Long id) {
+	public Category(Long id) {
 		super(id, false);
 		this.id = id;
 	}
@@ -131,16 +131,16 @@ public class Categories extends AbstractManaged implements Serializable {
     }
 
 	/**
-	 * @return Se devuelve el campo 'orders'
+	 * @return Se devuelve el campo 'Order'
 	 */
-	public Integer getOrders() {
-        return this.orders;
+	public Integer getOrder() {
+        return this.Order;
     }
 	/**
-	 * @param orders<Integer> - El campo 'orders' a establecer
+	 * @param Order<Integer> - El campo 'Order' a establecer
 	 */
-	public void setOrders( Integer orders ) {
-        this.orders = orders;
+	public void setOrder( Integer Order ) {
+        this.Order = Order;
     }
 
 	/**
@@ -162,16 +162,16 @@ public class Categories extends AbstractManaged implements Serializable {
 	 * Getters & Setters para las relaciones
 	 */
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'List<Subcategories>'
+	 * @return Se devuelve la lista de objetos de tipo 'List<Subcategory>'
 	 */
-	public List<Subcategories> getListOfSubcategories() {
-        return this.listOfSubcategories;
+	public List<Subcategory> getListOfSubcategory() {
+        return this.listOfSubcategory;
     }
 	/**
-	 * @param listOfSubcategories<List<SubcategoriesEntity>> - La lista de objetos de tipo 'List<Subcategories>' a establecer
+	 * @param listOfSubcategory<List<SubcategoryEntity>> - La lista de objetos de tipo 'List<Subcategory>' a establecer
 	 */
-	public void setListOfSubcategories( List<Subcategories> listOfSubcategories ) {
-        this.listOfSubcategories = listOfSubcategories;
+	public void setListOfSubcategory( List<Subcategory> listOfSubcategory ) {
+        this.listOfSubcategory = listOfSubcategory;
     }
 
 
@@ -188,7 +188,7 @@ public class Categories extends AbstractManaged implements Serializable {
 		int result = super.hashCode();
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
     	result = prime * result + ((name == null) ? 0 : name.hashCode());
-    	result = prime * result + ((orders == null) ? 0 : orders.hashCode());
+    	result = prime * result + ((Order == null) ? 0 : Order.hashCode());
     	result = prime * result + ((state == null) ? 0 : state.hashCode());
 		return result;
 	}
@@ -209,10 +209,10 @@ public class Categories extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Categories)) {
+		if (!(obj instanceof Category)) {
 			return false;
 		}
-		Categories other = (Categories) obj;
+		Category other = (Category) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -227,11 +227,11 @@ public class Categories extends AbstractManaged implements Serializable {
 		} else if (!name.equals(other.name)) {
 			return false;
 		}
-		if (orders == null) {
-			if (other.orders != null) {
+		if (Order == null) {
+			if (other.Order != null) {
 				return false;
 			}
-		} else if (!orders.equals(other.orders)) {
+		} else if (!Order.equals(other.Order)) {
 			return false;
 		}
 		if (state == null) {
@@ -241,17 +241,17 @@ public class Categories extends AbstractManaged implements Serializable {
 		} else if (!state.equals(other.state)) {
 			return false;
 		}
-		if (!(listOfSubcategories instanceof List)) {
-			if (!(other.listOfSubcategories instanceof List)) {
-				if (listOfSubcategories == null) {
-					if (other.listOfSubcategories != null) {
+		if (!(listOfSubcategory instanceof List)) {
+			if (!(other.listOfSubcategory instanceof List)) {
+				if (listOfSubcategory == null) {
+					if (other.listOfSubcategory != null) {
 						return false;
 					}
-				} else if (!listOfSubcategories.equals(other.listOfSubcategories)) {
+				} else if (!listOfSubcategory.equals(other.listOfSubcategory)) {
 					return false;
 				}
 			}			
-		} else if (other.listOfSubcategories != null && !(other.listOfSubcategories instanceof List)) {
+		} else if (other.listOfSubcategory != null && !(other.listOfSubcategory instanceof List)) {
 			return false;
 		}
 
@@ -281,9 +281,9 @@ public class Categories extends AbstractManaged implements Serializable {
 			builder.append(name);
 			builder.append(", ");
 		}		
-		if (orders != null) {
-			builder.append("orders=");
-			builder.append(orders);
+		if (Order != null) {
+			builder.append("Order=");
+			builder.append(Order);
 			builder.append(", ");
 		}		
 		if (state != null) {
@@ -291,9 +291,9 @@ public class Categories extends AbstractManaged implements Serializable {
 			builder.append(state);
 			builder.append(", ");
 		}		
-		if (listOfSubcategories != null && !(listOfSubcategories instanceof List)) {
-			builder.append("listOfSubcategories=");
-			builder.append(toString(listOfSubcategories, maxLen));
+		if (listOfSubcategory != null && !(listOfSubcategory instanceof List)) {
+			builder.append("listOfSubcategory=");
+			builder.append(toString(listOfSubcategory, maxLen));
 			builder.append(", ");
 		}		
 		builder.append("]");

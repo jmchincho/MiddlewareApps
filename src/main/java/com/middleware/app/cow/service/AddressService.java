@@ -4,13 +4,10 @@ package com.middleware.app.cow.service;
 import com.github.pagehelper.Page;
 import com.middleware.app.cow.domain.Address;
 import com.middleware.app.cow.exceptions.CowException;
-import org.mybatis.dynamic.sql.select.function.Add;
-
-import javax.persistence.EntityNotFoundException;
 
 public interface AddressService {
 
-    Page<Address> find(Address address) throws CowException;
+    Page<Address> find(Integer index, Integer totalCount, Address address) throws CowException;
 
     Address get(Long id) throws CowException;
 
@@ -18,6 +15,6 @@ public interface AddressService {
 
     void update(Address address) throws CowException;
 
-    void delete(Address address) throws CowException;
+    void delete(Long id) throws CowException;
 
 }

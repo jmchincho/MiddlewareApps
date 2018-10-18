@@ -19,20 +19,20 @@ import javax.persistence.Table;
 
 
 /**
- * <p>Class Administrators.java.</p>
+ * <p>Class Administrator.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:21 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Administrators"
+ * Clase de persistencia para la entidad almacenada en la tabla "Administrator"
  */
 @Entity
-@Table(name="Administrators")
+@Table(name="Administrator")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Administrators.findAll", query="SELECT x FROM Administrators x" ),
-  @NamedQuery ( name="Administrators.countAll", query="SELECT COUNT(x) FROM Administrators x" )
+  @NamedQuery ( name="Administrator.findAll", query="SELECT x FROM Administrator x" ),
+  @NamedQuery ( name="Administrator.countAll", query="SELECT COUNT(x) FROM Administrator x" )
 } )
-public class Administrators extends AbstractManaged implements Serializable {
+public class Administrator extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -41,8 +41,8 @@ public class Administrators extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_AdministratorsEntity")
-	@SequenceGenerator(name = "cow_generator_AdministratorsEntity", sequenceName = "sq_Administrators", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_AdministratorEntity")
+	@SequenceGenerator(name = "cow_generator_AdministratorEntity", sequenceName = "sq_Administrator", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -60,8 +60,8 @@ public class Administrators extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
 	
-	@OneToOne(mappedBy="administrator", targetEntity=Users.class)
-    private Users users;
+	@OneToOne(mappedBy="administrator", targetEntity=User.class)
+    private User User;
 
     /**
 	 * Constructor(es)
@@ -69,14 +69,14 @@ public class Administrators extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Administrators() {
+	public Administrator() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Administrators(Long id) {
+	public Administrator(Long id) {
 		super(id, false);
 	}
 
@@ -135,21 +135,21 @@ public class Administrators extends AbstractManaged implements Serializable {
 
 
     /**
-	 * Get users.
+	 * Get User.
 	 *
-	 * @return the users
+	 * @return the User
 	 */
-	public Users getUsers() {
-		return this.users;
+	public User getUser() {
+		return this.User;
 	}
 
 	/**
-	 * Set users.
+	 * Set User.
 	 *
-	 * @param users the users to set
+	 * @param User the User to set
 	 */
-	public void setUsers(Users users) {
-		this.users = users;
+	public void setUser(User User) {
+		this.User = User;
 	}
 
 	//----------------------------------------------------------------------
@@ -184,10 +184,10 @@ public class Administrators extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Administrators)) {
+		if (!(obj instanceof Administrator)) {
 			return false;
 		}
-		Administrators other = (Administrators) obj;
+		Administrator other = (Administrator) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;

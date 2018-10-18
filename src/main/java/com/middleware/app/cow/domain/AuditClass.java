@@ -42,7 +42,7 @@ public class AuditClass extends AbstractBase implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_audit_classAudit")
-	@SequenceGenerator(name = "cow_generator_audit_classAudit", sequenceName = "sq_audit_classAudit", allocationSize = 1)
+	@SequenceGenerator(name = "cow_generator_audit_classAudit", sequenceName = "sq_audit_classAudit", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 

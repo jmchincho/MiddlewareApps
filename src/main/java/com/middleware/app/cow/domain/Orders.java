@@ -29,20 +29,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Orders.java.</p>
+ * <p>Class Order.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:22 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Orders"
+ * Clase de persistencia para la entidad almacenada en la tabla "Order"
  */
 @Entity
-@Table(name="Orders")
+@Table(name="Order")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Orders.findAll", query="SELECT x FROM Orders x" ),
-  @NamedQuery ( name="Orders.countAll", query="SELECT COUNT(x) FROM Orders x" )
+  @NamedQuery ( name="Order.findAll", query="SELECT x FROM Order x" ),
+  @NamedQuery ( name="Order.countAll", query="SELECT COUNT(x) FROM Order x" )
 } )
-public class Orders extends AbstractManaged implements Serializable {
+public class Order extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,8 +51,8 @@ public class Orders extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_OrdersEntity")
-	@SequenceGenerator(name = "cow_generator_OrdersEntity", sequenceName = "sq_Orders", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_OrderEntity")
+	@SequenceGenerator(name = "cow_generator_OrderEntity", sequenceName = "sq_Order", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -92,12 +92,12 @@ public class Orders extends AbstractManaged implements Serializable {
     private Address address;
 	
 	@JsonIgnore
-    @OneToMany(mappedBy="orders", targetEntity=OrdersDetails.class)
-    private List<OrdersDetails> listOfOrdersDetails;
+    @OneToMany(mappedBy="Order", targetEntity=OrderDetail.class)
+    private List<OrderDetail> listOfOrderDetail;
 	
     @ManyToOne
-    @JoinColumn(name="users_id", referencedColumnName="id")
-    private Users users;
+    @JoinColumn(name="User_id", referencedColumnName="id")
+    private User User;
 	
 
 
@@ -107,14 +107,14 @@ public class Orders extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Orders() {
+	public Order() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Orders(Long id) {
+	public Order(Long id) {
 		super(id, false);
 	}
 
@@ -253,29 +253,29 @@ public class Orders extends AbstractManaged implements Serializable {
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'List<OrdersDetails>'
+	 * @return Se devuelve la lista de objetos de tipo 'List<OrderDetail>'
 	 */
-	public List<OrdersDetails> getListOfOrdersDetails() {
-        return this.listOfOrdersDetails;
+	public List<OrderDetail> getListOfOrderDetail() {
+        return this.listOfOrderDetail;
     }
 	/**
-	 * @param listOfOrdersDetails<List<OrdersDetailsEntity>> - La lista de objetos de tipo 'List<OrdersDetails>' a establecer
+	 * @param listOfOrderDetail<List<OrderDetailEntity>> - La lista de objetos de tipo 'List<OrderDetail>' a establecer
 	 */
-	public void setListOfOrdersDetails( List<OrdersDetails> listOfOrdersDetails ) {
-        this.listOfOrdersDetails = listOfOrdersDetails;
+	public void setListOfOrderDetail( List<OrderDetail> listOfOrderDetail ) {
+        this.listOfOrderDetail = listOfOrderDetail;
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Users'
+	 * @return Se devuelve la lista de objetos de tipo 'User'
 	 */
-	public Users getUsers() {
-        return this.users;
+	public User getUser() {
+        return this.User;
     }
 	/**
-	 * @param users<Users> - La lista de objetos de tipo 'Users' a establecer
+	 * @param User<User> - La lista de objetos de tipo 'User' a establecer
 	 */
-	public void setUsers( Users users ) {
-        this.users = users;
+	public void setUser( User User ) {
+        this.User = User;
     }
 
 
@@ -299,7 +299,7 @@ public class Orders extends AbstractManaged implements Serializable {
     	result = prime * result + ((state == null) ? 0 : state.hashCode());
     	result = prime * result + ((priceTotal == null) ? 0 : priceTotal.hashCode());
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
-		result = prime * result + ((users == null) ? 0 : users.hashCode());
+		result = prime * result + ((User == null) ? 0 : User.hashCode());
 		return result;
 	}
 
@@ -319,10 +319,10 @@ public class Orders extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Orders)) {
+		if (!(obj instanceof Order)) {
 			return false;
 		}
-		Orders other = (Orders) obj;
+		Order other = (Order) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -386,24 +386,24 @@ public class Orders extends AbstractManaged implements Serializable {
 		} else if (!address.equals(other.address)) {
 			return false;
 		}
-		if (!(listOfOrdersDetails instanceof List)) {
-			if (!(other.listOfOrdersDetails instanceof List)) {
-				if (listOfOrdersDetails == null) {
-					if (other.listOfOrdersDetails != null) {
+		if (!(listOfOrderDetail instanceof List)) {
+			if (!(other.listOfOrderDetail instanceof List)) {
+				if (listOfOrderDetail == null) {
+					if (other.listOfOrderDetail != null) {
 						return false;
 					}
-				} else if (!listOfOrdersDetails.equals(other.listOfOrdersDetails)) {
+				} else if (!listOfOrderDetail.equals(other.listOfOrderDetail)) {
 					return false;
 				}
 			}			
-		} else if (other.listOfOrdersDetails != null && !(other.listOfOrdersDetails instanceof List)) {
+		} else if (other.listOfOrderDetail != null && !(other.listOfOrderDetail instanceof List)) {
 			return false;
 		}
-		if (users == null) {
-			if (other.users != null) {
+		if (User == null) {
+			if (other.User != null) {
 				return false;
 			}
-		} else if (!users.equals(other.users)) {
+		} else if (!User.equals(other.User)) {
 			return false;
 		}
 
@@ -468,14 +468,14 @@ public class Orders extends AbstractManaged implements Serializable {
 			builder.append(address);
 			builder.append(", ");
 		}		
-		if (listOfOrdersDetails != null && !(listOfOrdersDetails instanceof List)) {
-			builder.append("listOfOrdersDetails=");
-			builder.append(toString(listOfOrdersDetails, maxLen));
+		if (listOfOrderDetail != null && !(listOfOrderDetail instanceof List)) {
+			builder.append("listOfOrderDetail=");
+			builder.append(toString(listOfOrderDetail, maxLen));
 			builder.append(", ");
 		}		
-		if (users != null) {
-			builder.append("users=");
-			builder.append(users);
+		if (User != null) {
+			builder.append("User=");
+			builder.append(User);
 			builder.append(", ");
 		}		
 		builder.append("]");

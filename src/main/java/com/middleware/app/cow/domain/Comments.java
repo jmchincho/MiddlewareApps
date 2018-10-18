@@ -25,20 +25,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Comments.java.</p>
+ * <p>Class Comment.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:21 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Comments"
+ * Clase de persistencia para la entidad almacenada en la tabla "Comment"
  */
 @Entity
-@Table(name="Comments")
+@Table(name="Comment")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Comments.findAll", query="SELECT x FROM Comments x" ),
-  @NamedQuery ( name="Comments.countAll", query="SELECT COUNT(x) FROM Comments x" )
+  @NamedQuery ( name="Comment.findAll", query="SELECT x FROM Comment x" ),
+  @NamedQuery ( name="Comment.countAll", query="SELECT COUNT(x) FROM Comment x" )
 } )
-public class Comments extends AbstractManaged implements Serializable {
+public class Comment extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,8 +47,8 @@ public class Comments extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_CommentsEntity")
-	@SequenceGenerator(name = "cow_generator_CommentsEntity", sequenceName = "sq_Comments", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_CommentEntity")
+	@SequenceGenerator(name = "cow_generator_CommentEntity", sequenceName = "sq_Comment", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -81,13 +81,13 @@ public class Comments extends AbstractManaged implements Serializable {
 	 */
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="customers_id", referencedColumnName="id")
-    private Customers customers;
+    @JoinColumn(name="Customer_id", referencedColumnName="id")
+    private Customer Customer;
 	
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="items_id", referencedColumnName="id")
-    private Items items;
+    @JoinColumn(name="Item_id", referencedColumnName="id")
+    private Item Item;
 	
 
 
@@ -97,14 +97,14 @@ public class Comments extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Comments() {
+	public Comment() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Comments(Long id) {
+	public Comment(Long id) {
 		super(id, false);
 	}
 
@@ -217,29 +217,29 @@ public class Comments extends AbstractManaged implements Serializable {
 	 * Getters & Setters para las relaciones
 	 */
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Customers'
+	 * @return Se devuelve la lista de objetos de tipo 'Customer'
 	 */
-	public Customers getCustomers() {
-        return this.customers;
+	public Customer getCustomer() {
+        return this.Customer;
     }
 	/**
-	 * @param customers<Customers> - La lista de objetos de tipo 'Customers' a establecer
+	 * @param Customer<Customer> - La lista de objetos de tipo 'Customer' a establecer
 	 */
-	public void setCustomers( Customers customers ) {
-        this.customers = customers;
+	public void setCustomer( Customer Customer ) {
+        this.Customer = Customer;
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Items'
+	 * @return Se devuelve la lista de objetos de tipo 'Item'
 	 */
-	public Items getItems() {
-        return this.items;
+	public Item getItem() {
+        return this.Item;
     }
 	/**
-	 * @param items<Items> - La lista de objetos de tipo 'Items' a establecer
+	 * @param Item<Item> - La lista de objetos de tipo 'Item' a establecer
 	 */
-	public void setItems( Items items ) {
-        this.items = items;
+	public void setItem( Item Item ) {
+        this.Item = Item;
     }
 
 
@@ -261,8 +261,8 @@ public class Comments extends AbstractManaged implements Serializable {
     	result = prime * result + ((approved == null) ? 0 : approved.hashCode());
     	result = prime * result + ((score == null) ? 0 : score.hashCode());
     	result = prime * result + ((denounced == null) ? 0 : denounced.hashCode());
-		result = prime * result + ((customers == null) ? 0 : customers.hashCode());
-		result = prime * result + ((items == null) ? 0 : items.hashCode());
+		result = prime * result + ((Customer == null) ? 0 : Customer.hashCode());
+		result = prime * result + ((Item == null) ? 0 : Item.hashCode());
 		return result;
 	}
 
@@ -282,10 +282,10 @@ public class Comments extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Comments)) {
+		if (!(obj instanceof Comment)) {
 			return false;
 		}
-		Comments other = (Comments) obj;
+		Comment other = (Comment) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -335,18 +335,18 @@ public class Comments extends AbstractManaged implements Serializable {
 		} else if (!denounced.equals(other.denounced)) {
 			return false;
 		}
-		if (customers == null) {
-			if (other.customers != null) {
+		if (Customer == null) {
+			if (other.Customer != null) {
 				return false;
 			}
-		} else if (!customers.equals(other.customers)) {
+		} else if (!Customer.equals(other.Customer)) {
 			return false;
 		}
-		if (items == null) {
-			if (other.items != null) {
+		if (Item == null) {
+			if (other.Item != null) {
 				return false;
 			}
-		} else if (!items.equals(other.items)) {
+		} else if (!Item.equals(other.Item)) {
 			return false;
 		}
 
@@ -401,14 +401,14 @@ public class Comments extends AbstractManaged implements Serializable {
 			builder.append(denounced);
 			builder.append(", ");
 		}		
-		if (customers != null) {
-			builder.append("customers=");
-			builder.append(customers);
+		if (Customer != null) {
+			builder.append("Customer=");
+			builder.append(Customer);
 			builder.append(", ");
 		}		
-		if (items != null) {
-			builder.append("items=");
-			builder.append(items);
+		if (Item != null) {
+			builder.append("Item=");
+			builder.append(Item);
 			builder.append(", ");
 		}		
 		builder.append("]");

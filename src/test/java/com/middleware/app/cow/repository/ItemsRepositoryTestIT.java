@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-public class ItemsRepositoryTestIT {
+public class ItemRepositoryTestIT {
 
     @Before
     public void setUp() throws Exception {

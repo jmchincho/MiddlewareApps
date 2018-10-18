@@ -23,20 +23,20 @@ import javax.persistence.TemporalType;
 
 
 /**
- * <p>Class Offers.java.</p>
+ * <p>Class Offer.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:22 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Offers"
+ * Clase de persistencia para la entidad almacenada en la tabla "Offer"
  */
 @Entity
-@Table(name="Offers")
+@Table(name="Offer")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Offers.findAll", query="SELECT x FROM Offers x" ),
-  @NamedQuery ( name="Offers.countAll", query="SELECT COUNT(x) FROM Offers x" )
+  @NamedQuery ( name="Offer.findAll", query="SELECT x FROM Offer x" ),
+  @NamedQuery ( name="Offer.countAll", query="SELECT COUNT(x) FROM Offer x" )
 } )
-public class Offers extends AbstractManaged implements Serializable {
+public class Offer extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,8 +45,8 @@ public class Offers extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_OffersEntity")
-	@SequenceGenerator(name = "cow_generator_OffersEntity", sequenceName = "sq_Offers", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_OfferEntity")
+	@SequenceGenerator(name = "cow_generator_OfferEntity", sequenceName = "sq_Offer", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -84,8 +84,8 @@ public class Offers extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
     @ManyToOne
-    @JoinColumn(name="items_id", referencedColumnName="id")
-    private Items items;
+    @JoinColumn(name="Item_id", referencedColumnName="id")
+    private Item Item;
 	
 
 
@@ -95,14 +95,14 @@ public class Offers extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Offers() {
+	public Offer() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Offers(Long id) {
+	public Offer(Long id) {
 		super(id, false);
 	}
 
@@ -233,16 +233,16 @@ public class Offers extends AbstractManaged implements Serializable {
 	 * Getters & Setters para las relaciones
 	 */
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Items'
+	 * @return Se devuelve la lista de objetos de tipo 'Item'
 	 */
-	public Items getItems() {
-        return this.items;
+	public Item getItem() {
+        return this.Item;
     }
 	/**
-	 * @param items<Items> - La lista de objetos de tipo 'Items' a establecer
+	 * @param Item<Item> - La lista de objetos de tipo 'Item' a establecer
 	 */
-	public void setItems( Items items ) {
-        this.items = items;
+	public void setItem( Item Item ) {
+        this.Item = Item;
     }
 
 
@@ -265,7 +265,7 @@ public class Offers extends AbstractManaged implements Serializable {
     	result = prime * result + ((finishDate == null) ? 0 : finishDate.hashCode());
     	result = prime * result + ((publishDate == null) ? 0 : publishDate.hashCode());
     	result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
-		result = prime * result + ((items == null) ? 0 : items.hashCode());
+		result = prime * result + ((Item == null) ? 0 : Item.hashCode());
 		return result;
 	}
 
@@ -285,10 +285,10 @@ public class Offers extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Offers)) {
+		if (!(obj instanceof Offer)) {
 			return false;
 		}
-		Offers other = (Offers) obj;
+		Offer other = (Offer) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -345,11 +345,11 @@ public class Offers extends AbstractManaged implements Serializable {
 		} else if (!createDate.equals(other.createDate)) {
 			return false;
 		}
-		if (items == null) {
-			if (other.items != null) {
+		if (Item == null) {
+			if (other.Item != null) {
 				return false;
 			}
-		} else if (!items.equals(other.items)) {
+		} else if (!Item.equals(other.Item)) {
 			return false;
 		}
 
@@ -409,9 +409,9 @@ public class Offers extends AbstractManaged implements Serializable {
 			builder.append(createDate);
 			builder.append(", ");
 		}		
-		if (items != null) {
-			builder.append("items=");
-			builder.append(items);
+		if (Item != null) {
+			builder.append("Item=");
+			builder.append(Item);
 			builder.append(", ");
 		}		
 		builder.append("]");

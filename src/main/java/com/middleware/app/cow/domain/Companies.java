@@ -25,20 +25,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Companies.java.</p>
+ * <p>Class Company.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:21 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Companies"
+ * Clase de persistencia para la entidad almacenada en la tabla "Company"
  */
 @Entity
-@Table(name="Companies")
+@Table(name="Company")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Companies.findAll", query="SELECT x FROM Companies x" ),
-  @NamedQuery ( name="Companies.countAll", query="SELECT COUNT(x) FROM Companies x" )
+  @NamedQuery ( name="Company.findAll", query="SELECT x FROM Company x" ),
+  @NamedQuery ( name="Company.countAll", query="SELECT COUNT(x) FROM Company x" )
 } )
-public class Companies extends AbstractManaged implements Serializable {
+public class Company extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,8 +47,8 @@ public class Companies extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_CompaniesEntity")
-	@SequenceGenerator(name = "cow_generator_CompaniesEntity", sequenceName = "sq_Companies", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_CompanyEntity")
+	@SequenceGenerator(name = "cow_generator_CompanyEntity", sequenceName = "sq_Company", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -79,15 +79,15 @@ public class Companies extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
 	@JsonIgnore
-    @OneToMany(mappedBy="companies", targetEntity=Subcription.class)
+    @OneToMany(mappedBy="Company", targetEntity=Subcription.class)
     private List<Subcription> listOfSubcription;
 	
 	@JsonIgnore
-    @OneToMany(mappedBy="companies", targetEntity=Items.class)
-    private List<Items> listOfItems;
+    @OneToMany(mappedBy="Company", targetEntity=Item.class)
+    private List<Item> listOfItem;
 	
-	@OneToOne(mappedBy="company", targetEntity=Users.class)
-    private Users users;
+	@OneToOne(mappedBy="company", targetEntity=User.class)
+    private User User;
 
 
     /**
@@ -96,14 +96,14 @@ public class Companies extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Companies() {
+	public Company() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Companies(Long id) {
+	public Company(Long id) {
 		super(id, false);
 	}
 
@@ -229,36 +229,36 @@ public class Companies extends AbstractManaged implements Serializable {
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'List<Items>'
+	 * @return Se devuelve la lista de objetos de tipo 'List<Item>'
 	 */
-	public List<Items> getListOfItems() {
-        return this.listOfItems;
+	public List<Item> getListOfItem() {
+        return this.listOfItem;
     }
 	/**
-	 * @param listOfItems<List<ItemsEntity>> - La lista de objetos de tipo 'List<Items>' a establecer
+	 * @param listOfItem<List<ItemEntity>> - La lista de objetos de tipo 'List<Item>' a establecer
 	 */
-	public void setListOfItems( List<Items> listOfItems ) {
-        this.listOfItems = listOfItems;
+	public void setListOfItem( List<Item> listOfItem ) {
+        this.listOfItem = listOfItem;
     }
 
 
 
     /**
-	 * Get users.
+	 * Get User.
 	 *
-	 * @return the users
+	 * @return the User
 	 */
-	public Users getUsers() {
-		return this.users;
+	public User getUser() {
+		return this.User;
 	}
 
 	/**
-	 * Set users.
+	 * Set User.
 	 *
-	 * @param users the users to set
+	 * @param User the User to set
 	 */
-	public void setUsers(Users users) {
-		this.users = users;
+	public void setUser(User User) {
+		this.User = User;
 	}
 
 	//----------------------------------------------------------------------
@@ -297,10 +297,10 @@ public class Companies extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Companies)) {
+		if (!(obj instanceof Company)) {
 			return false;
 		}
-		Companies other = (Companies) obj;
+		Company other = (Company) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -363,17 +363,17 @@ public class Companies extends AbstractManaged implements Serializable {
 		} else if (other.listOfSubcription != null && !(other.listOfSubcription instanceof List)) {
 			return false;
 		}
-		if (!(listOfItems instanceof List)) {
-			if (!(other.listOfItems instanceof List)) {
-				if (listOfItems == null) {
-					if (other.listOfItems != null) {
+		if (!(listOfItem instanceof List)) {
+			if (!(other.listOfItem instanceof List)) {
+				if (listOfItem == null) {
+					if (other.listOfItem != null) {
 						return false;
 					}
-				} else if (!listOfItems.equals(other.listOfItems)) {
+				} else if (!listOfItem.equals(other.listOfItem)) {
 					return false;
 				}
 			}			
-		} else if (other.listOfItems != null && !(other.listOfItems instanceof List)) {
+		} else if (other.listOfItem != null && !(other.listOfItem instanceof List)) {
 			return false;
 		}
 
@@ -433,9 +433,9 @@ public class Companies extends AbstractManaged implements Serializable {
 			builder.append(toString(listOfSubcription, maxLen));
 			builder.append(", ");
 		}		
-		if (listOfItems != null && !(listOfItems instanceof List)) {
-			builder.append("listOfItems=");
-			builder.append(toString(listOfItems, maxLen));
+		if (listOfItem != null && !(listOfItem instanceof List)) {
+			builder.append("listOfItem=");
+			builder.append(toString(listOfItem, maxLen));
 			builder.append(", ");
 		}				
 		builder.append("]");

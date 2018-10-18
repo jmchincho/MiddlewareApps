@@ -24,20 +24,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Countries.java.</p>
+ * <p>Class Country.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:22 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Countries"
+ * Clase de persistencia para la entidad almacenada en la tabla "Country"
  */
 @Entity
-@Table(name="Countries")
+@Table(name="Country")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Countries.findAll", query="SELECT x FROM Countries x" ),
-  @NamedQuery ( name="Countries.countAll", query="SELECT COUNT(x) FROM Countries x" )
+  @NamedQuery ( name="Country.findAll", query="SELECT x FROM Country x" ),
+  @NamedQuery ( name="Country.countAll", query="SELECT COUNT(x) FROM Country x" )
 } )
-public class Countries extends AbstractManaged implements Serializable {
+public class Country extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -46,8 +46,8 @@ public class Countries extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_CountriesEntity")
-	@SequenceGenerator(name = "cow_generator_CountriesEntity", sequenceName = "sq_Countries", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_CountryEntity")
+	@SequenceGenerator(name = "cow_generator_CountryEntity", sequenceName = "sq_Country", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -66,8 +66,8 @@ public class Countries extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
 	@JsonIgnore
-    @OneToMany(mappedBy="countries", targetEntity=Provinces.class)
-    private List<Provinces> listOfProvinces;
+    @OneToMany(mappedBy="Country", targetEntity=Province.class)
+    private List<Province> listOfProvince;
 	
 
 
@@ -77,14 +77,14 @@ public class Countries extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Countries() {
+	public Country() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Countries(Long id) {
+	public Country(Long id) {
 		super(id, false);
 	}
 
@@ -145,16 +145,16 @@ public class Countries extends AbstractManaged implements Serializable {
 	 * Getters & Setters para las relaciones
 	 */
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'List<Provinces>'
+	 * @return Se devuelve la lista de objetos de tipo 'List<Province>'
 	 */
-	public List<Provinces> getListOfProvinces() {
-        return this.listOfProvinces;
+	public List<Province> getListOfProvince() {
+        return this.listOfProvince;
     }
 	/**
-	 * @param listOfProvinces<List<ProvincesEntity>> - La lista de objetos de tipo 'List<Provinces>' a establecer
+	 * @param listOfProvince<List<ProvinceEntity>> - La lista de objetos de tipo 'List<Province>' a establecer
 	 */
-	public void setListOfProvinces( List<Provinces> listOfProvinces ) {
-        this.listOfProvinces = listOfProvinces;
+	public void setListOfProvince( List<Province> listOfProvince ) {
+        this.listOfProvince = listOfProvince;
     }
 
 
@@ -191,10 +191,10 @@ public class Countries extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Countries)) {
+		if (!(obj instanceof Country)) {
 			return false;
 		}
-		Countries other = (Countries) obj;
+		Country other = (Country) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -216,17 +216,17 @@ public class Countries extends AbstractManaged implements Serializable {
 		} else if (!state.equals(other.state)) {
 			return false;
 		}
-		if (!(listOfProvinces instanceof List)) {
-			if (!(other.listOfProvinces instanceof List)) {
-				if (listOfProvinces == null) {
-					if (other.listOfProvinces != null) {
+		if (!(listOfProvince instanceof List)) {
+			if (!(other.listOfProvince instanceof List)) {
+				if (listOfProvince == null) {
+					if (other.listOfProvince != null) {
 						return false;
 					}
-				} else if (!listOfProvinces.equals(other.listOfProvinces)) {
+				} else if (!listOfProvince.equals(other.listOfProvince)) {
 					return false;
 				}
 			}			
-		} else if (other.listOfProvinces != null && !(other.listOfProvinces instanceof List)) {
+		} else if (other.listOfProvince != null && !(other.listOfProvince instanceof List)) {
 			return false;
 		}
 
@@ -261,9 +261,9 @@ public class Countries extends AbstractManaged implements Serializable {
 			builder.append(state);
 			builder.append(", ");
 		}		
-		if (listOfProvinces != null && !(listOfProvinces instanceof List)) {
-			builder.append("listOfProvinces=");
-			builder.append(toString(listOfProvinces, maxLen));
+		if (listOfProvince != null && !(listOfProvince instanceof List)) {
+			builder.append("listOfProvince=");
+			builder.append(toString(listOfProvince, maxLen));
 			builder.append(", ");
 		}		
 		builder.append("]");

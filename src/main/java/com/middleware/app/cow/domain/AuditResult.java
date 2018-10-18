@@ -50,7 +50,7 @@ public class AuditResult extends AbstractBase implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_audit_result")
-	@SequenceGenerator(name = "cow_generator_audit_result", sequenceName = "sq_auditoria_res", allocationSize = 1)
+	@SequenceGenerator(name = "cow_generator_audit_result", sequenceName = "sq_auditoria_res", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 

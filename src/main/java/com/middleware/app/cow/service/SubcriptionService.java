@@ -7,7 +7,7 @@ import com.middleware.app.cow.exceptions.CowException;
 
 public interface SubcriptionService {
 
-    Page<Subcription> find(Subcription subcription) throws CowException;
+    Page<Subcription> find(Integer index, Integer totalCount,Subcription subcription) throws CowException;
 
     Subcription get(Long id) throws CowException;
 
@@ -15,6 +15,6 @@ public interface SubcriptionService {
 
     void update(Subcription subcription) throws CowException;
 
-    void delete(Subcription subcription) throws CowException;
+    void delete(Long id) throws CowException;
 
 }

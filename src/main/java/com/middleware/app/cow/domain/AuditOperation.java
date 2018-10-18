@@ -54,7 +54,7 @@ public class AuditOperation extends AbstractBase implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_audit_operation")
-	@SequenceGenerator(name = "cow_generator_audit_operation", sequenceName = "sq_auditoria_op", allocationSize = 1)
+	@SequenceGenerator(name = "cow_generator_audit_operation", sequenceName = "sq_auditoria_op", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -93,8 +93,8 @@ public class AuditOperation extends AbstractBase implements Serializable {
     private List<AuditResult> auditsResults;
 	
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="users_id", referencedColumnName="id")
-    private Users users;
+    @JoinColumn(name="User_id", referencedColumnName="id")
+    private User User;
 	
 
 
@@ -235,16 +235,16 @@ public class AuditOperation extends AbstractBase implements Serializable {
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de type 'Users'
+	 * @return Se devuelve la lista de objetos de type 'User'
 	 */
-	public Users getUsers() {
-        return this.users;
+	public User getUser() {
+        return this.User;
     }
 	/**
-	 * @param users<Users> - La lista de objetos de type 'Users' a establecer
+	 * @param User<User> - La lista de objetos de type 'User' a establecer
 	 */
-	public void setUsers( Users users ) {
-        this.users = users;
+	public void setUser( User User ) {
+        this.User = User;
     }
 
 
@@ -266,7 +266,7 @@ public class AuditOperation extends AbstractBase implements Serializable {
     	result = prime * result + ((entity == null) ? 0 : entity.hashCode());
     	result = prime * result + ((parameters == null) ? 0 : parameters.hashCode());
     	result = prime * result + ((txtSql == null) ? 0 : txtSql.hashCode());
-		result = prime * result + ((users == null) ? 0 : users.hashCode());
+		result = prime * result + ((User == null) ? 0 : User.hashCode());
 		return result;
 	}
 
@@ -352,11 +352,11 @@ public class AuditOperation extends AbstractBase implements Serializable {
 		} else if (other.auditsResults != null && !(other.auditsResults instanceof List)) {
 			return false;
 		}
-		if (users == null) {
-			if (other.users != null) {
+		if (User == null) {
+			if (other.User != null) {
 				return false;
 			}
-		} else if (!users.equals(other.users)) {
+		} else if (!User.equals(other.User)) {
 			return false;
 		}
 
@@ -416,9 +416,9 @@ public class AuditOperation extends AbstractBase implements Serializable {
 			builder.append(toString(auditsResults, maxLen));
 			builder.append(", ");
 		}		
-		if (users != null) {
-			builder.append("users=");
-			builder.append(users);
+		if (User != null) {
+			builder.append("User=");
+			builder.append(User);
 			builder.append(", ");
 		}		
 		builder.append("]");

@@ -25,20 +25,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Variants.java.</p>
+ * <p>Class Variant.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 27 abr 2017 ( Hora: 13:29:07 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "variants"
+ * Clase de persistencia para la entidad almacenada en la tabla "Variant"
  */
 @Entity
-@Table(name="variants")
+@Table(name="Variant")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Variants.findAll", query="SELECT x FROM Variants x" ),
-  @NamedQuery ( name="Variants.countAll", query="SELECT COUNT(x) FROM Variants x" )
+  @NamedQuery ( name="Variant.findAll", query="SELECT x FROM Variant x" ),
+  @NamedQuery ( name="Variant.countAll", query="SELECT COUNT(x) FROM Variant x" )
 } )
-public class Variants extends AbstractBase implements Serializable {
+public class Variant extends AbstractBase implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,8 +47,8 @@ public class Variants extends AbstractBase implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_VariantsEntity")
-	@SequenceGenerator(name = "cow_generator_VariantsEntity", sequenceName = "sq_variants", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_VariantEntity")
+	@SequenceGenerator(name = "cow_generator_VariantEntity", sequenceName = "sq_Variant", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -98,8 +98,8 @@ public class Variants extends AbstractBase implements Serializable {
 	 */
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="items_id", referencedColumnName="id")
-    private Items items;
+    @JoinColumn(name="Item_id", referencedColumnName="id")
+    private Item Item;
 
     /**
 	 * Constructor(es)
@@ -107,14 +107,14 @@ public class Variants extends AbstractBase implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Variants() {
+	public Variant() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Variants(Long id) {
+	public Variant(Long id) {
 		super(id);
 	}
 
@@ -290,16 +290,16 @@ public class Variants extends AbstractBase implements Serializable {
 	 * Getters & Setters para las relaciones
 	 */
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Items'
+	 * @return Se devuelve la lista de objetos de tipo 'Item'
 	 */
-	public Items getItems() {
-        return this.items;
+	public Item getItem() {
+        return this.Item;
     }
 	/**
-	 * @param items<Items> - La lista de objetos de tipo 'Items' a establecer
+	 * @param Item<Item> - La lista de objetos de tipo 'Item' a establecer
 	 */
-	public void setItems( Items items ) {
-        this.items = items;
+	public void setItem( Item Item ) {
+        this.Item = Item;
     }
 
 
@@ -326,7 +326,7 @@ public class Variants extends AbstractBase implements Serializable {
     	result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
     	result = prime * result + ((type == null) ? 0 : type.hashCode());
     	result = prime * result + ((deleted == null) ? 0 : deleted.hashCode());
-		result = prime * result + ((items == null) ? 0 : items.hashCode());
+		result = prime * result + ((Item == null) ? 0 : Item.hashCode());
 		return result;
 	}
 
@@ -346,10 +346,10 @@ public class Variants extends AbstractBase implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Variants)) {
+		if (!(obj instanceof Variant)) {
 			return false;
 		}
-		Variants other = (Variants) obj;
+		Variant other = (Variant) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -434,11 +434,11 @@ public class Variants extends AbstractBase implements Serializable {
 		} else if (!deleted.equals(other.deleted)) {
 			return false;
 		}
-		if (items == null) {
-			if (other.items != null) {
+		if (Item == null) {
+			if (other.Item != null) {
 				return false;
 			}
-		} else if (!items.equals(other.items)) {
+		} else if (!Item.equals(other.Item)) {
 			return false;
 		}
 
@@ -518,9 +518,9 @@ public class Variants extends AbstractBase implements Serializable {
 			builder.append(deleted);
 			builder.append(", ");
 		}		
-		if (items != null) {
-			builder.append("items=");
-			builder.append(items);
+		if (Item != null) {
+			builder.append("Item=");
+			builder.append(Item);
 			builder.append(", ");
 		}		
 		builder.append("]");

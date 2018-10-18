@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplication.class)
-public class CountriesRepositoryTestIT {
+public class CountryRepositoryTestIT {
 
 
 }

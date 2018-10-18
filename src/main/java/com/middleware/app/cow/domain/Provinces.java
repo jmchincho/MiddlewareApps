@@ -26,20 +26,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Provinces.java.</p>
+ * <p>Class Province.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:22 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Provinces"
+ * Clase de persistencia para la entidad almacenada en la tabla "Province"
  */
 @Entity
-@Table(name="Provinces")
+@Table(name="Province")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Provinces.findAll", query="SELECT x FROM Provinces x" ),
-  @NamedQuery ( name="Provinces.countAll", query="SELECT COUNT(x) FROM Provinces x" )
+  @NamedQuery ( name="Province.findAll", query="SELECT x FROM Province x" ),
+  @NamedQuery ( name="Province.countAll", query="SELECT COUNT(x) FROM Province x" )
 } )
-public class Provinces extends AbstractManaged implements Serializable {
+public class Province extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -48,8 +48,8 @@ public class Provinces extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_ProvincesEntity")
-	@SequenceGenerator(name = "cow_generator_ProvincesEntity", sequenceName = "sq_Provinces", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_ProvinceEntity")
+	@SequenceGenerator(name = "cow_generator_ProvinceEntity", sequenceName = "sq_Province", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -68,12 +68,12 @@ public class Provinces extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
     @ManyToOne
-    @JoinColumn(name="countries_id", referencedColumnName="id")
-    private Countries countries;
+    @JoinColumn(name="Country_id", referencedColumnName="id")
+    private Country Country;
 	
 	@JsonIgnore
-    @OneToMany(mappedBy="provinces", targetEntity=Locations.class)
-    private List<Locations> listOfLocations;
+    @OneToMany(mappedBy="Province", targetEntity=Location.class)
+    private List<Location> listOfLocation;
 	
 
 
@@ -83,14 +83,14 @@ public class Provinces extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Provinces() {
+	public Province() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Provinces(Long id) {
+	public Province(Long id) {
 		super(id, false);
 	}
 
@@ -151,29 +151,29 @@ public class Provinces extends AbstractManaged implements Serializable {
 	 * Getters & Setters para las relaciones
 	 */
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Countries'
+	 * @return Se devuelve la lista de objetos de tipo 'Country'
 	 */
-	public Countries getCountries() {
-        return this.countries;
+	public Country getCountry() {
+        return this.Country;
     }
 	/**
-	 * @param countries<Countries> - La lista de objetos de tipo 'Countries' a establecer
+	 * @param Country<Country> - La lista de objetos de tipo 'Country' a establecer
 	 */
-	public void setCountries( Countries countries ) {
-        this.countries = countries;
+	public void setCountry( Country Country ) {
+        this.Country = Country;
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'List<Locations>'
+	 * @return Se devuelve la lista de objetos de tipo 'List<Location>'
 	 */
-	public List<Locations> getListOfLocations() {
-        return this.listOfLocations;
+	public List<Location> getListOfLocation() {
+        return this.listOfLocation;
     }
 	/**
-	 * @param listOfLocations<List<LocationsEntity>> - La lista de objetos de tipo 'List<Locations>' a establecer
+	 * @param listOfLocation<List<LocationEntity>> - La lista de objetos de tipo 'List<Location>' a establecer
 	 */
-	public void setListOfLocations( List<Locations> listOfLocations ) {
-        this.listOfLocations = listOfLocations;
+	public void setListOfLocation( List<Location> listOfLocation ) {
+        this.listOfLocation = listOfLocation;
     }
 
 
@@ -191,7 +191,7 @@ public class Provinces extends AbstractManaged implements Serializable {
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
     	result = prime * result + ((name == null) ? 0 : name.hashCode());
     	result = prime * result + ((state == null) ? 0 : state.hashCode());
-		result = prime * result + ((countries == null) ? 0 : countries.hashCode());
+		result = prime * result + ((Country == null) ? 0 : Country.hashCode());
 		return result;
 	}
 
@@ -211,10 +211,10 @@ public class Provinces extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Provinces)) {
+		if (!(obj instanceof Province)) {
 			return false;
 		}
-		Provinces other = (Provinces) obj;
+		Province other = (Province) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -236,24 +236,24 @@ public class Provinces extends AbstractManaged implements Serializable {
 		} else if (!state.equals(other.state)) {
 			return false;
 		}
-		if (countries == null) {
-			if (other.countries != null) {
+		if (Country == null) {
+			if (other.Country != null) {
 				return false;
 			}
-		} else if (!countries.equals(other.countries)) {
+		} else if (!Country.equals(other.Country)) {
 			return false;
 		}
-		if (!(listOfLocations instanceof List)) {
-			if (!(other.listOfLocations instanceof List)) {
-				if (listOfLocations == null) {
-					if (other.listOfLocations != null) {
+		if (!(listOfLocation instanceof List)) {
+			if (!(other.listOfLocation instanceof List)) {
+				if (listOfLocation == null) {
+					if (other.listOfLocation != null) {
 						return false;
 					}
-				} else if (!listOfLocations.equals(other.listOfLocations)) {
+				} else if (!listOfLocation.equals(other.listOfLocation)) {
 					return false;
 				}
 			}			
-		} else if (other.listOfLocations != null && !(other.listOfLocations instanceof List)) {
+		} else if (other.listOfLocation != null && !(other.listOfLocation instanceof List)) {
 			return false;
 		}
 
@@ -288,14 +288,14 @@ public class Provinces extends AbstractManaged implements Serializable {
 			builder.append(state);
 			builder.append(", ");
 		}		
-		if (countries != null) {
-			builder.append("countries=");
-			builder.append(countries);
+		if (Country != null) {
+			builder.append("Country=");
+			builder.append(Country);
 			builder.append(", ");
 		}		
-		if (listOfLocations != null && !(listOfLocations instanceof List)) {
-			builder.append("listOfLocations=");
-			builder.append(toString(listOfLocations, maxLen));
+		if (listOfLocation != null && !(listOfLocation instanceof List)) {
+			builder.append("listOfLocation=");
+			builder.append(toString(listOfLocation, maxLen));
 			builder.append(", ");
 		}		
 		builder.append("]");

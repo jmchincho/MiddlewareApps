@@ -23,20 +23,20 @@ import javax.persistence.TemporalType;
 
 
 /**
- * <p>Class OrdersDetails.java.</p>
+ * <p>Class OrderDetail.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:22 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Orders_Details"
+ * Clase de persistencia para la entidad almacenada en la tabla "Order_Details"
  */
 @Entity
-@Table(name="Orders_Details")
+@Table(name="Order_Details")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="OrdersDetails.findAll", query="SELECT x FROM OrdersDetails x" ),
-  @NamedQuery ( name="OrdersDetails.countAll", query="SELECT COUNT(x) FROM OrdersDetails x" )
+  @NamedQuery ( name="OrderDetail.findAll", query="SELECT x FROM OrderDetail x" ),
+  @NamedQuery ( name="OrderDetail.countAll", query="SELECT COUNT(x) FROM OrderDetail x" )
 } )
-public class OrdersDetails extends AbstractManaged implements Serializable {
+public class OrderDetail extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -45,8 +45,8 @@ public class OrdersDetails extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_OrdersDetailsEntity")
-	@SequenceGenerator(name = "cow_generator_OrdersDetailsEntity", sequenceName = "sq_Orders_Details", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_OrderDetailEntity")
+	@SequenceGenerator(name = "cow_generator_OrderDetailEntity", sequenceName = "sq_Order_Details", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -80,12 +80,12 @@ public class OrdersDetails extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
     @ManyToOne
-    @JoinColumn(name="items_id", referencedColumnName="id")
-    private Items items;
+    @JoinColumn(name="Item_id", referencedColumnName="id")
+    private Item Item;
 	
     @ManyToOne
-    @JoinColumn(name="orders_id", referencedColumnName="id")
-    private Orders orders;
+    @JoinColumn(name="Order_id", referencedColumnName="id")
+    private Order Order;
 	
 
 
@@ -95,14 +95,14 @@ public class OrdersDetails extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public OrdersDetails() {
+	public OrderDetail() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public OrdersDetails(Long id) {
+	public OrderDetail(Long id) {
 		super(id, false);
 	}
 
@@ -215,29 +215,29 @@ public class OrdersDetails extends AbstractManaged implements Serializable {
 	 * Getters & Setters para las relaciones
 	 */
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Items'
+	 * @return Se devuelve la lista de objetos de tipo 'Item'
 	 */
-	public Items getItems() {
-        return this.items;
+	public Item getItem() {
+        return this.Item;
     }
 	/**
-	 * @param items<Items> - La lista de objetos de tipo 'Items' a establecer
+	 * @param Item<Item> - La lista de objetos de tipo 'Item' a establecer
 	 */
-	public void setItems( Items items ) {
-        this.items = items;
+	public void setItem( Item Item ) {
+        this.Item = Item;
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Orders'
+	 * @return Se devuelve la lista de objetos de tipo 'Order'
 	 */
-	public Orders getOrders() {
-        return this.orders;
+	public Order getOrder() {
+        return this.Order;
     }
 	/**
-	 * @param orders<Orders> - La lista de objetos de tipo 'Orders' a establecer
+	 * @param Order<Order> - La lista de objetos de tipo 'Order' a establecer
 	 */
-	public void setOrders( Orders orders ) {
-        this.orders = orders;
+	public void setOrder( Order Order ) {
+        this.Order = Order;
     }
 
 
@@ -259,8 +259,8 @@ public class OrdersDetails extends AbstractManaged implements Serializable {
     	result = prime * result + ((cancelledDate == null) ? 0 : cancelledDate.hashCode());
     	result = prime * result + ((sendState == null) ? 0 : sendState.hashCode());
     	result = prime * result + ((price == null) ? 0 : price.hashCode());
-		result = prime * result + ((items == null) ? 0 : items.hashCode());
-		result = prime * result + ((orders == null) ? 0 : orders.hashCode());
+		result = prime * result + ((Item == null) ? 0 : Item.hashCode());
+		result = prime * result + ((Order == null) ? 0 : Order.hashCode());
 		return result;
 	}
 
@@ -280,10 +280,10 @@ public class OrdersDetails extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof OrdersDetails)) {
+		if (!(obj instanceof OrderDetail)) {
 			return false;
 		}
-		OrdersDetails other = (OrdersDetails) obj;
+		OrderDetail other = (OrderDetail) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -333,18 +333,18 @@ public class OrdersDetails extends AbstractManaged implements Serializable {
 		} else if (!price.equals(other.price)) {
 			return false;
 		}
-		if (items == null) {
-			if (other.items != null) {
+		if (Item == null) {
+			if (other.Item != null) {
 				return false;
 			}
-		} else if (!items.equals(other.items)) {
+		} else if (!Item.equals(other.Item)) {
 			return false;
 		}
-		if (orders == null) {
-			if (other.orders != null) {
+		if (Order == null) {
+			if (other.Order != null) {
 				return false;
 			}
-		} else if (!orders.equals(other.orders)) {
+		} else if (!Order.equals(other.Order)) {
 			return false;
 		}
 
@@ -399,14 +399,14 @@ public class OrdersDetails extends AbstractManaged implements Serializable {
 			builder.append(price);
 			builder.append(", ");
 		}		
-		if (items != null) {
-			builder.append("items=");
-			builder.append(items);
+		if (Item != null) {
+			builder.append("Item=");
+			builder.append(Item);
 			builder.append(", ");
 		}		
-		if (orders != null) {
-			builder.append("orders=");
-			builder.append(orders);
+		if (Order != null) {
+			builder.append("Order=");
+			builder.append(Order);
 			builder.append(", ");
 		}		
 		builder.append("]");

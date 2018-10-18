@@ -1,6 +1,11 @@
 package com.middleware.app.cow.web;
 
 import com.middleware.app.cow.domain.Address;
+import com.middleware.app.cow.exceptions.CowException;
+import com.middleware.app.cow.service.AddressService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -14,35 +19,71 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class AddressEndpoint {
 
-	@GET
+    private AddressService addressService;
+
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    public AddressEndpoint(AddressService addressService) {
+        this.addressService = addressService;
+    }
+
+    @GET
     public Response findAll(Integer index, Integer totalCount) {
-	    return null;
-}
+        try {
+            return Response.ok().entity(addressService.find(index, totalCount, null)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
+    }
 
     @GET
     public Response findAllByFilter(Integer index, Integer totalCount, Address address) {
-        return null;
+        try {
+            return Response.ok().entity(addressService.find(index, totalCount, address)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/{id}")
     public Response get(@PathVariable Long id) {
-        return null;
+        try {
+            return Response.ok().entity(addressService.get(id)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @POST
     public Response post(Address address) {
-        return null;
+        try {
+            addressService.create(address);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @PUT
     public Response put(Address address) {
-        return null;
+        try {
+            addressService.update(address);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @DELETE
     public Response delete(Long id) {
-        return null;
+        try {
+            addressService.delete(id);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
 }

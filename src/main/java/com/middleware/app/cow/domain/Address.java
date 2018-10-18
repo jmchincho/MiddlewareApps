@@ -49,7 +49,7 @@ public class Address extends AbstractManaged implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_AddressEntity")
-	@SequenceGenerator(name = "cow_generator_AddressEntity", sequenceName = "sq_Address", allocationSize = 1)
+	@SequenceGenerator(name = "cow_generator_AddressEntity", sequenceName = "sq_Address", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -83,16 +83,16 @@ public class Address extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
     @ManyToOne
-    @JoinColumn(name="locations_id", referencedColumnName="id")
-    private Locations locations;
+    @JoinColumn(name="Location_id", referencedColumnName="id")
+    private Location Location;
 	
 	@JsonIgnore
-    @OneToMany(mappedBy="address", targetEntity=Orders.class)
-    private List<Orders> listOfOrders;
+    @OneToMany(mappedBy="address", targetEntity=Order.class)
+    private List<Order> listOfOrder;
 	
     @ManyToOne
-    @JoinColumn(name="users_id", referencedColumnName="id")
-    private Users users;
+    @JoinColumn(name="User_id", referencedColumnName="id")
+    private User User;
 	
 
     /**
@@ -208,42 +208,42 @@ public class Address extends AbstractManaged implements Serializable {
 	 * Getters & Setters para las relaciones
 	 */
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Locations'
+	 * @return Se devuelve la lista de objetos de tipo 'Location'
 	 */
-	public Locations getLocations() {
-        return this.locations;
+	public Location getLocation() {
+        return this.Location;
     }
 	/**
-	 * @param locations<Locations> - La lista de objetos de tipo 'Locations' a establecer
+	 * @param Location<Location> - La lista de objetos de tipo 'Location' a establecer
 	 */
-	public void setLocations( Locations locations ) {
-        this.locations = locations;
-    }
-
-	/**
-	 * @return Se devuelve la lista de objetos de tipo 'List<Orders>'
-	 */
-	public List<Orders> getListOfOrders() {
-        return this.listOfOrders;
-    }
-	/**
-	 * @param listOfOrders<List<OrdersEntity>> - La lista de objetos de tipo 'List<Orders>' a establecer
-	 */
-	public void setListOfOrders( List<Orders> listOfOrders ) {
-        this.listOfOrders = listOfOrders;
+	public void setLocation( Location Location ) {
+        this.Location = Location;
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Users'
+	 * @return Se devuelve la lista de objetos de tipo 'List<Order>'
 	 */
-	public Users getUsers() {
-        return this.users;
+	public List<Order> getListOfOrder() {
+        return this.listOfOrder;
     }
 	/**
-	 * @param users<Users> - La lista de objetos de tipo 'Users' a establecer
+	 * @param listOfOrder<List<OrderEntity>> - La lista de objetos de tipo 'List<Order>' a establecer
 	 */
-	public void setUsers( Users users ) {
-        this.users = users;
+	public void setListOfOrder( List<Order> listOfOrder ) {
+        this.listOfOrder = listOfOrder;
+    }
+
+	/**
+	 * @return Se devuelve la lista de objetos de tipo 'User'
+	 */
+	public User getUser() {
+        return this.User;
+    }
+	/**
+	 * @param User<User> - La lista de objetos de tipo 'User' a establecer
+	 */
+	public void setUser( User User ) {
+        this.User = User;
     }
 
     public String getName() {
@@ -278,8 +278,8 @@ public class Address extends AbstractManaged implements Serializable {
     	result = prime * result + ((number == null) ? 0 : number.hashCode());
     	result = prime * result + ((floor == null) ? 0 : floor.hashCode());
     	result = prime * result + ((stairs == null) ? 0 : stairs.hashCode());
-		result = prime * result + ((locations == null) ? 0 : locations.hashCode());
-		result = prime * result + ((users == null) ? 0 : users.hashCode());
+		result = prime * result + ((Location == null) ? 0 : Location.hashCode());
+		result = prime * result + ((User == null) ? 0 : User.hashCode());
 		return result;
 	}
 
@@ -345,31 +345,31 @@ public class Address extends AbstractManaged implements Serializable {
 		} else if (!stairs.equals(other.stairs)) {
 			return false;
 		}
-		if (locations == null) {
-			if (other.locations != null) {
+		if (Location == null) {
+			if (other.Location != null) {
 				return false;
 			}
-		} else if (!locations.equals(other.locations)) {
+		} else if (!Location.equals(other.Location)) {
 			return false;
 		}
-		if (!(listOfOrders instanceof List)) {
-			if (!(other.listOfOrders instanceof List)) {
-				if (listOfOrders == null) {
-					if (other.listOfOrders != null) {
+		if (!(listOfOrder instanceof List)) {
+			if (!(other.listOfOrder instanceof List)) {
+				if (listOfOrder == null) {
+					if (other.listOfOrder != null) {
 						return false;
 					}
-				} else if (!listOfOrders.equals(other.listOfOrders)) {
+				} else if (!listOfOrder.equals(other.listOfOrder)) {
 					return false;
 				}
 			}			
-		} else if (other.listOfOrders != null && !(other.listOfOrders instanceof List)) {
+		} else if (other.listOfOrder != null && !(other.listOfOrder instanceof List)) {
 			return false;
 		}
-		if (users == null) {
-			if (other.users != null) {
+		if (User == null) {
+			if (other.User != null) {
 				return false;
 			}
-		} else if (!users.equals(other.users)) {
+		} else if (!User.equals(other.User)) {
 			return false;
 		}
 
@@ -419,19 +419,19 @@ public class Address extends AbstractManaged implements Serializable {
 			builder.append(stairs);
 			builder.append(", ");
 		}		
-		if (locations != null) {
-			builder.append("locations=");
-			builder.append(locations);
+		if (Location != null) {
+			builder.append("Location=");
+			builder.append(Location);
 			builder.append(", ");
 		}		
-		if (listOfOrders != null && !(listOfOrders instanceof List)) {
-			builder.append("listOfOrders=");
-			builder.append(toString(listOfOrders, maxLen));
+		if (listOfOrder != null && !(listOfOrder instanceof List)) {
+			builder.append("listOfOrder=");
+			builder.append(toString(listOfOrder, maxLen));
 			builder.append(", ");
 		}		
-		if (users != null) {
-			builder.append("users=");
-			builder.append(users);
+		if (User != null) {
+			builder.append("User=");
+			builder.append(User);
 			builder.append(", ");
 		}		
 		builder.append("]");

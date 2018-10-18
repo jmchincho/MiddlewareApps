@@ -1,5 +1,6 @@
 package com.middleware.app.cow.config;
 
+import com.middleware.app.cow.web.AddressEndpoint;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,5 +12,6 @@ public class JerseyConfig extends ResourceConfig {
 
 	public JerseyConfig() {
 		register(CORSResponseFilter.class);
+		register(AddressEndpoint.class);
 	}
 }

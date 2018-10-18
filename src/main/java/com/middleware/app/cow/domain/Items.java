@@ -30,20 +30,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Items.java.</p>
+ * <p>Class Item.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:22 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Items"
+ * Clase de persistencia para la entidad almacenada en la tabla "Item"
  */
 @Entity
-@Table(name="Items")
+@Table(name="Item")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Items.findAll", query="SELECT x FROM Items x" ),
-  @NamedQuery ( name="Items.countAll", query="SELECT COUNT(x) FROM Items x" )
+  @NamedQuery ( name="Item.findAll", query="SELECT x FROM Item x" ),
+  @NamedQuery ( name="Item.countAll", query="SELECT COUNT(x) FROM Item x" )
 } )
-public class Items extends AbstractManaged implements Serializable {
+public class Item extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,8 +52,8 @@ public class Items extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_ItemsEntity")
-	@SequenceGenerator(name = "cow_generator_ItemsEntity", sequenceName = "sq_Items", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_ItemEntity")
+	@SequenceGenerator(name = "cow_generator_ItemEntity", sequenceName = "sq_Item", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -129,28 +129,28 @@ public class Items extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
     @ManyToOne
-    @JoinColumn(name="subcategories_id", referencedColumnName="id")
-    private Subcategories subcategories;
+    @JoinColumn(name="Subcategory_id", referencedColumnName="id")
+    private Subcategory Subcategory;
 	
     @ManyToOne
-    @JoinColumn(name="companies_id", referencedColumnName="id")
-    private Companies companies;
+    @JoinColumn(name="Company_id", referencedColumnName="id")
+    private Company Company;
 	
 	//@JsonIgnore
-    @OneToMany( mappedBy="items", targetEntity=Comments.class)
-    private List<Comments> comments;
+    @OneToMany( mappedBy="Item", targetEntity=Comment.class)
+    private List<Comment> Comment;
 	
 	@JsonIgnore
-    @OneToMany(mappedBy="items", targetEntity=Offers.class)
-    private List<Offers> listOfOffers;
+    @OneToMany(mappedBy="Item", targetEntity=Offer.class)
+    private List<Offer> listOfOffer;
 	
 	@JsonIgnore
-    @OneToMany(mappedBy="items", targetEntity=OrdersDetails.class)
-    private List<OrdersDetails> listOfOrdersDetails;
+    @OneToMany(mappedBy="Item", targetEntity=OrderDetail.class)
+    private List<OrderDetail> listOfOrderDetail;
 	
 //	@JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="items", targetEntity=Variants.class)
-    private List<Variants> variants;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="Item", targetEntity=Variant.class)
+    private List<Variant> Variant;
 
     /**
 	 * Constructor(es)
@@ -158,14 +158,14 @@ public class Items extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Items() {
+	public Item() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Items(Long id) {
+	public Item(Long id) {
 		super(id, false);
 	}
 
@@ -447,29 +447,29 @@ public class Items extends AbstractManaged implements Serializable {
 	 * Getters & Setters para las relaciones
 	 */
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Subcategories'
+	 * @return Se devuelve la lista de objetos de tipo 'Subcategory'
 	 */
-	public Subcategories getSubcategories() {
-        return this.subcategories;
+	public Subcategory getSubcategory() {
+        return this.Subcategory;
     }
 	/**
-	 * @param subcategories<Subcategories> - La lista de objetos de tipo 'Subcategories' a establecer
+	 * @param Subcategory<Subcategory> - La lista de objetos de tipo 'Subcategory' a establecer
 	 */
-	public void setSubcategories( Subcategories subcategories ) {
-        this.subcategories = subcategories;
+	public void setSubcategory( Subcategory Subcategory ) {
+        this.Subcategory = Subcategory;
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Companies'
+	 * @return Se devuelve la lista de objetos de tipo 'Company'
 	 */
-	public Companies getCompanies() {
-        return this.companies;
+	public Company getCompany() {
+        return this.Company;
     }
 	/**
-	 * @param companies<Companies> - La lista de objetos de tipo 'Companies' a establecer
+	 * @param Company<Company> - La lista de objetos de tipo 'Company' a establecer
 	 */
-	public void setCompanies( Companies companies ) {
-        this.companies = companies;
+	public void setCompany( Company Company ) {
+        this.Company = Company;
     }
 
 	/**
@@ -491,56 +491,56 @@ public class Items extends AbstractManaged implements Serializable {
 	}
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'List<Comments>'
+	 * @return Se devuelve la lista de objetos de tipo 'List<Comment>'
 	 */
-	public List<Comments> getComments() {
-        return this.comments;
+	public List<Comment> getComment() {
+        return this.Comment;
     }
 	/**
-	 * @param comments<List<CommentsEntity>> - La lista de objetos de tipo 'List<Comments>' a establecer
+	 * @param Comment<List<CommentEntity>> - La lista de objetos de tipo 'List<Comment>' a establecer
 	 */
-	public void setComments( List<Comments> comments ) {
-        this.comments = comments;
-    }
-
-	/**
-	 * @return Se devuelve la lista de objetos de tipo 'List<Offers>'
-	 */
-	public List<Offers> getListOfOffers() {
-        return this.listOfOffers;
-    }
-	/**
-	 * @param listOfOffers<List<OffersEntity>> - La lista de objetos de tipo 'List<Offers>' a establecer
-	 */
-	public void setListOfOffers( List<Offers> listOfOffers ) {
-        this.listOfOffers = listOfOffers;
+	public void setComment( List<Comment> Comment ) {
+        this.Comment = Comment;
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'List<OrdersDetails>'
+	 * @return Se devuelve la lista de objetos de tipo 'List<Offer>'
 	 */
-	public List<OrdersDetails> getListOfOrdersDetails() {
-        return this.listOfOrdersDetails;
+	public List<Offer> getListOfOffer() {
+        return this.listOfOffer;
     }
 	/**
-	 * @param listOfOrdersDetails<List<OrdersDetailsEntity>> - La lista de objetos de tipo 'List<OrdersDetails>' a establecer
+	 * @param listOfOffer<List<OfferEntity>> - La lista de objetos de tipo 'List<Offer>' a establecer
 	 */
-	public void setListOfOrdersDetails( List<OrdersDetails> listOfOrdersDetails ) {
-        this.listOfOrdersDetails = listOfOrdersDetails;
+	public void setListOfOffer( List<Offer> listOfOffer ) {
+        this.listOfOffer = listOfOffer;
+    }
+
+	/**
+	 * @return Se devuelve la lista de objetos de tipo 'List<OrderDetail>'
+	 */
+	public List<OrderDetail> getListOfOrderDetail() {
+        return this.listOfOrderDetail;
+    }
+	/**
+	 * @param listOfOrderDetail<List<OrderDetailEntity>> - La lista de objetos de tipo 'List<OrderDetail>' a establecer
+	 */
+	public void setListOfOrderDetail( List<OrderDetail> listOfOrderDetail ) {
+        this.listOfOrderDetail = listOfOrderDetail;
     }
 
     /**
-	 * @return the variants
+	 * @return the Variant
 	 */
-	public List<Variants> getVariants() {
-		return variants;
+	public List<Variant> getVariant() {
+		return Variant;
 	}
 
 	/**
-	 * @param variants the variants to set
+	 * @param Variant the Variant to set
 	 */
-	public void setVariants(List<Variants> variants) {
-		this.variants = variants;
+	public void setVariant(List<Variant> Variant) {
+		this.Variant = Variant;
 	}
 
 	//----------------------------------------------------------------------
@@ -573,8 +573,8 @@ public class Items extends AbstractManaged implements Serializable {
     	result = prime * result + ((sendType == null) ? 0 : sendType.hashCode());
     	result = prime * result + ((state == null) ? 0 : state.hashCode());
     	result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + ((subcategories == null) ? 0 : subcategories.hashCode());
-		result = prime * result + ((companies == null) ? 0 : companies.hashCode());
+		result = prime * result + ((Subcategory == null) ? 0 : Subcategory.hashCode());
+		result = prime * result + ((Company == null) ? 0 : Company.hashCode());
 		return result;
 	}
 
@@ -594,10 +594,10 @@ public class Items extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Items)) {
+		if (!(obj instanceof Item)) {
 			return false;
 		}
-		Items other = (Items) obj;
+		Item other = (Item) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -738,57 +738,57 @@ public class Items extends AbstractManaged implements Serializable {
 		} else if (!type.equals(other.type)) {
 			return false;
 		}
-		if (subcategories == null) {
-			if (other.subcategories != null) {
+		if (Subcategory == null) {
+			if (other.Subcategory != null) {
 				return false;
 			}
-		} else if (!subcategories.equals(other.subcategories)) {
+		} else if (!Subcategory.equals(other.Subcategory)) {
 			return false;
 		}
-		if (companies == null) {
-			if (other.companies != null) {
+		if (Company == null) {
+			if (other.Company != null) {
 				return false;
 			}
-		} else if (!companies.equals(other.companies)) {
+		} else if (!Company.equals(other.Company)) {
 			return false;
 		}
-		if (!(comments instanceof List)) {
-			if (!(other.comments instanceof List)) {
-				if (comments == null) {
-					if (other.comments != null) {
+		if (!(Comment instanceof List)) {
+			if (!(other.Comment instanceof List)) {
+				if (Comment == null) {
+					if (other.Comment != null) {
 						return false;
 					}
-				} else if (!comments.equals(other.comments)) {
+				} else if (!Comment.equals(other.Comment)) {
 					return false;
 				}
 			}			
-		} else if (other.comments != null && !(other.comments instanceof List)) {
+		} else if (other.Comment != null && !(other.Comment instanceof List)) {
 			return false;
 		}
-		if (!(listOfOffers instanceof List)) {
-			if (!(other.listOfOffers instanceof List)) {
-				if (listOfOffers == null) {
-					if (other.listOfOffers != null) {
+		if (!(listOfOffer instanceof List)) {
+			if (!(other.listOfOffer instanceof List)) {
+				if (listOfOffer == null) {
+					if (other.listOfOffer != null) {
 						return false;
 					}
-				} else if (!listOfOffers.equals(other.listOfOffers)) {
+				} else if (!listOfOffer.equals(other.listOfOffer)) {
 					return false;
 				}
 			}			
-		} else if (other.listOfOffers != null && !(other.listOfOffers instanceof List)) {
+		} else if (other.listOfOffer != null && !(other.listOfOffer instanceof List)) {
 			return false;
 		}
-		if (!(listOfOrdersDetails instanceof List)) {
-			if (!(other.listOfOrdersDetails instanceof List)) {
-				if (listOfOrdersDetails == null) {
-					if (other.listOfOrdersDetails != null) {
+		if (!(listOfOrderDetail instanceof List)) {
+			if (!(other.listOfOrderDetail instanceof List)) {
+				if (listOfOrderDetail == null) {
+					if (other.listOfOrderDetail != null) {
 						return false;
 					}
-				} else if (!listOfOrdersDetails.equals(other.listOfOrdersDetails)) {
+				} else if (!listOfOrderDetail.equals(other.listOfOrderDetail)) {
 					return false;
 				}
 			}			
-		} else if (other.listOfOrdersDetails != null && !(other.listOfOrdersDetails instanceof List)) {
+		} else if (other.listOfOrderDetail != null && !(other.listOfOrderDetail instanceof List)) {
 			return false;
 		}
 
@@ -908,29 +908,29 @@ public class Items extends AbstractManaged implements Serializable {
 			builder.append(type);
 			builder.append(", ");
 		}		
-		if (subcategories != null) {
-			builder.append("subcategories=");
-			builder.append(subcategories);
+		if (Subcategory != null) {
+			builder.append("Subcategory=");
+			builder.append(Subcategory);
 			builder.append(", ");
 		}		
-		if (companies != null) {
-			builder.append("companies=");
-			builder.append(companies);
+		if (Company != null) {
+			builder.append("Company=");
+			builder.append(Company);
 			builder.append(", ");
 		}		
-		if (comments != null && !(comments instanceof List)) {
-			builder.append("comments=");
-			builder.append(toString(comments, maxLen));
+		if (Comment != null && !(Comment instanceof List)) {
+			builder.append("Comment=");
+			builder.append(toString(Comment, maxLen));
 			builder.append(", ");
 		}		
-		if (listOfOffers != null && !(listOfOffers instanceof List)) {
-			builder.append("listOfOffers=");
-			builder.append(toString(listOfOffers, maxLen));
+		if (listOfOffer != null && !(listOfOffer instanceof List)) {
+			builder.append("listOfOffer=");
+			builder.append(toString(listOfOffer, maxLen));
 			builder.append(", ");
 		}		
-		if (listOfOrdersDetails != null && !(listOfOrdersDetails instanceof List)) {
-			builder.append("listOfOrdersDetails=");
-			builder.append(toString(listOfOrdersDetails, maxLen));
+		if (listOfOrderDetail != null && !(listOfOrderDetail instanceof List)) {
+			builder.append("listOfOrderDetail=");
+			builder.append(toString(listOfOrderDetail, maxLen));
 			builder.append(", ");
 		}		
 		builder.append("]");

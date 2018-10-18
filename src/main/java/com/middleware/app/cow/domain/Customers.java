@@ -25,20 +25,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Customers.java.</p>
+ * <p>Class Customer.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:22 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Customers"
+ * Clase de persistencia para la entidad almacenada en la tabla "Customer"
  */
 @Entity
-@Table(name="Customers")
+@Table(name="Customer")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Customers.findAll", query="SELECT x FROM Customers x" ),
-  @NamedQuery ( name="Customers.countAll", query="SELECT COUNT(x) FROM Customers x" )
+  @NamedQuery ( name="Customer.findAll", query="SELECT x FROM Customer x" ),
+  @NamedQuery ( name="Customer.countAll", query="SELECT COUNT(x) FROM Customer x" )
 } )
-public class Customers extends AbstractManaged implements Serializable {
+public class Customer extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -47,8 +47,8 @@ public class Customers extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_CustomersEntity")
-	@SequenceGenerator(name = "cow_generator_CustomersEntity", sequenceName = "sq_Customers", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_CustomerEntity")
+	@SequenceGenerator(name = "cow_generator_CustomerEntity", sequenceName = "sq_Customer", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -73,16 +73,16 @@ public class Customers extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
 	
-	@OneToOne(mappedBy="customer", targetEntity=Users.class)
-    private Users users;
+	@OneToOne(mappedBy="customer", targetEntity=User.class)
+    private User User;
 	
 	@JsonIgnore
-    @OneToMany(mappedBy="customers", targetEntity=Subcription.class)
+    @OneToMany(mappedBy="Customer", targetEntity=Subcription.class)
     private List<Subcription> listOfSubcription;
 	
 	@JsonIgnore
-    @OneToMany(mappedBy="customers", targetEntity=Comments.class)
-    private List<Comments> listOfComments;
+    @OneToMany(mappedBy="Customer", targetEntity=Comment.class)
+    private List<Comment> listOfComment;
 	
 
 
@@ -92,14 +92,14 @@ public class Customers extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Customers() {
+	public Customer() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Customers(Long id) {
+	public Customer(Long id) {
 		super(id, false);
 	}
 
@@ -187,16 +187,16 @@ public class Customers extends AbstractManaged implements Serializable {
 	 */
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Users'
+	 * @return Se devuelve la lista de objetos de tipo 'User'
 	 */
-	public Users getUsers() {
-        return this.users;
+	public User getUser() {
+        return this.User;
     }
 	/**
-	 * @param users<Users> - La lista de objetos de tipo 'Users' a establecer
+	 * @param User<User> - La lista de objetos de tipo 'User' a establecer
 	 */
-	public void setUsers( Users users ) {
-        this.users = users;
+	public void setUser( User User ) {
+        this.User = User;
     }
 
 	/**
@@ -213,16 +213,16 @@ public class Customers extends AbstractManaged implements Serializable {
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'List<Comments>'
+	 * @return Se devuelve la lista de objetos de tipo 'List<Comment>'
 	 */
-	public List<Comments> getListOfComments() {
-        return this.listOfComments;
+	public List<Comment> getListOfComment() {
+        return this.listOfComment;
     }
 	/**
-	 * @param listOfComments<List<CommentsEntity>> - La lista de objetos de tipo 'List<Comments>' a establecer
+	 * @param listOfComment<List<CommentEntity>> - La lista de objetos de tipo 'List<Comment>' a establecer
 	 */
-	public void setListOfComments( List<Comments> listOfComments ) {
-        this.listOfComments = listOfComments;
+	public void setListOfComment( List<Comment> listOfComment ) {
+        this.listOfComment = listOfComment;
     }
 
 
@@ -242,7 +242,7 @@ public class Customers extends AbstractManaged implements Serializable {
     	result = prime * result + ((surname == null) ? 0 : surname.hashCode());
     	result = prime * result + ((dni == null) ? 0 : dni.hashCode());
     	result = prime * result + ((telephone == null) ? 0 : telephone.hashCode());
-//		result = prime * result + ((users == null) ? 0 : users.hashCode());
+//		result = prime * result + ((User == null) ? 0 : User.hashCode());
 		return result;
 	}
 
@@ -262,10 +262,10 @@ public class Customers extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Customers)) {
+		if (!(obj instanceof Customer)) {
 			return false;
 		}
-		Customers other = (Customers) obj;
+		Customer other = (Customer) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -301,11 +301,11 @@ public class Customers extends AbstractManaged implements Serializable {
 		} else if (!telephone.equals(other.telephone)) {
 			return false;
 		}
-		if (users == null) {
-			if (other.users != null) {
+		if (User == null) {
+			if (other.User != null) {
 				return false;
 			}
-		} else if (!users.equals(other.users)) {
+		} else if (!User.equals(other.User)) {
 			return false;
 		}
 		if (!(listOfSubcription instanceof List)) {
@@ -321,17 +321,17 @@ public class Customers extends AbstractManaged implements Serializable {
 		} else if (other.listOfSubcription != null && !(other.listOfSubcription instanceof List)) {
 			return false;
 		}
-		if (!(listOfComments instanceof List)) {
-			if (!(other.listOfComments instanceof List)) {
-				if (listOfComments == null) {
-					if (other.listOfComments != null) {
+		if (!(listOfComment instanceof List)) {
+			if (!(other.listOfComment instanceof List)) {
+				if (listOfComment == null) {
+					if (other.listOfComment != null) {
 						return false;
 					}
-				} else if (!listOfComments.equals(other.listOfComments)) {
+				} else if (!listOfComment.equals(other.listOfComment)) {
 					return false;
 				}
 			}			
-		} else if (other.listOfComments != null && !(other.listOfComments instanceof List)) {
+		} else if (other.listOfComment != null && !(other.listOfComment instanceof List)) {
 			return false;
 		}
 
@@ -376,9 +376,9 @@ public class Customers extends AbstractManaged implements Serializable {
 			builder.append(telephone);
 			builder.append(", ");
 		}		
-		if (users != null) {
-			builder.append("users=");
-			builder.append(users);
+		if (User != null) {
+			builder.append("User=");
+			builder.append(User);
 			builder.append(", ");
 		}		
 		if (listOfSubcription != null && !(listOfSubcription instanceof List)) {
@@ -386,9 +386,9 @@ public class Customers extends AbstractManaged implements Serializable {
 			builder.append(toString(listOfSubcription, maxLen));
 			builder.append(", ");
 		}		
-		if (listOfComments != null && !(listOfComments instanceof List)) {
-			builder.append("listOfComments=");
-			builder.append(toString(listOfComments, maxLen));
+		if (listOfComment != null && !(listOfComment instanceof List)) {
+			builder.append("listOfComment=");
+			builder.append(toString(listOfComment, maxLen));
 			builder.append(", ");
 		}		
 		builder.append("]");

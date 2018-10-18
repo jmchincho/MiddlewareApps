@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-public class LocationsRepositoryTestIT {
+public class LocationRepositoryTestIT {
 
     @Before
     public void setUp() throws Exception {

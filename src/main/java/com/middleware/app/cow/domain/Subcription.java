@@ -46,7 +46,7 @@ public class Subcription extends AbstractManaged implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_SubcriptionEntity")
-	@SequenceGenerator(name = "cow_generator_SubcriptionEntity", sequenceName = "sq_Subcription", allocationSize = 1)
+	@SequenceGenerator(name = "cow_generator_SubcriptionEntity", sequenceName = "sq_Subcription", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -63,12 +63,12 @@ public class Subcription extends AbstractManaged implements Serializable {
 	 * Enlaces con otras entidades (Relaciones) 
 	 */
     @ManyToOne
-    @JoinColumn(name="customers_id", referencedColumnName="id")
-    private Customers customers;
+    @JoinColumn(name="Customer_id", referencedColumnName="id")
+    private Customer Customer;
 	
     @ManyToOne
-    @JoinColumn(name="companies_id", referencedColumnName="id")
-    private Companies companies;
+    @JoinColumn(name="Company_id", referencedColumnName="id")
+    private Company Company;
 	
 
 
@@ -133,29 +133,29 @@ public class Subcription extends AbstractManaged implements Serializable {
 	 * Getters & Setters para las relaciones
 	 */
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Customers'
+	 * @return Se devuelve la lista de objetos de tipo 'Customer'
 	 */
-	public Customers getCustomers() {
-        return this.customers;
+	public Customer getCustomer() {
+        return this.Customer;
     }
 	/**
-	 * @param customers<Customers> - La lista de objetos de tipo 'Customers' a establecer
+	 * @param Customer<Customer> - La lista de objetos de tipo 'Customer' a establecer
 	 */
-	public void setCustomers( Customers customers ) {
-        this.customers = customers;
+	public void setCustomer( Customer Customer ) {
+        this.Customer = Customer;
     }
 
 	/**
-	 * @return Se devuelve la lista de objetos de tipo 'Companies'
+	 * @return Se devuelve la lista de objetos de tipo 'Company'
 	 */
-	public Companies getCompanies() {
-        return this.companies;
+	public Company getCompany() {
+        return this.Company;
     }
 	/**
-	 * @param companies<Companies> - La lista de objetos de tipo 'Companies' a establecer
+	 * @param Company<Company> - La lista de objetos de tipo 'Company' a establecer
 	 */
-	public void setCompanies( Companies companies ) {
-        this.companies = companies;
+	public void setCompany( Company Company ) {
+        this.Company = Company;
     }
 
 
@@ -172,8 +172,8 @@ public class Subcription extends AbstractManaged implements Serializable {
 		int result = super.hashCode();
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
     	result = prime * result + ((createDate == null) ? 0 : createDate.hashCode());
-		result = prime * result + ((customers == null) ? 0 : customers.hashCode());
-		result = prime * result + ((companies == null) ? 0 : companies.hashCode());
+		result = prime * result + ((Customer == null) ? 0 : Customer.hashCode());
+		result = prime * result + ((Company == null) ? 0 : Company.hashCode());
 		return result;
 	}
 
@@ -211,18 +211,18 @@ public class Subcription extends AbstractManaged implements Serializable {
 		} else if (!createDate.equals(other.createDate)) {
 			return false;
 		}
-		if (customers == null) {
-			if (other.customers != null) {
+		if (Customer == null) {
+			if (other.Customer != null) {
 				return false;
 			}
-		} else if (!customers.equals(other.customers)) {
+		} else if (!Customer.equals(other.Customer)) {
 			return false;
 		}
-		if (companies == null) {
-			if (other.companies != null) {
+		if (Company == null) {
+			if (other.Company != null) {
 				return false;
 			}
-		} else if (!companies.equals(other.companies)) {
+		} else if (!Company.equals(other.Company)) {
 			return false;
 		}
 
@@ -252,14 +252,14 @@ public class Subcription extends AbstractManaged implements Serializable {
 			builder.append(createDate);
 			builder.append(", ");
 		}		
-		if (customers != null) {
-			builder.append("customers=");
-			builder.append(customers);
+		if (Customer != null) {
+			builder.append("Customer=");
+			builder.append(Customer);
 			builder.append(", ");
 		}		
-		if (companies != null) {
-			builder.append("companies=");
-			builder.append(companies);
+		if (Company != null) {
+			builder.append("Company=");
+			builder.append(Company);
 			builder.append(", ");
 		}		
 		builder.append("]");

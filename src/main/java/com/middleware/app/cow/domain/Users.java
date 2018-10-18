@@ -27,20 +27,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
- * <p>Class Users.java.</p>
+ * <p>Class User.java.</p>
  * <b>Project:</b><p>Capitan Oferta Web</p>
  * @version 1.0, 6 mar 2017 ( Hora: 21:18:22 ).
  * @author jmchincho
- * Clase de persistencia para la entidad almacenada en la tabla "Users"
+ * Clase de persistencia para la entidad almacenada en la tabla "User"
  */
 @Entity
-@Table(name="Users")
+@Table(name="User")
 // Definir consultas con nombre aquí
 @NamedQueries ( {
-  @NamedQuery ( name="Users.findAll", query="SELECT x FROM Users x" ),
-  @NamedQuery ( name="Users.countAll", query="SELECT COUNT(x) FROM Users x" )
+  @NamedQuery ( name="User.findAll", query="SELECT x FROM User x" ),
+  @NamedQuery ( name="User.countAll", query="SELECT COUNT(x) FROM User x" )
 } )
-public class Users extends AbstractManaged implements Serializable {
+public class User extends AbstractManaged implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -49,8 +49,8 @@ public class Users extends AbstractManaged implements Serializable {
 	 * Clave primaria de la entidad  
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_UsersEntity")
-	@SequenceGenerator(name = "cow_generator_UsersEntity", sequenceName = "sq_Users", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "cow_generator_UserEntity")
+	@SequenceGenerator(name = "cow_generator_UserEntity", sequenceName = "sq_User", alLocationize = 1)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
 
@@ -76,23 +76,23 @@ public class Users extends AbstractManaged implements Serializable {
 	 */
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="customer_id", referencedColumnName="id")
-    private Customers customer;
+    private Customer customer;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="company_id", referencedColumnName="id")
-    private Companies company;
+    private Company company;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="administrator_id", referencedColumnName="id")
-    private Administrators administrator;
+    private Administrator administrator;
 	
 	@JsonIgnore
-    @OneToMany(mappedBy="users", targetEntity=Address.class)
+    @OneToMany(mappedBy="User", targetEntity=Address.class)
     private List<Address> addresses;
 	
 	@JsonIgnore
-    @OneToMany(mappedBy="users", targetEntity=Orders.class)
-    private List<Orders> orders;
+    @OneToMany(mappedBy="User", targetEntity=Order.class)
+    private List<Order> Order;
 	
     
 
@@ -102,14 +102,14 @@ public class Users extends AbstractManaged implements Serializable {
     /**
 	 * Constructor por defecto
 	 */
-	public Users() {
+	public User() {
 		super();
     }
 
 	/**
 	 * Constructor de la superclase
 	 */
-	public Users(Long id) {
+	public User(Long id) {
 		super(id, false);
 	}
 
@@ -195,7 +195,7 @@ public class Users extends AbstractManaged implements Serializable {
 	 *
 	 * @return the customer
 	 */
-	public Customers getCustomer() {
+	public Customer getCustomer() {
 		return this.customer;
 	}
 
@@ -204,7 +204,7 @@ public class Users extends AbstractManaged implements Serializable {
 	 *
 	 * @param customer the customer to set
 	 */
-	public void setCustomer(Customers customer) {
+	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 
@@ -213,7 +213,7 @@ public class Users extends AbstractManaged implements Serializable {
 	 *
 	 * @return the company
 	 */
-	public Companies getCompany() {
+	public Company getCompany() {
 		return this.company;
 	}
 
@@ -222,7 +222,7 @@ public class Users extends AbstractManaged implements Serializable {
 	 *
 	 * @param company the company to set
 	 */
-	public void setCompany(Companies company) {
+	public void setCompany(Company company) {
 		this.company = company;
 	}
 
@@ -231,7 +231,7 @@ public class Users extends AbstractManaged implements Serializable {
 	 *
 	 * @return the administrator
 	 */
-	public Administrators getAdministrator() {
+	public Administrator getAdministrator() {
 		return this.administrator;
 	}
 
@@ -240,7 +240,7 @@ public class Users extends AbstractManaged implements Serializable {
 	 *
 	 * @param administrator the administrator to set
 	 */
-	public void setAdministrator(Administrators administrator) {
+	public void setAdministrator(Administrator administrator) {
 		this.administrator = administrator;
 	}
 
@@ -278,10 +278,10 @@ public class Users extends AbstractManaged implements Serializable {
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (!(obj instanceof Users)) {
+		if (!(obj instanceof User)) {
 			return false;
 		}
-		Users other = (Users) obj;
+		User other = (User) obj;
 		if (getId() == null) {
 			if (other.getId() != null) {
 				return false;
@@ -330,17 +330,17 @@ public class Users extends AbstractManaged implements Serializable {
 		} else if (other.addresses != null && !(other.addresses instanceof List)) {
 			return false;
 		}
-		if (!(orders instanceof List)) {
-			if (!(other.orders instanceof List)) {
-				if (orders == null) {
-					if (other.orders != null) {
+		if (!(Order instanceof List)) {
+			if (!(other.Order instanceof List)) {
+				if (Order == null) {
+					if (other.Order != null) {
 						return false;
 					}
-				} else if (!orders.equals(other.orders)) {
+				} else if (!Order.equals(other.Order)) {
 					return false;
 				}
 			}			
-		} else if (other.orders != null && !(other.orders instanceof List)) {
+		} else if (other.Order != null && !(other.Order instanceof List)) {
 			return false;
 		}
 		
@@ -390,9 +390,9 @@ public class Users extends AbstractManaged implements Serializable {
 			builder.append(toString(addresses, maxLen));
 			builder.append(", ");
 		}		
-		if (orders != null && !(orders instanceof List)) {
-			builder.append("orders=");
-			builder.append(toString(orders, maxLen));
+		if (Order != null && !(Order instanceof List)) {
+			builder.append("Order=");
+			builder.append(toString(Order, maxLen));
 			builder.append(", ");
 		}
 			
