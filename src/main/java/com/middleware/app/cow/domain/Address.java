@@ -13,7 +13,6 @@ public class Address {
 	private Integer postalCode;
     private Integer number;
     private Integer floor;
-
     private Integer stairs;
 
 	private String street;

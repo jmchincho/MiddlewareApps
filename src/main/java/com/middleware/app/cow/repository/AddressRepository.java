@@ -2,19 +2,40 @@ package com.middleware.app.cow.repository;
 
 import com.github.pagehelper.Page;
 import com.middleware.app.cow.domain.Address;
-import org.apache.ibatis.annotations.Mapper;
+import com.middleware.app.cow.domain.User;
+import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface AddressRepository {
 
-    Page<Address> findAll(Address address) throws Exception;
+    @Select({"<script>",
+            "select * from address a where NOT a.deleted",
+            "<if test='address.street != null'>",
+                " and a.street=#{address.street}",
+            "</if>",
+            "</script>"})
+    @Results({
+            @Result(property = "user", column = "user_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.UserRepository.findById"))
+    })
+    Page<Address> findAll(@Param("address") Address address) throws Exception;
 
-    Address findById(Long id) throws Exception;
+    @Select("select * from address a where a.id = #{id}")
+    @Results({
+            @Result(property = "user", column = "user_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.UserRepository.findById"))
+    })
+    Address findById(@Param("id") Long id) throws Exception;
 
-    void insert(Address address) throws Exception;
+    @Insert("insert into address(deleted, street, postalCode ,number ,floor ,stairs ,user_id) values "
+            + "(#{address.deleted}, #{address.street}, #{address.postalCode} " +
+                ",#{address.number} ,#{address.floor},#{address.stairs} ,#{address.user.id})")
+    void insert(@Param("address")Address address) throws Exception;
 
-    void update(Address address) throws Exception;
+    @Update("update address set deleted = #{address.deleted}, street = #{address.street}, postalCode = #{address.postalCode}, " +
+            "number = #{address.number} ,floor = #{address.floor} ,stairs = #{address.stairs} ,user_id = #{address.user.id} "
+            + "where id = #{address.id}")
+    void update(@Param("address") Address address) throws Exception;
 
-    void delete(Long id) throws Exception;
+    @Delete("delete from address where id = #{id}")
+    void delete(@Param("id") Long id) throws Exception;
 
 }

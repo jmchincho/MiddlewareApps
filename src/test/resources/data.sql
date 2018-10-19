@@ -1,28 +1,7 @@
-insert into instructor(id,name,surname) values(1,'Manuel','Perez');
-insert into instructor(id,name,surname) values(2,'Emilio','Moraleda');
-insert into instructor(id,name,surname) values(3,'Agustina','Benavente');
-insert into instructor(id,name,surname) values(4,'Rafael','Casado Dominguez');
-insert into instructor(id,name,surname) values(5,'Horacio','Garcia');
-insert into instructor(id,name,surname) values(6,'Maria','Jimenez');
+insert into user(deleted, username, password, mail, state) values (0, 'jmchincho', 'password', 'josemanuel.chincho@capitanoferta.com', 'A');
 
-insert into lesson(title,instructor_id,hours,isActive,level) values('Buenas practicas',1,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Spring Boot with REST',1,20,0,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Polymer 3.0',1,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Java 9',2,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Android',2,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',2,20,0,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',3,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',3,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',3,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',4,20,0,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',4,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',4,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',5,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',5,20,0,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',5,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',6,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',6,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',6,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',1,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',3,20,1,'A');
-insert into lesson(title,instructor_id,hours,isActive,level) values('Curso Angular 6',5,20,1,'A');
+insert into address(deleted, street, postalCode ,number ,floor ,stairs ,user_id) values (0, 'Calle Jerico', 41710, 6, 0, 0, 1);
+insert into address(deleted, street, postalCode ,number ,floor ,stairs ,user_id) values (0, 'Calle Romero de Torres', 41710, 6, 0, 0, 1);
+insert into address(deleted, street, postalCode ,number ,floor ,stairs ,user_id) values (1, 'Calle Borrada', 41710, 6, 0, 0, 1);
+
+
