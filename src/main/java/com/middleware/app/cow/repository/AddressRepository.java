@@ -9,9 +9,11 @@ import org.apache.ibatis.annotations.*;
 public interface AddressRepository {
 
     @Select({"<script>",
-            "select * from address a where NOT a.deleted",
-            "<if test='address.street != null'>",
-                " and a.street=#{address.street}",
+            "select * from address a where id is not null",
+            "<if test='address != null'>",
+                "<if test='address.street != null'>",
+                    " and a.street=#{address.street}",
+                "</if>",
             "</if>",
             "</script>"})
     @Results({
@@ -35,7 +37,7 @@ public interface AddressRepository {
             + "where id = #{address.id}")
     void update(@Param("address") Address address) throws Exception;
 
-    @Delete("delete from address where id = #{id}")
+    @Update("update address set deleted = 1 where id = #{id}")
     void delete(@Param("id") Long id) throws Exception;
 
 }

@@ -5,8 +5,10 @@ import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Address;
 import com.middleware.app.cow.domain.User;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,15 +20,14 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
+@FixMethodOrder(MethodSorters.JVM)
 public class AddressRepositoryTestIT {
 
     @Autowired
-    private AddressRepository addressRepository;
+    public AddressRepository addressRepository;
 
     @Mock
     private UserRepository userRepository;
@@ -65,11 +66,6 @@ public class AddressRepositoryTestIT {
         assertTrue(result.getResult().stream().anyMatch(address -> address.getStreet().equals("Calle Jerico")));
     }
 
-    /*@Test(expected = Exception.class)
-    public void findShouldReturnException() throws Exception {
-
-    }*/
-
     @Test
     public void getShouldReturnAddressById1() throws Exception {
         Address result = addressRepository.findById(1L);
@@ -79,13 +75,8 @@ public class AddressRepositoryTestIT {
         assertTrue(result.getId().equals(1L));
     }
 
-    /*@Test(expected = Exception.class)
-    public void getShouldReturnException() throws Exception {
-
-    }*/
-
     @Test
-    public void createAllShouldReturnAddressInsert() throws Exception {
+    public void createAllShouldInsertNewAddress() throws Exception {
         when(address.getStreet()).thenReturn("Calle Belianes");
         when(address.getNumber()).thenReturn(30);
         when(address.getPostalCode()).thenReturn(28043);
@@ -106,13 +97,8 @@ public class AddressRepositoryTestIT {
         assertTrue(addressInsert.getUser().getId().equals(1L));
     }
 
-    /*@Test(expected = Exception.class)
-    public void createAllShouldReturnException() throws Exception {
-
-    }*/
-
     @Test
-    public void updateAllShouldReturnResult() throws Exception {
+    public void updateAllShouldUpdateAddressById2() throws Exception {
         Address update = addressRepository.findById(2L);
         update.setNumber(31);
         update.setPostalCode(28044);
@@ -125,23 +111,12 @@ public class AddressRepositoryTestIT {
         assertTrue(addressUpdate.getPostalCode().equals(28044));
     }
 
-    /*@Test(expected = Exception.class)
-    public void updateAllShouldReturnException() throws Exception {
-
-    }*/
-
     @Test
-    public void deleteShouldReturnResult() throws Exception {
-        addressRepository.delete(4L);
+    public void deleteShouldRemoveAddressById4() throws Exception {
+        addressRepository.delete(1L);
 
-        Address addressDelete = addressRepository.findById(4L);
+        Address addressDelete = addressRepository.findById(1L);
 
-        assertNull(addressDelete);
+        assertTrue(addressDelete.isDeleted());
     }
-
-    /*@Test(expected = Exception.class)
-    public void deleteShouldReturnException() throws Exception {
-
-    }*/
-
 }

@@ -7,7 +7,6 @@ import java.util.List;
 
 public class User {
 
-
 	private Long id;
 
 	private boolean deleted;
@@ -16,7 +15,6 @@ public class User {
 	private String password;
 	private String mail;
 	private String state;
-
 
     private Customer customer;
 	
