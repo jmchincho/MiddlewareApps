@@ -52,70 +52,70 @@ public class AddressServiceTest {
 	}
 
 	@Test
-	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
+	public void findShouldCallRepositoryFindAllAndReturnResult() throws CowException {
 		Page<Address> result = addressService.find(1,1, any(Address.class));
 
 		assertNotNull(result.getResult());
 	}
 
 	@Test(expected = CowException.class)
-	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
+	public void findShouldCallRepositoryFindAllAndReturnException() throws Exception {
 		when(addressRepository.findAll(any())).thenThrow(new Exception());
 
 		addressService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
-	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
+	public void getShouldCallRepositoryFindByIdAndReturnResult() throws CowException {
 		Address result = addressService.get(anyLong());
 
 		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
-	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
+	public void getShouldCallRepositoryFindByIdAndReturnException() throws Exception {
 		when(addressRepository.findAll(any())).thenThrow(new Exception());
 
 		addressService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
-	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
+	public void createAllShouldCallRepositoryInsertAndReturnResult() throws Exception {
 		addressService.create(address);
 
 		verify(addressRepository, times(1)).insert(address);
 	}
 
 	@Test(expected = CowException.class)
-	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
+	public void createAllShouldCallRepositoryInsertAndReturnException() throws Exception {
 		doThrow(new CowException()).when(addressRepository).insert(any());
 
 		addressService.create(any());
 	}
 
 	@Test
-	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
+	public void updateAllShouldCallRepositoryUpdateAndReturnResult() throws Exception {
 		addressService.update(address);
 
 		verify(addressRepository, times(1)).update(address);
 	}
 
 	@Test(expected = CowException.class)
-	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
+	public void updateAllShouldCallRepositoryUpdateAndReturnException() throws Exception {
 		doThrow(new CowException()).when(addressRepository).update(any());
 
 		addressService.update(any());
 	}
 
 	@Test
-	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
+	public void deleteShouldCallRepositoryDeleteAndReturnResult() throws Exception {
 		addressService.delete(1L);
 
 		verify(addressRepository, times(1)).delete(anyLong());
 	}
 
 	@Test(expected = CowException.class)
-	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
+	public void deleteShouldCallRepositoryDeleteAndReturnException() throws Exception {
 		doThrow(new CowException()).when(addressRepository).delete(any());
 
 		addressService.delete(any());

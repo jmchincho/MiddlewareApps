@@ -57,7 +57,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void findAllShouldCallServiceFindAndReturnResult() {
+    public void findAllShouldCallServiceFindAllAndReturnResult() {
         Response result = addressEndpoint.findAll(1, 1);
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
@@ -65,7 +65,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void findAllShouldCallServiceFindAndReturnException() throws CowException {
+    public void findAllShouldCallServiceFindAllAndReturnException() throws CowException {
         when(addressService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
 
         Response result = addressEndpoint.findAll(1, 5);
@@ -73,7 +73,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void findAllByFilterShouldCallServiceFindAndReturnResult() {
+    public void findAllByFilterShouldCallServiceFindAllByFilterAndReturnResult() {
         Response result = addressEndpoint.findAllByFilter(1, 5, address);
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
@@ -81,7 +81,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void findAllByFilterShouldCallServiceFindAndReturnException() throws CowException {
+    public void findAllByFilterShouldCallServiceFindAllByFilterAndReturnException() throws CowException {
         when(addressService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
 
         Response result = addressEndpoint.findAllByFilter(1, 5, address);
@@ -90,7 +90,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void getShouldCallServiceFindAndReturnResult() {
+    public void getShouldCallServiceGetAndReturnResult() {
         Response result = addressEndpoint.get(any());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
@@ -98,7 +98,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void getShouldCallServiceFindAndReturnException() throws CowException {
+    public void getShouldCallServiceGetAndReturnException() throws CowException {
         when(addressService.get(any())).thenThrow(new CowException());
 
         Response result = addressEndpoint.get(any());
@@ -107,7 +107,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void postAllShouldCallServiceFindAndReturnResult() throws CowException {
+    public void postAllShouldCallServicePostAndReturnResult() throws CowException {
         Response result = addressEndpoint.post(any());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
@@ -115,7 +115,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void postAllShouldCallServiceFindAndReturnException() throws CowException {
+    public void postAllShouldCallServicePostAndReturnException() throws CowException {
         doThrow(new CowException()).when(addressService).create(any());
 
         Response result = addressEndpoint.post(any());
@@ -124,7 +124,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void putAllShouldCallServiceFindAndReturnResult() throws CowException {
+    public void putAllShouldCallServicePutAndReturnResult() throws CowException {
         Response result = addressEndpoint.put(any());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
@@ -132,7 +132,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void putAllShouldCallServiceFindAndReturnException() throws CowException {
+    public void putAllShouldCallServicePutAndReturnException() throws CowException {
         doThrow(new CowException()).when(addressService).update(any());
 
         Response result = addressEndpoint.put(any());
@@ -141,7 +141,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void deleteShouldCallServiceFindAndReturnResult() throws CowException {
+    public void deleteShouldCallServiceDeleteAndReturnResult() throws CowException {
         Response result = addressEndpoint.delete(anyLong());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
@@ -149,7 +149,7 @@ public class AddressEndpointTest {
     }
 
     @Test
-    public void deleteShouldCallServiceFindAndReturnException() throws CowException {
+    public void deleteShouldCallServiceDeleteAndReturnException() throws CowException {
         doThrow(new CowException()).when(addressService).delete(any());
 
         Response result = addressEndpoint.delete(anyLong());
