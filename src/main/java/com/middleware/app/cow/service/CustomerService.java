@@ -12,7 +12,7 @@ public interface CustomerService {
 
     Customer get(Long id) throws CowException;
 
-    void create(Customer customer) throws CowException;
+    Long create(Customer customer) throws CowException;
 
     void update(Customer customer) throws CowException;
 
