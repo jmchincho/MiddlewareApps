@@ -12,7 +12,7 @@ public interface AdministratorService {
 
     Administrator get(Long id) throws CowException;
 
-    void create(Administrator Administrator) throws CowException;
+    Long create(Administrator Administrator) throws CowException;
 
     void update(Administrator Administrator) throws CowException;
 

@@ -7,8 +7,6 @@ public class Administrator {
     private String name;
 	private String surname;
 
-	private boolean deleted;
-    
     private User user;
 
 	public Long getId() {
@@ -33,14 +31,6 @@ public class Administrator {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
 	}
 
 	public User getUser() {
