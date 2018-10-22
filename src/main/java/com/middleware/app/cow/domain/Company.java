@@ -7,8 +7,6 @@ public class Company {
 
 	private Long id;
 
-	private boolean deleted;
-
 	private String name;
 	private String logo;
 	private String cif;
@@ -29,14 +27,6 @@ public class Company {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
 	}
 
 	public String getName() {

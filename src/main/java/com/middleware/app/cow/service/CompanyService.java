@@ -12,7 +12,7 @@ public interface CompanyService {
 
     Company get(Long id) throws CowException;
 
-    void create(Company company) throws CowException;
+    Long create(Company company) throws CowException;
 
     void update(Company company) throws CowException;
 
