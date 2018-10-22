@@ -1,6 +1,9 @@
 package com.middleware.app.cow.repository;
 
 import com.github.pagehelper.Page;
+import com.middleware.app.cow.domain.Administrator;
+import com.middleware.app.cow.domain.Company;
+import com.middleware.app.cow.domain.Customer;
 import com.middleware.app.cow.domain.User;
 import org.apache.ibatis.annotations.*;
 
@@ -21,9 +24,11 @@ public interface UserRepository {
                 "</if>",
             "</if>",
             "</script>"})
-    /*@Results({
-            @Result(property = "user", column = "user_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.UserRepository.findById"))
-    })*/
+    @Results({
+            @Result(property = "customer", column = "customer_id", javaType = Customer.class,  one = @One(select = "com.middleware.app.cow.repository.CustomerRepository.findById")),
+            @Result(property = "administrator", column = "administrator_id", javaType = Administrator.class,  one = @One(select = "com.middleware.app.cow.repository.AdministratorRepository.findById")),
+            @Result(property = "company", column = "company_id", javaType = Company.class,  one = @One(select = "com.middleware.app.cow.repository.CompanyRepository.findById"))
+    })
     Page<User> findAll(@Param("user") User user) throws Exception;
 
     @Select("select * from user u where u.id = #{id}")

@@ -39,18 +39,18 @@ public class UserRepositoryTestIT {
     public void findShouldReturnAllUserByUser() throws Exception {
         Page<User> result = userRepository.findAll(null);
 
-        assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(user -> user.getUsername().equals("jmchincho")));
+        assertThat(result.size(), equalTo(6));
+        assertTrue(result.getResult().stream().anyMatch(user -> user.getUsername().equals("admin1")));
     }
 
     @Test
     public void findShouldReturnUserByFilterUserAndUser() throws Exception {
-        when(user.getUsername()).thenReturn("jmchincho");
+        when(user.getUsername()).thenReturn("admin1");
 
         Page<User> result = userRepository.findAll(user);
 
         assertThat(result.size(), equalTo(1));
-        assertTrue(result.getResult().stream().anyMatch(user -> user.getUsername().equals("jmchincho")));
+        assertTrue(result.getResult().stream().anyMatch(user -> user.getUsername().equals("admin1")));
     }
 
     @Test
@@ -58,7 +58,7 @@ public class UserRepositoryTestIT {
         User result = userRepository.findById(1L);
 
         assertNotNull(result);
-        assertTrue(result.getUsername().equals("jmchincho"));
+        assertTrue(result.getUsername().equals("admin1"));
         assertTrue(result.getId().equals(1L));
     }
 
@@ -71,7 +71,7 @@ public class UserRepositoryTestIT {
 
         userRepository.insert(user);
 
-        User userInsert = userRepository.findById(4L);
+        User userInsert = userRepository.findById(7L);
 
         assertTrue(userInsert.getUsername().equals("josemanuel.chincho"));
         assertTrue(userInsert.getPassword().equals("password"));
@@ -81,21 +81,21 @@ public class UserRepositoryTestIT {
 
     @Test
     public void updateAllShouldUpdateUserById() throws Exception {
-        User update = userRepository.findById(1L);
+        User update = userRepository.findById(7L);
         update.setUsername("cambiado");
 
         userRepository.update(update);
 
-        User userUpdate = userRepository.findById(1L);
+        User userUpdate = userRepository.findById(7L);
 
         assertTrue(userUpdate.getUsername().equals("cambiado"));
     }
 
     @Test
     public void deleteShouldRemoveUserById() throws Exception {
-        userRepository.delete(1L);
+        userRepository.delete(7L);
 
-        User userDelete = userRepository.findById(1L);
+        User userDelete = userRepository.findById(7L);
 
         assertTrue(userDelete.isDeleted());
     }
