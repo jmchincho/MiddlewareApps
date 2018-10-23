@@ -20,7 +20,6 @@ public interface CategoryRepository {
             "</if>",
             "</if>",
             "</where>",
-            "group by c.id",
             "</script>"})
     @Results({
             @Result(property = "id", column = "id"),

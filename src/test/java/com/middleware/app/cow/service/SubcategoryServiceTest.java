@@ -26,10 +26,10 @@ import static org.mockito.Mockito.*;
 @Import(CowApplicationTests.class)
 public class SubcategoryServiceTest {
 
-	private SubcategoryService SubcategoryService;
+	private SubcategoryService subcategoryService;
 
 	@Mock
-	private SubcategoryRepository SubcategoryRepository;
+	private SubcategoryRepository subcategoryRepository;
 
 	@Mock
 	private List<Subcategory> subcategories;
@@ -44,81 +44,81 @@ public class SubcategoryServiceTest {
 	public void setUp() throws Exception {
 		when(page.getResult()).thenReturn(subcategories);
 
-		when(SubcategoryRepository.findAll(any())).thenReturn(page);
+		when(subcategoryRepository.findAll(any())).thenReturn(page);
 
-		when(SubcategoryRepository.findById(anyLong())).thenReturn(subcategory);
+		when(subcategoryRepository.findById(anyLong())).thenReturn(subcategory);
 
-		SubcategoryService = new SubcategoryServiceImpl(SubcategoryRepository);
+		subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
 	}
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Subcategory> result = SubcategoryService.find(1,1, any(Subcategory.class));
+		Page<Subcategory> result = subcategoryService.find(1,1, any(Subcategory.class));
 
 		assertNotNull(result.getResult());
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(SubcategoryRepository.findAll(any())).thenThrow(new Exception());
+		when(subcategoryRepository.findAll(any())).thenThrow(new Exception());
 
-		SubcategoryService.find(anyInt(), anyInt(), any());
+		subcategoryService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Subcategory result = SubcategoryService.get(anyLong());
+		Subcategory result = subcategoryService.get(anyLong());
 
 		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(SubcategoryRepository.findAll(any())).thenThrow(new Exception());
+		when(subcategoryRepository.findAll(any())).thenThrow(new Exception());
 
-		SubcategoryService.find(anyInt(), anyInt(), any());
+		subcategoryService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		SubcategoryService.create(subcategory);
+		subcategoryService.create(subcategory);
 
-		verify(SubcategoryRepository, times(1)).insert(subcategory);
+		verify(subcategoryRepository, times(1)).insert(subcategory);
 	}
 
 	@Test(expected = CowException.class)
 	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(SubcategoryRepository).insert(any());
+		doThrow(new CowException()).when(subcategoryRepository).insert(any());
 
-		SubcategoryService.create(any());
+		subcategoryService.create(any());
 	}
 
 	@Test
 	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		SubcategoryService.update(subcategory);
+		subcategoryService.update(subcategory);
 
-		verify(SubcategoryRepository, times(1)).update(subcategory);
+		verify(subcategoryRepository, times(1)).update(subcategory);
 	}
 
 	@Test(expected = CowException.class)
 	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(SubcategoryRepository).update(any());
+		doThrow(new CowException()).when(subcategoryRepository).update(any());
 
-		SubcategoryService.update(any());
+		subcategoryService.update(any());
 	}
 
 	@Test
 	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
-		SubcategoryService.delete(1L);
+		subcategoryService.delete(1L);
 
-		verify(SubcategoryRepository, times(1)).delete(anyLong());
+		verify(subcategoryRepository, times(1)).delete(anyLong());
 	}
 
 	@Test(expected = CowException.class)
 	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(SubcategoryRepository).delete(any());
+		doThrow(new CowException()).when(subcategoryRepository).delete(any());
 
-		SubcategoryService.delete(any());
+		subcategoryService.delete(any());
 	}
 
 }

@@ -1,6 +1,9 @@
 package com.middleware.app.cow.web;
 
 import com.middleware.app.cow.domain.Subcategory;
+import com.middleware.app.cow.exceptions.CowException;
+import com.middleware.app.cow.service.SubcategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -14,35 +17,69 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class SubcategoryEndpoint {
 
+    @Autowired
+    private SubcategoryService subcategoryService;
+
+    public SubcategoryEndpoint(SubcategoryService subcategoryService) {
+        this.subcategoryService = subcategoryService;
+    }
+
     @GET
     public Response findAll(Integer index, Integer totalCount) {
-        return null;
+        try {
+            return Response.ok().entity(subcategoryService.find(index, totalCount, null)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     public Response findAllByFilter(Integer index, Integer totalCount, Subcategory subcategory) {
-        return null;
+        try {
+            return Response.ok().entity(subcategoryService.find(index, totalCount, subcategory)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/{id}")
     public Response get(@PathVariable Long id) {
-        return null;
+        try {
+            return Response.ok().entity(subcategoryService.get(id)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @POST
     public Response post(Subcategory subcategory) {
-        return null;
+        try {
+            subcategoryService.create(subcategory);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @PUT
     public Response put(Subcategory subcategory) {
-        return null;
+        try {
+            subcategoryService.update(subcategory);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @DELETE
     public Response delete(Long id) {
-        return null;
+        try {
+            subcategoryService.delete(id);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
 }
