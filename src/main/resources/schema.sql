@@ -3,6 +3,11 @@ DROP TABLE IF EXISTS administrator;
 DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS company;
 DROP TABLE IF EXISTS address;
+DROP TABLE IF EXISTS location;
+DROP TABLE IF EXISTS province;
+DROP TABLE IF EXISTS country;
+DROP TABLE IF EXISTS subcategory;
+DROP TABLE IF EXISTS category;
 
 create table administrator
 (
@@ -51,6 +56,37 @@ create table user
     primary key(id)
 );
 
+create table country
+(
+   id integer not null auto_increment,
+   deleted Bool not null,
+   name varchar(50) not null,
+   state varchar(255) not null,
+   primary key(id)
+);
+
+create table province
+(
+   id integer not null auto_increment,
+   deleted Bool not null,
+   name varchar(50) not null,
+   state varchar(255) not null,
+   country_id integer not null,
+   primary key(id),
+   FOREIGN KEY (country_id) REFERENCES country(id)
+);
+
+create table location
+(
+   id integer not null auto_increment,
+   deleted Bool not null,
+   name varchar(50) not null,
+   state varchar(255) not null,
+   province_id integer not null,
+   primary key(id),
+   FOREIGN KEY (province_id) REFERENCES province(id)
+);
+
 create table address
 (
    id integer not null auto_increment,
@@ -61,6 +97,34 @@ create table address
    floor integer not null,
    stairs integer not null,
    user_id integer not null,
+   location_id integer not null,
    primary key(id),
-   FOREIGN KEY (user_id) REFERENCES user(id)
+   FOREIGN KEY (user_id) REFERENCES user(id),
+   FOREIGN KEY (location_id) REFERENCES location(id)
 );
+
+create table category
+(
+   id integer not null auto_increment,
+   deleted Bool not null,
+   name varchar(50) not null,
+   state varchar(255) not null,
+   sequence integer not null,
+   primary key(id)
+);
+
+create table subcategory
+(
+   id integer not null auto_increment,
+   deleted Bool not null,
+   name varchar(50) not null,
+   state varchar(255) not null,
+   category_id integer not null,
+   sequence integer not null,
+   primary key(id),
+   FOREIGN KEY (category_id) REFERENCES category(id)
+);
+
+
+
+

@@ -11,7 +11,7 @@ public class Category {
 	private String name;
 	private String state;
 
-    private Integer order;
+    private Integer sequence;
 
     private List<Subcategory> subcategories;
 
@@ -47,12 +47,12 @@ public class Category {
 		this.state = state;
 	}
 
-	public Integer getOrder() {
-		return order;
+	public Integer getSequence() {
+		return sequence;
 	}
 
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
 	}
 
 	public List<Subcategory> getSubcategories() {

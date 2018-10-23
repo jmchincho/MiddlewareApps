@@ -26,10 +26,10 @@ import static org.mockito.Mockito.*;
 @Import(CowApplicationTests.class)
 public class CategoryServiceTest {
 
-	private CategoryService CategoryService;
+	private CategoryService categoryService;
 
 	@Mock
-	private CategoryRepository CategoryRepository;
+	private CategoryRepository categoryRepository;
 
 	@Mock
 	private List<Category> categories;
@@ -44,81 +44,81 @@ public class CategoryServiceTest {
 	public void setUp() throws Exception {
 		when(page.getResult()).thenReturn(categories);
 
-		when(CategoryRepository.findAll(any())).thenReturn(page);
+		when(categoryRepository.findAll(any())).thenReturn(page);
 
-		when(CategoryRepository.findById(anyLong())).thenReturn(category);
+		when(categoryRepository.findById(anyLong())).thenReturn(category);
 
-		CategoryService = new CategoryServiceImpl(CategoryRepository);
+		categoryService = new CategoryServiceImpl(categoryRepository);
 	}
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Category> result = CategoryService.find(1,1, any(Category.class));
+		Page<Category> result = categoryService.find(1,1, any(Category.class));
 
 		assertNotNull(result.getResult());
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(CategoryRepository.findAll(any())).thenThrow(new Exception());
+		when(categoryRepository.findAll(any())).thenThrow(new Exception());
 
-		CategoryService.find(anyInt(), anyInt(), any());
+		categoryService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Category result = CategoryService.get(anyLong());
+		Category result = categoryService.get(anyLong());
 
 		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(CategoryRepository.findAll(any())).thenThrow(new Exception());
+		when(categoryRepository.findAll(any())).thenThrow(new Exception());
 
-		CategoryService.find(anyInt(), anyInt(), any());
+		categoryService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		CategoryService.create(category);
+		categoryService.create(category);
 
-		verify(CategoryRepository, times(1)).insert(category);
+		verify(categoryRepository, times(1)).insert(category);
 	}
 
 	@Test(expected = CowException.class)
 	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(CategoryRepository).insert(any());
+		doThrow(new Exception()).when(categoryRepository).insert(any());
 
-		CategoryService.create(any());
+		categoryService.create(any());
 	}
 
 	@Test
 	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		CategoryService.update(category);
+		categoryService.update(category);
 
-		verify(CategoryRepository, times(1)).update(category);
+		verify(categoryRepository, times(1)).update(category);
 	}
 
 	@Test(expected = CowException.class)
 	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(CategoryRepository).update(any());
+		doThrow(new Exception()).when(categoryRepository).update(any());
 
-		CategoryService.update(any());
+		categoryService.update(any());
 	}
 
 	@Test
 	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
-		CategoryService.delete(1L);
+		categoryService.delete(1L);
 
-		verify(CategoryRepository, times(1)).delete(anyLong());
+		verify(categoryRepository, times(1)).delete(anyLong());
 	}
 
 	@Test(expected = CowException.class)
 	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(CategoryRepository).delete(any());
+		doThrow(new Exception()).when(categoryRepository).delete(any());
 
-		CategoryService.delete(any());
+		categoryService.delete(any());
 	}
 
 }
