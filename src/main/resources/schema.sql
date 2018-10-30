@@ -42,7 +42,7 @@ create table company
 create table user
 (
 	id integer not null auto_increment,
-	deleted Bool not null,
+	deleted Bool not null default 0,
 	username varchar(50) not null,
 	password varchar(255) not null,
     mail varchar(100) not null,
@@ -59,7 +59,7 @@ create table user
 create table country
 (
    id integer not null auto_increment,
-   deleted Bool not null,
+   deleted Bool not null default 0,
    name varchar(50) not null,
    state varchar(255) not null,
    primary key(id)
@@ -68,7 +68,7 @@ create table country
 create table province
 (
    id integer not null auto_increment,
-   deleted Bool not null,
+   deleted Bool not null default 0,
    name varchar(50) not null,
    state varchar(255) not null,
    country_id integer not null,
@@ -79,7 +79,7 @@ create table province
 create table location
 (
    id integer not null auto_increment,
-   deleted Bool not null,
+   deleted Bool not null default 0,
    name varchar(50) not null,
    state varchar(255) not null,
    province_id integer not null,
@@ -106,7 +106,7 @@ create table address
 create table category
 (
    id integer not null auto_increment,
-   deleted Bool not null,
+   deleted Bool not null default 0,
    name varchar(50) not null,
    state varchar(255) not null,
    sequence integer not null,
@@ -116,13 +116,29 @@ create table category
 create table subcategory
 (
    id integer not null auto_increment,
-   deleted Bool not null,
+   deleted Bool not null default 0,
    name varchar(50) not null,
    state varchar(255) not null,
    category_id integer not null,
    sequence integer not null,
    primary key(id),
    FOREIGN KEY (category_id) REFERENCES category(id)
+);
+
+create table bannerAds
+(
+   id integer not null auto_increment,
+   deleted Bool not null default 0,
+   title varchar(50) not null,
+   description varchar(255) not null,
+   image varchar(50) not null,
+   url varchar(50) not null,
+   state varchar(255) not null,
+   sequence integer not null,
+   createDate datetime not null default CURRENT_TIMESTAMP,
+   startDate datetime not null,
+   finishDate datetime not null,
+   primary key(id)
 );
 
 

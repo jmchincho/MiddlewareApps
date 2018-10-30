@@ -26,10 +26,10 @@ import static org.mockito.Mockito.*;
 @Import(CowApplicationTests.class)
 public class ProvinceServiceTest {
 
-	private ProvinceService ProvinceService;
+	private ProvinceService provinceService;
 
 	@Mock
-	private ProvinceRepository ProvinceRepository;
+	private ProvinceRepository provinceRepository;
 
 	@Mock
 	private List<Province> provinces;
@@ -44,81 +44,81 @@ public class ProvinceServiceTest {
 	public void setUp() throws Exception {
 		when(page.getResult()).thenReturn(provinces);
 
-		when(ProvinceRepository.findAll(any())).thenReturn(page);
+		when(provinceRepository.findAll(any())).thenReturn(page);
 
-		when(ProvinceRepository.findById(anyLong())).thenReturn(province);
+		when(provinceRepository.findById(anyLong())).thenReturn(province);
 
-		ProvinceService = new ProvinceServiceImpl(ProvinceRepository);
+		provinceService = new ProvinceServiceImpl(provinceRepository);
 	}
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Province> result = ProvinceService.find(1,1, any(Province.class));
+		Page<Province> result = provinceService.find(1,1, any(Province.class));
 
 		assertNotNull(result.getResult());
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(ProvinceRepository.findAll(any())).thenThrow(new Exception());
+		when(provinceRepository.findAll(any())).thenThrow(new Exception());
 
-		ProvinceService.find(anyInt(), anyInt(), any());
+		provinceService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Province result = ProvinceService.get(anyLong());
+		Province result = provinceService.get(anyLong());
 
 		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(ProvinceRepository.findAll(any())).thenThrow(new Exception());
+		when(provinceRepository.findAll(any())).thenThrow(new Exception());
 
-		ProvinceService.find(anyInt(), anyInt(), any());
+		provinceService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		ProvinceService.create(province);
+		provinceService.create(province);
 
-		verify(ProvinceRepository, times(1)).insert(province);
+		verify(provinceRepository, times(1)).insert(province);
 	}
 
 	@Test(expected = CowException.class)
 	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(ProvinceRepository).insert(any());
+		doThrow(new CowException()).when(provinceRepository).insert(any());
 
-		ProvinceService.create(any());
+		provinceService.create(any());
 	}
 
 	@Test
 	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		ProvinceService.update(province);
+		provinceService.update(province);
 
-		verify(ProvinceRepository, times(1)).update(province);
+		verify(provinceRepository, times(1)).update(province);
 	}
 
 	@Test(expected = CowException.class)
 	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(ProvinceRepository).update(any());
+		doThrow(new CowException()).when(provinceRepository).update(any());
 
-		ProvinceService.update(any());
+		provinceService.update(any());
 	}
 
 	@Test
 	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
-		ProvinceService.delete(1L);
+		provinceService.delete(1L);
 
-		verify(ProvinceRepository, times(1)).delete(anyLong());
+		verify(provinceRepository, times(1)).delete(anyLong());
 	}
 
 	@Test(expected = CowException.class)
 	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(ProvinceRepository).delete(any());
+		doThrow(new CowException()).when(provinceRepository).delete(any());
 
-		ProvinceService.delete(any());
+		provinceService.delete(any());
 	}
 
 }

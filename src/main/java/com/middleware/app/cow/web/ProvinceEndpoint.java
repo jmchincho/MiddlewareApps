@@ -1,6 +1,9 @@
 package com.middleware.app.cow.web;
 
 import com.middleware.app.cow.domain.Province;
+import com.middleware.app.cow.exceptions.CowException;
+import com.middleware.app.cow.service.ProvinceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -14,35 +17,69 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProvinceEndpoint {
 
+    @Autowired
+    private ProvinceService provinceService;
+
+    public ProvinceEndpoint(ProvinceService provinceService) {
+        this.provinceService = provinceService;
+    }
+
     @GET
     public Response findAll(Integer index, Integer totalCount) {
-        return null;
+        try {
+            return Response.ok().entity(provinceService.find(index, totalCount, null)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     public Response findAllByFilter(Integer index, Integer totalCount, Province province) {
-        return null;
+        try {
+            return Response.ok().entity(provinceService.find(index, totalCount, province)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/{id}")
     public Response get(@PathVariable Long id) {
-        return null;
+        try {
+            return Response.ok().entity(provinceService.get(id)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @POST
     public Response post(Province province) {
-        return null;
+        try {
+            provinceService.create(province);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @PUT
     public Response put(Province province) {
-        return null;
+        try {
+            provinceService.update(province);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @DELETE
     public Response delete(Long id) {
-        return null;
+        try {
+            provinceService.delete(id);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
 }
