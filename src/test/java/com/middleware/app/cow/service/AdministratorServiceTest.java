@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 @Import(CowApplicationTests.class)
 public class AdministratorServiceTest {
 
-	private AdministratorService AdministratorService;
+	private AdministratorService administratorService;
 
 	@Mock
 	private AdministratorRepository administratorRepository;
@@ -48,12 +48,12 @@ public class AdministratorServiceTest {
 
 		when(administratorRepository.findById(anyLong())).thenReturn(administrator);
 
-		AdministratorService = new AdministratorServiceImpl(administratorRepository);
+		administratorService = new AdministratorServiceImpl(administratorRepository);
 	}
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Administrator> result = AdministratorService.find(1,1, any(Administrator.class));
+		Page<Administrator> result = administratorService.find(1,1, any(Administrator.class));
 
 		assertNotNull(result.getResult());
 	}
@@ -62,12 +62,12 @@ public class AdministratorServiceTest {
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
 		when(administratorRepository.findAll(any())).thenThrow(new Exception());
 
-		AdministratorService.find(anyInt(), anyInt(), any());
+		administratorService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Administrator result = AdministratorService.get(anyLong());
+		Administrator result = administratorService.get(anyLong());
 
 		assertNotNull(result);
 	}
@@ -76,12 +76,12 @@ public class AdministratorServiceTest {
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
 		when(administratorRepository.findAll(any())).thenThrow(new Exception());
 
-		AdministratorService.find(anyInt(), anyInt(), any());
+		administratorService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		AdministratorService.create(administrator);
+		administratorService.create(administrator);
 
 		verify(administratorRepository, times(1)).insert(administrator);
 	}
@@ -90,12 +90,12 @@ public class AdministratorServiceTest {
 	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
 		doThrow(new Exception()).when(administratorRepository).insert(any());
 
-		AdministratorService.create(any());
+		administratorService.create(any());
 	}
 
 	@Test
 	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		AdministratorService.update(administrator);
+		administratorService.update(administrator);
 
 		verify(administratorRepository, times(1)).update(administrator);
 	}
@@ -104,12 +104,12 @@ public class AdministratorServiceTest {
 	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
 		doThrow(new Exception()).when(administratorRepository).update(any());
 
-		AdministratorService.update(any());
+		administratorService.update(any());
 	}
 
 	@Test
 	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
-		AdministratorService.delete(1L);
+		administratorService.delete(1L);
 
 		verify(administratorRepository, times(1)).delete(anyLong());
 	}
@@ -118,7 +118,7 @@ public class AdministratorServiceTest {
 	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
 		doThrow(new Exception()).when(administratorRepository).delete(any());
 
-		AdministratorService.delete(any());
+		administratorService.delete(any());
 	}
 
 }

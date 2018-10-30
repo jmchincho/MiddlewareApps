@@ -9,12 +9,14 @@ import org.apache.ibatis.annotations.*;
 public interface AddressRepository {
 
     @Select({"<script>",
-            "select * from address a where id is not null",
+            "select * from address a",
+            "<where>",
             "<if test='address != null'>",
-                "<if test='address.street != null'>",
-                    " and a.street=#{address.street}",
-                "</if>",
+            "<if test='address.street != null'>",
+            " and a.street=#{address.street}",
             "</if>",
+            "</if>",
+            "</where>",
             "</script>"})
     @Results({
             @Result(property = "user", column = "user_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.UserRepository.findById"))

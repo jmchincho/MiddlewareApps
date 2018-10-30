@@ -88,7 +88,7 @@ public class AddressServiceTest {
 
 	@Test(expected = CowException.class)
 	public void createAllShouldCallRepositoryInsertAndReturnException() throws Exception {
-		doThrow(new CowException()).when(addressRepository).insert(any());
+		doThrow(new Exception()).when(addressRepository).insert(any());
 
 		addressService.create(any());
 	}
@@ -102,7 +102,7 @@ public class AddressServiceTest {
 
 	@Test(expected = CowException.class)
 	public void updateAllShouldCallRepositoryUpdateAndReturnException() throws Exception {
-		doThrow(new CowException()).when(addressRepository).update(any());
+		doThrow(new Exception()).when(addressRepository).update(any());
 
 		addressService.update(any());
 	}
@@ -116,7 +116,7 @@ public class AddressServiceTest {
 
 	@Test(expected = CowException.class)
 	public void deleteShouldCallRepositoryDeleteAndReturnException() throws Exception {
-		doThrow(new CowException()).when(addressRepository).delete(any());
+		doThrow(new Exception()).when(addressRepository).delete(any());
 
 		addressService.delete(any());
 	}

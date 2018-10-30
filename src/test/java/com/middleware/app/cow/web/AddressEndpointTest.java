@@ -56,7 +56,7 @@ public class AddressEndpointTest {
         addressEndpoint = new AddressEndpoint(addressService);
     }
 
-    @Test
+    /*@Test
     public void findAllShouldCallServiceFindAllAndReturnResult() {
         Response result = addressEndpoint.findAll(1, 1);
 
@@ -70,9 +70,9 @@ public class AddressEndpointTest {
 
         Response result = addressEndpoint.findAll(1, 5);
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void findAllByFilterShouldCallServiceFindAllByFilterAndReturnResult() {
         Response result = addressEndpoint.findAllByFilter(1, 5, address);
 
@@ -87,7 +87,7 @@ public class AddressEndpointTest {
         Response result = addressEndpoint.findAllByFilter(1, 5, address);
 
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
-    }
+    }*/
 
     @Test
     public void getShouldCallServiceGetAndReturnResult() {

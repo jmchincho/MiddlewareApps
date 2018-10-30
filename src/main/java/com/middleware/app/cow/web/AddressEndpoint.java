@@ -6,6 +6,7 @@ import com.middleware.app.cow.service.AddressService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -29,22 +30,22 @@ public class AddressEndpoint {
     }
 
     @GET
-    public Response findAll(Integer index, Integer totalCount) {
+    public Response findAll() {
         try {
-            return Response.ok().entity(addressService.find(index, totalCount, null)).build();
+            return Response.ok().entity(addressService.find(1, 1, null)).build();
         } catch (CowException e) {
             return Response.serverError().build();
         }
     }
 
-    @GET
+    /*@GET
     public Response findAllByFilter(Integer index, Integer totalCount, Address address) {
         try {
             return Response.ok().entity(addressService.find(index, totalCount, address)).build();
         } catch (CowException e) {
             return Response.serverError().build();
         }
-    }
+    }*/
 
     @GET
     @Path("/{id}")
