@@ -26,10 +26,10 @@ import static org.mockito.Mockito.*;
 @Import(CowApplicationTests.class)
 public class CountryServiceTest {
 
-	private CountryService CountryService;
+	private CountryService countryService;
 
 	@Mock
-	private CountryRepository CountryRepository;
+	private CountryRepository countryRepository;
 
 	@Mock
 	private List<Country> countries;
@@ -44,81 +44,81 @@ public class CountryServiceTest {
 	public void setUp() throws Exception {
 		when(page.getResult()).thenReturn(countries);
 
-		when(CountryRepository.findAll(any())).thenReturn(page);
+		when(countryRepository.findAll(any())).thenReturn(page);
 
-		when(CountryRepository.findById(anyLong())).thenReturn(country);
+		when(countryRepository.findById(anyLong())).thenReturn(country);
 
-		CountryService = new CountryServiceImpl(CountryRepository);
+		countryService = new CountryServiceImpl(countryRepository);
 	}
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Country> result = CountryService.find(1,1, any(Country.class));
+		Page<Country> result = countryService.find(1,1, any(Country.class));
 
 		assertNotNull(result.getResult());
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(CountryRepository.findAll(any())).thenThrow(new Exception());
+		when(countryRepository.findAll(any())).thenThrow(new Exception());
 
-		CountryService.find(anyInt(), anyInt(), any());
+		countryService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Country result = CountryService.get(anyLong());
+		Country result = countryService.get(anyLong());
 
 		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(CountryRepository.findAll(any())).thenThrow(new Exception());
+		when(countryRepository.findAll(any())).thenThrow(new Exception());
 
-		CountryService.find(anyInt(), anyInt(), any());
+		countryService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		CountryService.create(country);
+		countryService.create(country);
 
-		verify(CountryRepository, times(1)).insert(country);
+		verify(countryRepository, times(1)).insert(country);
 	}
 
 	@Test(expected = CowException.class)
 	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(CountryRepository).insert(any());
+		doThrow(new CowException()).when(countryRepository).insert(any());
 
-		CountryService.create(any());
+		countryService.create(any());
 	}
 
 	@Test
 	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		CountryService.update(country);
+		countryService.update(country);
 
-		verify(CountryRepository, times(1)).update(country);
+		verify(countryRepository, times(1)).update(country);
 	}
 
 	@Test(expected = CowException.class)
 	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(CountryRepository).update(any());
+		doThrow(new CowException()).when(countryRepository).update(any());
 
-		CountryService.update(any());
+		countryService.update(any());
 	}
 
 	@Test
 	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
-		CountryService.delete(1L);
+		countryService.delete(1L);
 
-		verify(CountryRepository, times(1)).delete(anyLong());
+		verify(countryRepository, times(1)).delete(anyLong());
 	}
 
 	@Test(expected = CowException.class)
 	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(CountryRepository).delete(any());
+		doThrow(new CowException()).when(countryRepository).delete(any());
 
-		CountryService.delete(any());
+		countryService.delete(any());
 	}
 
 }
