@@ -1,6 +1,9 @@
 package com.middleware.app.cow.web;
 
 import com.middleware.app.cow.domain.Location;
+import com.middleware.app.cow.exceptions.CowException;
+import com.middleware.app.cow.service.LocationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -14,35 +17,69 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class LocationEndpoint {
 
+    @Autowired
+    private LocationService locationService;
+
+    public LocationEndpoint(LocationService locationService) {
+        this.locationService = locationService;
+    }
+
     @GET
     public Response findAll(Integer index, Integer totalCount) {
-        return null;
+        try {
+            return Response.ok().entity(locationService.find(index, totalCount, null)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     public Response findAllByFilter(Integer index, Integer totalCount, Location location) {
-        return null;
+        try {
+            return Response.ok().entity(locationService.find(index, totalCount, location)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/{id}")
     public Response get(@PathVariable Long id) {
-        return null;
+        try {
+            return Response.ok().entity(locationService.get(id)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @POST
     public Response post(Location location) {
-        return null;
+        try {
+            locationService.create(location);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @PUT
     public Response put(Location location) {
-        return null;
+        try {
+            locationService.update(location);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @DELETE
     public Response delete(Long id) {
-        return null;
+        try {
+            locationService.delete(id);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
 }

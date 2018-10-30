@@ -26,10 +26,10 @@ import static org.mockito.Mockito.*;
 @Import(CowApplicationTests.class)
 public class LocationServiceTest {
 
-	private LocationService LocationService;
+	private LocationService locationService;
 
 	@Mock
-	private LocationRepository LocationRepository;
+	private LocationRepository locationRepository;
 
 	@Mock
 	private List<Location> locations;
@@ -44,81 +44,81 @@ public class LocationServiceTest {
 	public void setUp() throws Exception {
 		when(page.getResult()).thenReturn(locations);
 
-		when(LocationRepository.findAll(any())).thenReturn(page);
+		when(locationRepository.findAll(any())).thenReturn(page);
 
-		when(LocationRepository.findById(anyLong())).thenReturn(location);
+		when(locationRepository.findById(anyLong())).thenReturn(location);
 
-		LocationService = new LocationServiceImpl(LocationRepository);
+		locationService = new LocationServiceImpl(locationRepository);
 	}
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Location> result = LocationService.find(1,1, any(Location.class));
+		Page<Location> result = locationService.find(1,1, any(Location.class));
 
 		assertNotNull(result.getResult());
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(LocationRepository.findAll(any())).thenThrow(new Exception());
+		when(locationRepository.findAll(any())).thenThrow(new Exception());
 
-		LocationService.find(anyInt(), anyInt(), any());
+		locationService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Location result = LocationService.get(anyLong());
+		Location result = locationService.get(anyLong());
 
 		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(LocationRepository.findAll(any())).thenThrow(new Exception());
+		when(locationRepository.findAll(any())).thenThrow(new Exception());
 
-		LocationService.find(anyInt(), anyInt(), any());
+		locationService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		LocationService.create(location);
+		locationService.create(location);
 
-		verify(LocationRepository, times(1)).insert(location);
+		verify(locationRepository, times(1)).insert(location);
 	}
 
 	@Test(expected = CowException.class)
 	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(LocationRepository).insert(any());
+		doThrow(new CowException()).when(locationRepository).insert(any());
 
-		LocationService.create(any());
+		locationService.create(any());
 	}
 
 	@Test
 	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		LocationService.update(location);
+		locationService.update(location);
 
-		verify(LocationRepository, times(1)).update(location);
+		verify(locationRepository, times(1)).update(location);
 	}
 
 	@Test(expected = CowException.class)
 	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(LocationRepository).update(any());
+		doThrow(new CowException()).when(locationRepository).update(any());
 
-		LocationService.update(any());
+		locationService.update(any());
 	}
 
 	@Test
 	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
-		LocationService.delete(1L);
+		locationService.delete(1L);
 
-		verify(LocationRepository, times(1)).delete(anyLong());
+		verify(locationRepository, times(1)).delete(anyLong());
 	}
 
 	@Test(expected = CowException.class)
 	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(LocationRepository).delete(any());
+		doThrow(new CowException()).when(locationRepository).delete(any());
 
-		LocationService.delete(any());
+		locationService.delete(any());
 	}
 
 }
