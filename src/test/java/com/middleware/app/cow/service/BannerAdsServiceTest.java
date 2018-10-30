@@ -26,10 +26,10 @@ import static org.mockito.Mockito.*;
 @Import(CowApplicationTests.class)
 public class BannerAdsServiceTest {
 
-	private BannerAdsService BannerAdsService;
+	private BannerAdsService bannerAdsService;
 
 	@Mock
-	private BannerAdsRepository BannerAdsRepository;
+	private BannerAdsRepository bannerAdsRepository;
 
 	@Mock
 	private List<BannerAds> bannersAds;
@@ -44,81 +44,81 @@ public class BannerAdsServiceTest {
 	public void setUp() throws Exception {
 		when(page.getResult()).thenReturn(bannersAds);
 
-		when(BannerAdsRepository.findAll(any())).thenReturn(page);
+		when(bannerAdsRepository.findAll(any())).thenReturn(page);
 
-		when(BannerAdsRepository.findById(anyLong())).thenReturn(bannerAds);
+		when(bannerAdsRepository.findById(anyLong())).thenReturn(bannerAds);
 
-		BannerAdsService = new BannerAdsServiceImpl(BannerAdsRepository);
+		bannerAdsService = new BannerAdsServiceImpl(bannerAdsRepository);
 	}
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<BannerAds> result = BannerAdsService.find(1,1, any(BannerAds.class));
+		Page<BannerAds> result = bannerAdsService.find(1,1, any(BannerAds.class));
 
 		assertNotNull(result.getResult());
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(BannerAdsRepository.findAll(any())).thenThrow(new Exception());
+		when(bannerAdsRepository.findAll(any())).thenThrow(new Exception());
 
-		BannerAdsService.find(anyInt(), anyInt(), any());
+		bannerAdsService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
-		BannerAds result = BannerAdsService.get(anyLong());
+		BannerAds result = bannerAdsService.get(anyLong());
 
 		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(BannerAdsRepository.findAll(any())).thenThrow(new Exception());
+		when(bannerAdsRepository.findAll(any())).thenThrow(new Exception());
 
-		BannerAdsService.find(anyInt(), anyInt(), any());
+		bannerAdsService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		BannerAdsService.create(bannerAds);
+		bannerAdsService.create(bannerAds);
 
-		verify(BannerAdsRepository, times(1)).insert(bannerAds);
+		verify(bannerAdsRepository, times(1)).insert(bannerAds);
 	}
 
 	@Test(expected = CowException.class)
 	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(BannerAdsRepository).insert(any());
+		doThrow(new Exception()).when(bannerAdsRepository).insert(any());
 
-		BannerAdsService.create(any());
+		bannerAdsService.create(any());
 	}
 
 	@Test
 	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		BannerAdsService.update(bannerAds);
+		bannerAdsService.update(bannerAds);
 
-		verify(BannerAdsRepository, times(1)).update(bannerAds);
+		verify(bannerAdsRepository, times(1)).update(bannerAds);
 	}
 
 	@Test(expected = CowException.class)
 	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(BannerAdsRepository).update(any());
+		doThrow(new Exception()).when(bannerAdsRepository).update(any());
 
-		BannerAdsService.update(any());
+		bannerAdsService.update(any());
 	}
 
 	@Test
 	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
-		BannerAdsService.delete(1L);
+		bannerAdsService.delete(1L);
 
-		verify(BannerAdsRepository, times(1)).delete(anyLong());
+		verify(bannerAdsRepository, times(1)).delete(anyLong());
 	}
 
 	@Test(expected = CowException.class)
 	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(BannerAdsRepository).delete(any());
+		doThrow(new Exception()).when(bannerAdsRepository).delete(any());
 
-		BannerAdsService.delete(any());
+		bannerAdsService.delete(any());
 	}
 
 }

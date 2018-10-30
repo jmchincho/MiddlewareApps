@@ -16,7 +16,7 @@ public class BannerAds {
 	private String url;
 	private String state;
 
-    private Integer order;
+    private Integer sequence;
 
     private Date createDate;
 	private Date startDate;
@@ -78,12 +78,12 @@ public class BannerAds {
 		this.state = state;
 	}
 
-	public Integer getOrder() {
-		return order;
+	public Integer getSequence() {
+		return sequence;
 	}
 
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
 	}
 
 	public Date getCreateDate() {
