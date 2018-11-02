@@ -22,8 +22,6 @@ public class Order {
 	private Address address;
 	
 	private List<OrderDetail> orderDetails;
-	
-    private User user;
 
 	public Long getId() {
 		return id;
@@ -111,14 +109,6 @@ public class Order {
 
 	public void setOrderDetails(List<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 }
 

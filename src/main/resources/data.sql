@@ -46,3 +46,6 @@ insert into bannerAds(title, description, image, url, state, sequence, startDate
 
 insert into subcription(customer_id, company_id) values (1, 1);
 insert into subcription(customer_id, company_id) values (1, 2);
+
+insert into purchaseOrder(paymentType, paidOrder, observations, state, priceTotal, address_id) values ('paymentType', 'paidOrder', 'observations1', 'enabled', 200.40, 1);
+insert into purchaseOrder(paymentType, paidOrder, observations, state, priceTotal, address_id) values ('paymentType', 'paidOrder', 'observations2', 'enabled', 1200.50, 1);

@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS subcription;
+DROP TABLE IF EXISTS purchaseOrder;
 DROP TABLE IF EXISTS bannerAds;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS administrator;
@@ -153,6 +154,22 @@ create table subcription
    primary key(id),
    FOREIGN KEY (customer_id) REFERENCES customer(id),
    FOREIGN KEY (company_id) REFERENCES company(id)
+);
+
+create table purchaseOrder
+(
+	id integer not null auto_increment,
+	deleted Bool not null default 0,
+	paymentType varchar(50) not null,
+	paidOrder varchar(50) not null,
+    observations varchar(1000) not null,
+    state varchar(255) not null,
+    createDate datetime not null default CURRENT_TIMESTAMP,
+    modifyDate datetime not null default CURRENT_TIMESTAMP,
+    priceTotal decimal,
+    address_id integer not null,
+    FOREIGN KEY (address_id) REFERENCES address(id),
+    primary key(id)
 );
 
 
