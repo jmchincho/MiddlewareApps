@@ -5,7 +5,6 @@ import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Subcription;
 import com.middleware.app.cow.exceptions.CowException;
 import com.middleware.app.cow.repository.SubcriptionRepository;
-import com.middleware.app.cow.repository.s;
 import com.middleware.app.cow.service.impl.SubcriptionServiceImpl;
 import org.junit.Before;
 import org.junit.Test;

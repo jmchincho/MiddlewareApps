@@ -43,3 +43,6 @@ insert into bannerAds(deleted, title, description, image, url, state, sequence, 
     values(0, 'title1', 'description1', 'image1', 'url1', 'enabled', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 insert into bannerAds(title, description, image, url, state, sequence, startDate, finishDate)
     values('title2', 'description2', 'image2', 'url2', 'enabled', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+
+insert into subcription(customer_id, company_id) values (1, 1);
+insert into subcription(customer_id, company_id) values (1, 2);

@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS subcription;
+DROP TABLE IF EXISTS bannerAds;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS administrator;
 DROP TABLE IF EXISTS customer;
@@ -139,6 +141,18 @@ create table bannerAds
    startDate datetime not null,
    finishDate datetime not null,
    primary key(id)
+);
+
+create table subcription
+(
+   id integer not null auto_increment,
+   deleted Bool not null default 0,
+   createDate datetime not null default CURRENT_TIMESTAMP,
+   customer_id integer not null,
+   company_id integer not null,
+   primary key(id),
+   FOREIGN KEY (customer_id) REFERENCES customer(id),
+   FOREIGN KEY (company_id) REFERENCES company(id)
 );
 
 
