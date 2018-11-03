@@ -33,6 +33,10 @@ public class Item {
 
     private boolean dates;
 
+    private Company company;
+
+    private Subcategory subcategory;
+
 	public Long getId() {
 		return id;
 	}
@@ -207,6 +211,22 @@ public class Item {
 
 	public void setDates(boolean dates) {
 		this.dates = dates;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public Subcategory getSubcategory() {
+		return subcategory;
+	}
+
+	public void setSubcategory(Subcategory subcategory) {
+		this.subcategory = subcategory;
 	}
 }
 

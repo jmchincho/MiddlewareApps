@@ -172,6 +172,36 @@ create table purchaseOrder
     primary key(id)
 );
 
+create table item
+(
+	id integer not null auto_increment,
+	deleted Bool not null default 0,
+	name varchar(200) not null,
+	descriptions varchar(1000) not null,
+    conditions varchar(1000) not null,
+    state varchar(255) not null,
+    url varchar(255),
+    image1 varchar(255),
+    image2 varchar(255),
+    image3 varchar(255),
+    image4 varchar(255),
+    image5 varchar(255),
+    sendType varchar(255),
+    type varchar(255),
+    price decimal default 0.0,
+    sendPrice decimal default 0.0,
+    stock integer not null,
+    startDate datetime not null default CURRENT_TIMESTAMP,
+    finishDate datetime not null default CURRENT_TIMESTAMP,
+    createDate datetime not null default CURRENT_TIMESTAMP,
+    publishDate datetime not null default CURRENT_TIMESTAMP,
+    company_id integer not null,
+    subcategory_id integer not null,
+    FOREIGN KEY (company_id) REFERENCES company(id),
+    FOREIGN KEY (subcategory_id) REFERENCES subcategory(id),
+    primary key(id)
+);
+
 
 
 

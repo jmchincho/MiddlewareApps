@@ -49,3 +49,8 @@ insert into subcription(customer_id, company_id) values (1, 2);
 
 insert into purchaseOrder(paymentType, paidOrder, observations, state, priceTotal, address_id) values ('paymentType', 'paidOrder', 'observations1', 'enabled', 200.40, 1);
 insert into purchaseOrder(paymentType, paidOrder, observations, state, priceTotal, address_id) values ('paymentType', 'paidOrder', 'observations2', 'enabled', 1200.50, 1);
+
+insert into item(name, descriptions, conditions, sendType, state, type, price, sendPrice, stock, company_id, subcategory_id)
+            values ('item1', 'descriptions1', 'conditions1', 'sendType', 'enabled', 'type', 40.00, 0.00, 3, 1, 1);
+insert into item(name, descriptions, conditions, sendType, state, type, price, sendPrice, stock, company_id, subcategory_id)
+            values ('item2', 'descriptions2', 'conditions2', 'sendType', 'enabled', 'type', 30.00, 0.00, 5, 2, 1);
