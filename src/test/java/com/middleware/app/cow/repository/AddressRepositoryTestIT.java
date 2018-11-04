@@ -17,7 +17,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,9 +29,6 @@ public class AddressRepositoryTestIT {
     public AddressRepository addressRepository;
 
     @Mock
-    private UserRepository userRepository;
-
-    @Mock
     private Address address;
 
     @Mock
@@ -41,8 +37,6 @@ public class AddressRepositoryTestIT {
     @Before
     public void setUp() throws Exception {
         when(user.getId()).thenReturn(1L);
-
-        when(userRepository.findById(any())).thenReturn(user);
 
         when(address.getUser()).thenReturn(user);
     }
