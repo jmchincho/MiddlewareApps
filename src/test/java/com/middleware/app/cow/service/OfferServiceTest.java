@@ -26,10 +26,10 @@ import static org.mockito.Mockito.*;
 @Import(CowApplicationTests.class)
 public class OfferServiceTest {
 
-	private OfferService OfferService;
+	private OfferService offerService;
 
 	@Mock
-	private OfferRepository OfferRepository;
+	private OfferRepository offerRepository;
 
 	@Mock
 	private List<Offer> offers;
@@ -44,81 +44,81 @@ public class OfferServiceTest {
 	public void setUp() throws Exception {
 		when(page.getResult()).thenReturn(offers);
 
-		when(OfferRepository.findAll(any())).thenReturn(page);
+		when(offerRepository.findAll(any())).thenReturn(page);
 
-		when(OfferRepository.findById(anyLong())).thenReturn(offer);
+		when(offerRepository.findById(anyLong())).thenReturn(offer);
 
-		OfferService = new OfferServiceImpl(OfferRepository);
+		offerService = new OfferServiceImpl(offerRepository);
 	}
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Offer> result = OfferService.find(1,1, any(Offer.class));
+		Page<Offer> result = offerService.find(1,1, any(Offer.class));
 
 		assertNotNull(result.getResult());
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(OfferRepository.findAll(any())).thenThrow(new Exception());
+		when(offerRepository.findAll(any())).thenThrow(new Exception());
 
-		OfferService.find(anyInt(), anyInt(), any());
+		offerService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Offer result = OfferService.get(anyLong());
+		Offer result = offerService.get(anyLong());
 
 		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(OfferRepository.findAll(any())).thenThrow(new Exception());
+		when(offerRepository.findAll(any())).thenThrow(new Exception());
 
-		OfferService.find(anyInt(), anyInt(), any());
+		offerService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		OfferService.create(offer);
+		offerService.create(offer);
 
-		verify(OfferRepository, times(1)).insert(offer);
+		verify(offerRepository, times(1)).insert(offer);
 	}
 
 	@Test(expected = CowException.class)
 	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(OfferRepository).insert(any());
+		doThrow(new CowException()).when(offerRepository).insert(any());
 
-		OfferService.create(any());
+		offerService.create(any());
 	}
 
 	@Test
 	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		OfferService.update(offer);
+		offerService.update(offer);
 
-		verify(OfferRepository, times(1)).update(offer);
+		verify(offerRepository, times(1)).update(offer);
 	}
 
 	@Test(expected = CowException.class)
 	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(OfferRepository).update(any());
+		doThrow(new CowException()).when(offerRepository).update(any());
 
-		OfferService.update(any());
+		offerService.update(any());
 	}
 
 	@Test
 	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
-		OfferService.delete(1L);
+		offerService.delete(1L);
 
-		verify(OfferRepository, times(1)).delete(anyLong());
+		verify(offerRepository, times(1)).delete(anyLong());
 	}
 
 	@Test(expected = CowException.class)
 	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(OfferRepository).delete(any());
+		doThrow(new CowException()).when(offerRepository).delete(any());
 
-		OfferService.delete(any());
+		offerService.delete(any());
 	}
 
 }

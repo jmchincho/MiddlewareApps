@@ -202,6 +202,74 @@ create table item
     primary key(id)
 );
 
+create table orderDetail
+(
+	id integer not null auto_increment,
+	deleted Bool not null default 0,
+	quantity integer not null,
+	sendState varchar(50) not null,
+	price decimal not null,
+    sendDate datetime not null default CURRENT_TIMESTAMP,
+    deliveredDate datetime not null default CURRENT_TIMESTAMP,
+    cancelledDate datetime not null default CURRENT_TIMESTAMP,
+    order_id integer not null,
+    item_id integer not null,
+    FOREIGN KEY (order_id) REFERENCES purchaseOrder(id),
+    FOREIGN KEY (item_id) REFERENCES item(id),
+    primary key(id)
+);
+
+create table offer
+(
+	id integer not null auto_increment,
+	deleted Bool not null default 0,
+	state varchar(50) not null,
+	paymentType varchar(50) not null,
+	price decimal not null,
+    createDate datetime not null default CURRENT_TIMESTAMP,
+    startDate datetime not null default CURRENT_TIMESTAMP,
+    finishDate datetime not null default CURRENT_TIMESTAMP,
+    publishDate datetime not null default CURRENT_TIMESTAMP,
+    item_id integer not null,
+    FOREIGN KEY (item_id) REFERENCES item(id),
+    primary key(id)
+);
+
+create table comment
+(
+	id integer not null auto_increment,
+	deleted Bool not null default 0,
+	name varchar(50) not null,
+	description varchar(1000) not null,
+	approved varchar(50) not null,
+	denounced varchar(50) not null,
+    createDate datetime not null default CURRENT_TIMESTAMP,
+    score integer not null,
+    customer_id integer not null,
+    item_id integer not null,
+    FOREIGN KEY (customer_id) REFERENCES customer(id),
+    FOREIGN KEY (item_id) REFERENCES item(id),
+    primary key(id)
+);
+
+create table variant
+(
+	id integer not null auto_increment,
+	deleted Bool not null default 0,
+	type varchar(50) not null,
+	size varchar(50) not null,
+	state varchar(50) not null,
+	color varchar(50) not null,
+	price decimal not null,
+	stock integer not null,
+    createDate datetime not null default CURRENT_TIMESTAMP,
+    startDate datetime not null default CURRENT_TIMESTAMP,
+    finishDate datetime not null default CURRENT_TIMESTAMP,
+    publishDate datetime not null default CURRENT_TIMESTAMP,
+    item_id integer not null,
+    FOREIGN KEY (item_id) REFERENCES item(id),
+    primary key(id)
+);
 
 
 

@@ -54,3 +54,15 @@ insert into item(name, descriptions, conditions, sendType, state, type, price, s
             values ('item1', 'descriptions1', 'conditions1', 'sendType', 'enabled', 'type', 40.00, 0.00, 3, 1, 1);
 insert into item(name, descriptions, conditions, sendType, state, type, price, sendPrice, stock, company_id, subcategory_id)
             values ('item2', 'descriptions2', 'conditions2', 'sendType', 'enabled', 'type', 30.00, 0.00, 5, 2, 1);
+
+insert into orderDetail(quantity, sendState, price, order_id, item_id) values (3, 'sendState', 500.00, 1, 1);
+insert into orderDetail(quantity, sendState, price, order_id, item_id) values (5, 'sendState', 130.00, 1, 2);
+
+insert into offer(state, paymentType, price, item_id) values ('enabled', 'paymentType', 130.00, 1);
+insert into offer(state, paymentType, price, item_id) values ('enabled', 'paymentType', 10.00, 2);
+
+insert into comment(name, description, approved, denounced, score, customer_id, item_id) values ('name1', 'description1', 'approved', 'denounced', 3, 1, 1);
+insert into comment(name, description, approved, denounced, score, customer_id, item_id) values ('name2', 'description2', 'approved', 'denounced', 3, 1, 2);
+
+insert into variant(type, size, color, state, stock, price, item_id) values ('type', 'size', 'color','enabled', 5, 10.00, 1);
+insert into variant(type, size, color, state, stock, price, item_id) values ('type', 'size', 'color','enabled', 3, 9.00, 2);
