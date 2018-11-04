@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS subcription;
 DROP TABLE IF EXISTS purchaseOrder;
 DROP TABLE IF EXISTS bannerAds;
@@ -241,8 +242,8 @@ create table comment
 	deleted Bool not null default 0,
 	name varchar(50) not null,
 	description varchar(1000) not null,
-	approved varchar(50) not null,
-	denounced varchar(50) not null,
+	approved varchar(50) not null default 'noapproved',
+	denounced varchar(50),
     createDate datetime not null default CURRENT_TIMESTAMP,
     score integer not null,
     customer_id integer not null,
