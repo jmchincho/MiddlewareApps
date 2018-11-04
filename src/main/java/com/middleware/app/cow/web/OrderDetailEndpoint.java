@@ -1,6 +1,9 @@
 package com.middleware.app.cow.web;
 
 import com.middleware.app.cow.domain.OrderDetail;
+import com.middleware.app.cow.exceptions.CowException;
+import com.middleware.app.cow.service.OrderDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -14,35 +17,69 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class OrderDetailEndpoint {
 
+    @Autowired
+    private OrderDetailService orderDetailService;
+
+    public OrderDetailEndpoint(OrderDetailService orderDetailService) {
+        this.orderDetailService = orderDetailService;
+    }
+
     @GET
     public Response findAll(Integer index, Integer totalCount) {
-        return null;
+        try {
+            return Response.ok().entity(orderDetailService.find(index, totalCount, null)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     public Response findAllByFilter(Integer index, Integer totalCount, OrderDetail orderDetail) {
-        return null;
+        try {
+            return Response.ok().entity(orderDetailService.find(index, totalCount, orderDetail)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @GET
     @Path("/{id}")
     public Response get(@PathVariable Long id) {
-        return null;
+        try {
+            return Response.ok().entity(orderDetailService.get(id)).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @POST
     public Response post(OrderDetail orderDetail) {
-        return null;
+        try {
+            orderDetailService.create(orderDetail);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @PUT
     public Response put(OrderDetail orderDetail) {
-        return null;
+        try {
+            orderDetailService.update(orderDetail);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
     @DELETE
     public Response delete(Long id) {
-        return null;
+        try {
+            orderDetailService.delete(id);
+            return Response.ok().build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
     }
 
 }

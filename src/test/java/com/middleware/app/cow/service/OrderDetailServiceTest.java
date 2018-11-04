@@ -26,10 +26,10 @@ import static org.mockito.Mockito.*;
 @Import(CowApplicationTests.class)
 public class OrderDetailServiceTest {
 
-	private OrderDetailService OrderDetailService;
+	private OrderDetailService orderDetailService;
 
 	@Mock
-	private OrderDetailRepository OrderDetailRepository;
+	private OrderDetailRepository orderDetailRepository;
 
 	@Mock
 	private List<OrderDetail> orderDetails;
@@ -44,81 +44,81 @@ public class OrderDetailServiceTest {
 	public void setUp() throws Exception {
 		when(page.getResult()).thenReturn(orderDetails);
 
-		when(OrderDetailRepository.findAll(any())).thenReturn(page);
+		when(orderDetailRepository.findAll(any())).thenReturn(page);
 
-		when(OrderDetailRepository.findById(anyLong())).thenReturn(orderDetail);
+		when(orderDetailRepository.findById(anyLong())).thenReturn(orderDetail);
 
-		OrderDetailService = new OrderDetailServiceImpl(OrderDetailRepository);
+		orderDetailService = new OrderDetailServiceImpl(orderDetailRepository);
 	}
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<OrderDetail> result = OrderDetailService.find(1,1, any(OrderDetail.class));
+		Page<OrderDetail> result = orderDetailService.find(1,1, any(OrderDetail.class));
 
 		assertNotNull(result.getResult());
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(OrderDetailRepository.findAll(any())).thenThrow(new Exception());
+		when(orderDetailRepository.findAll(any())).thenThrow(new Exception());
 
-		OrderDetailService.find(anyInt(), anyInt(), any());
+		orderDetailService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
-		OrderDetail result = OrderDetailService.get(anyLong());
+		OrderDetail result = orderDetailService.get(anyLong());
 
 		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(OrderDetailRepository.findAll(any())).thenThrow(new Exception());
+		when(orderDetailRepository.findAll(any())).thenThrow(new Exception());
 
-		OrderDetailService.find(anyInt(), anyInt(), any());
+		orderDetailService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		OrderDetailService.create(orderDetail);
+		orderDetailService.create(orderDetail);
 
-		verify(OrderDetailRepository, times(1)).insert(orderDetail);
+		verify(orderDetailRepository, times(1)).insert(orderDetail);
 	}
 
 	@Test(expected = CowException.class)
 	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(OrderDetailRepository).insert(any());
+		doThrow(new CowException()).when(orderDetailRepository).insert(any());
 
-		OrderDetailService.create(any());
+		orderDetailService.create(any());
 	}
 
 	@Test
 	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		OrderDetailService.update(orderDetail);
+		orderDetailService.update(orderDetail);
 
-		verify(OrderDetailRepository, times(1)).update(orderDetail);
+		verify(orderDetailRepository, times(1)).update(orderDetail);
 	}
 
 	@Test(expected = CowException.class)
 	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(OrderDetailRepository).update(any());
+		doThrow(new CowException()).when(orderDetailRepository).update(any());
 
-		OrderDetailService.update(any());
+		orderDetailService.update(any());
 	}
 
 	@Test
 	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
-		OrderDetailService.delete(1L);
+		orderDetailService.delete(1L);
 
-		verify(OrderDetailRepository, times(1)).delete(anyLong());
+		verify(orderDetailRepository, times(1)).delete(anyLong());
 	}
 
 	@Test(expected = CowException.class)
 	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(OrderDetailRepository).delete(any());
+		doThrow(new CowException()).when(orderDetailRepository).delete(any());
 
-		OrderDetailService.delete(any());
+		orderDetailService.delete(any());
 	}
 
 }
