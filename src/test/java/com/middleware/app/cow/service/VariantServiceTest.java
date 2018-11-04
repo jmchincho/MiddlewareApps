@@ -26,10 +26,10 @@ import static org.mockito.Mockito.*;
 @Import(CowApplicationTests.class)
 public class VariantServiceTest {
 
-	private VariantService VariantService;
+	private VariantService variantService;
 
 	@Mock
-	private VariantRepository VariantRepository;
+	private VariantRepository variantRepository;
 
 	@Mock
 	private List<Variant> variants;
@@ -44,81 +44,81 @@ public class VariantServiceTest {
 	public void setUp() throws Exception {
 		when(page.getResult()).thenReturn(variants);
 
-		when(VariantRepository.findAll(any())).thenReturn(page);
+		when(variantRepository.findAll(any())).thenReturn(page);
 
-		when(VariantRepository.findById(anyLong())).thenReturn(variant);
+		when(variantRepository.findById(anyLong())).thenReturn(variant);
 
-		VariantService = new VariantServiceImpl(VariantRepository);
+		variantService = new VariantServiceImpl(variantRepository);
 	}
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Variant> result = VariantService.find(1,1, any(Variant.class));
+		Page<Variant> result = variantService.find(1,1, any(Variant.class));
 
 		assertNotNull(result.getResult());
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(VariantRepository.findAll(any())).thenThrow(new Exception());
+		when(variantRepository.findAll(any())).thenThrow(new Exception());
 
-		VariantService.find(anyInt(), anyInt(), any());
+		variantService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void getShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Variant result = VariantService.get(anyLong());
+		Variant result = variantService.get(anyLong());
 
 		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(VariantRepository.findAll(any())).thenThrow(new Exception());
+		when(variantRepository.findAll(any())).thenThrow(new Exception());
 
-		VariantService.find(anyInt(), anyInt(), any());
+		variantService.find(anyInt(), anyInt(), any());
 	}
 
 	@Test
 	public void createAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		VariantService.create(variant);
+		variantService.create(variant);
 
-		verify(VariantRepository, times(1)).insert(variant);
+		verify(variantRepository, times(1)).insert(variant);
 	}
 
 	@Test(expected = CowException.class)
 	public void createAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(VariantRepository).insert(any());
+		doThrow(new CowException()).when(variantRepository).insert(any());
 
-		VariantService.create(any());
+		variantService.create(any());
 	}
 
 	@Test
 	public void updateAllShouldCallRepositoryFindAndReturnResult() throws Exception {
-		VariantService.update(variant);
+		variantService.update(variant);
 
-		verify(VariantRepository, times(1)).update(variant);
+		verify(variantRepository, times(1)).update(variant);
 	}
 
 	@Test(expected = CowException.class)
 	public void updateAllShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(VariantRepository).update(any());
+		doThrow(new CowException()).when(variantRepository).update(any());
 
-		VariantService.update(any());
+		variantService.update(any());
 	}
 
 	@Test
 	public void deleteShouldCallRepositoryFindAndReturnResult() throws Exception {
-		VariantService.delete(1L);
+		variantService.delete(1L);
 
-		verify(VariantRepository, times(1)).delete(anyLong());
+		verify(variantRepository, times(1)).delete(anyLong());
 	}
 
 	@Test(expected = CowException.class)
 	public void deleteShouldCallRepositoryFindAndReturnException() throws Exception {
-		doThrow(new CowException()).when(VariantRepository).delete(any());
+		doThrow(new CowException()).when(variantRepository).delete(any());
 
-		VariantService.delete(any());
+		variantService.delete(any());
 	}
 
 }

@@ -8,9 +8,7 @@ public class Variant {
 	private Long id;
 
 	private Double price;
-	private String state;
-	private String size;
-	private String color;
+
 	private Integer stock;
 
 	private Date startDate;
@@ -19,8 +17,11 @@ public class Variant {
 	private Date createDate;
 
     private String type;
+	private String state;
+	private String size;
+	private String color;
 
-    private Boolean deleted;
+    private boolean deleted;
     
     private Item item;
 
@@ -38,30 +39,6 @@ public class Variant {
 
 	public void setPrice(Double price) {
 		this.price = price;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
 	}
 
 	public Integer getStock() {
@@ -112,11 +89,35 @@ public class Variant {
 		this.type = type;
 	}
 
-	public Boolean getDeleted() {
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public boolean isDeleted() {
 		return deleted;
 	}
 
-	public void setDeleted(Boolean deleted) {
+	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
