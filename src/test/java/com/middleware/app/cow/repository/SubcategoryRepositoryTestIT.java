@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SubcategoryRepositoryTestIT {
 
     @Autowired
@@ -43,7 +43,7 @@ public class SubcategoryRepositoryTestIT {
     public void findShouldReturnAllSubcategoryByUser() throws Exception {
         Page<Subcategory> result = subcategoryRepository.findAll(null);
 
-        assertThat(result.size(), equalTo(2));
+        assertThat(result.size(), equalTo(3));
         assertTrue(result.getResult().stream().anyMatch(subcategory -> subcategory.getName().equals("Futbol")));
     }
 

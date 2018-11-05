@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LocationRepositoryTestIT {
 
     @Autowired
@@ -54,7 +54,7 @@ public class LocationRepositoryTestIT {
     public void findShouldReturnAllLocationByUser() throws Exception {
         Page<Location> result = locationRepository.findAll(null);
 
-        assertThat(result.size(), equalTo(2));
+        assertThat(result.size(), equalTo(3));
         assertTrue(result.getResult().stream().anyMatch(location -> location.getName().equals("Utrera")));
     }
 

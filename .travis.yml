@@ -12,6 +12,10 @@
   "script": [
     "mvn clean install"
   ],
+  "addons": [
+    sonarcloud:
+      organization: "jmchincho-github"
+  ],
   "language": "java",
   "before_cache": [
     "rm -rf $HOME/.m2/repository/com/middleware/app"

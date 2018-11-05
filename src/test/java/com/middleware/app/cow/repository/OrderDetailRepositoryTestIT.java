@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OrderDetailRepositoryTestIT {
 
     @Autowired
@@ -49,7 +49,7 @@ public class OrderDetailRepositoryTestIT {
     public void findShouldReturnAllOrderDetailByUser() throws Exception {
         Page<OrderDetail> result = orderDetailRepository.findAll(orderDetail);
 
-        assertThat(result.size(), equalTo(2));
+        assertThat(result.size(), equalTo(3));
         assertTrue(result.getResult().stream().anyMatch(orderDetail -> orderDetail.getPrice().equals(130.0)));
         assertTrue(result.getResult().stream().anyMatch(orderDetail -> orderDetail.getItem().getId().equals(item.getId())));
     }
@@ -60,7 +60,7 @@ public class OrderDetailRepositoryTestIT {
 
         Page<OrderDetail> result = orderDetailRepository.findAll(orderDetail);
 
-        assertThat(result.size(), equalTo(1));
+        assertThat(result.size(), equalTo(2));
         assertTrue(result.getResult().stream().anyMatch(orderDetail -> orderDetail.getPrice().equals(500.00)));
         assertTrue(result.getResult().stream().anyMatch(orderDetail -> orderDetail.getItem().getId().equals(item.getId())));
     }

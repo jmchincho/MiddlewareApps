@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CountryRepositoryTestIT {
 
     @Autowired
@@ -39,7 +39,7 @@ public class CountryRepositoryTestIT {
     public void findShouldReturnAllCountry() throws Exception {
         Page<Country> result = countryRepository.findAll(null);
 
-        assertThat(result.size(), equalTo(2));
+        assertThat(result.size(), equalTo(3));
         assertTrue(result.getResult().stream().anyMatch(country -> country.getName().equals("España")));
     }
 

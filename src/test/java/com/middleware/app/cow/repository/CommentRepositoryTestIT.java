@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CommentRepositoryTestIT {
 
     @Autowired
@@ -49,7 +49,7 @@ public class CommentRepositoryTestIT {
     public void findShouldReturnAllComment() throws Exception {
         Page<Comment> result = commentRepository.findAll(comment);
 
-        assertThat(result.size(), equalTo(2));
+        assertThat(result.size(), equalTo(3));
         assertTrue(result.getResult().stream().anyMatch(comment -> comment.getName().equals("name1")));
         assertTrue(result.getResult().stream().anyMatch(comment -> comment.getItem().getId().equals(item.getId())));
         assertTrue(result.getResult().stream().anyMatch(comment -> comment.getCustomer().getId().equals(customer.getId())));
@@ -61,7 +61,7 @@ public class CommentRepositoryTestIT {
 
         Page<Comment> result = commentRepository.findAll(comment);
 
-        assertThat(result.size(), equalTo(1));
+        assertThat(result.size(), equalTo(2));
         assertTrue(result.getResult().stream().anyMatch(comment -> comment.getName().equals("name1")));
         assertTrue(result.getResult().stream().anyMatch(comment -> comment.getItem().getId().equals(item.getId())));
         assertTrue(result.getResult().stream().anyMatch(comment -> comment.getCustomer().getId().equals(customer.getId())));

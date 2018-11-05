@@ -1,7 +1,9 @@
 package com.middleware.app.cow.repository;
 
 import com.github.pagehelper.Page;
+import com.middleware.app.cow.domain.Company;
 import com.middleware.app.cow.domain.Item;
+import com.middleware.app.cow.domain.Subcategory;
 import com.middleware.app.cow.domain.User;
 import org.apache.ibatis.annotations.*;
 
@@ -19,15 +21,15 @@ public interface ItemRepository {
             "</where>",
             "</script>"})
     @Results({
-            @Result(property = "company", column = "company_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.CompanyRepository.findById")),
-            @Result(property = "subcategory", column = "subcategory_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.SubcategoryRepository.findById"))
+            @Result(property = "company", column = "company_id", javaType = Company.class,  one = @One(select = "com.middleware.app.cow.repository.CompanyRepository.findById")),
+            @Result(property = "subcategory", column = "subcategory_id", javaType = Subcategory.class,  one = @One(select = "com.middleware.app.cow.repository.SubcategoryRepository.findById"))
     })
     Page<Item> findAll(@Param("item") Item item) throws Exception;
 
     @Select("select * from item i where i.id = #{id}")
     @Results({
-            @Result(property = "company", column = "company_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.CompanyRepository.findById")),
-            @Result(property = "subcategory", column = "subcategory_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.SubcategoryRepository.findById"))
+            @Result(property = "company", column = "company_id", javaType = Company.class,  one = @One(select = "com.middleware.app.cow.repository.CompanyRepository.findById")),
+            @Result(property = "subcategory", column = "subcategory_id", javaType = Subcategory.class,  one = @One(select = "com.middleware.app.cow.repository.SubcategoryRepository.findById"))
     })
     Item findById(Long id) throws Exception;
 

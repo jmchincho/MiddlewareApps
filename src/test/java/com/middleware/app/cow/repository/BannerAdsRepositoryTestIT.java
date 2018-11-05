@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BannerAdsRepositoryTestIT {
 
     @Autowired
@@ -43,7 +43,7 @@ public class BannerAdsRepositoryTestIT {
     public void findShouldReturnAllBannerAds() throws Exception {
         Page<BannerAds> result = bannerAdsRepository.findAll(null);
 
-        assertThat(result.size(), equalTo(2));
+        assertThat(result.size(), equalTo(3));
         assertTrue(result.getResult().stream().anyMatch(bannerAds -> bannerAds.getTitle().equals("title1")));
     }
 

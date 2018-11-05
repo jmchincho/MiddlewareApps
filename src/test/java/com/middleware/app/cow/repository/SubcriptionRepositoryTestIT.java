@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SubcriptionRepositoryTestIT {
 
     @Autowired
@@ -49,7 +49,7 @@ public class SubcriptionRepositoryTestIT {
     public void findShouldReturnAllSubcription() throws Exception {
         Page<Subcription> result = subcriptionRepository.findAll(subcription);
 
-        assertThat(result.size(), equalTo(2));
+        assertThat(result.size(), equalTo(3));
         assertTrue(result.getResult().stream().anyMatch(subcription -> subcription.getCompany().getId().equals(company.getId())));
         assertTrue(result.getResult().stream().anyMatch(subcription -> subcription.getCustomer().getId().equals(customer.getId())));
     }
@@ -60,7 +60,7 @@ public class SubcriptionRepositoryTestIT {
 
         Page<Subcription> result = subcriptionRepository.findAll(subcription);
 
-        assertThat(result.size(), equalTo(1));
+        assertThat(result.size(), equalTo(2));
         assertTrue(result.getResult().stream().anyMatch(subcription -> subcription.getCompany().getId().equals(company.getId())));
         assertTrue(result.getResult().stream().anyMatch(subcription -> subcription.getCustomer().getId().equals(customer.getId())));
     }

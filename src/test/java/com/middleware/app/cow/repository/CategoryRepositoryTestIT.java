@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CategoryRepositoryTestIT {
 
     @Autowired
@@ -39,7 +39,7 @@ public class CategoryRepositoryTestIT {
     public void findShouldReturnAllCategoryByUser() throws Exception {
         Page<Category> result = categoryRepository.findAll(null);
 
-        assertThat(result.size(), equalTo(2));
+        assertThat(result.size(), equalTo(3));
         assertTrue(result.getResult().stream().anyMatch(category -> category.getName().equals("Deportes")));
     }
 

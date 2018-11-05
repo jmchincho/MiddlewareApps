@@ -3,6 +3,7 @@ package com.middleware.app.cow.repository;
 import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Address;
+import com.middleware.app.cow.domain.Location;
 import com.middleware.app.cow.domain.User;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AddressRepositoryTestIT {
 
     @Autowired
@@ -34,9 +35,14 @@ public class AddressRepositoryTestIT {
     @Mock
     private User user;
 
+    @Mock
+    private Location location;
+
     @Before
     public void setUp() throws Exception {
         when(user.getId()).thenReturn(1L);
+
+        when(location.getId()).thenReturn(1L);
 
         when(address.getUser()).thenReturn(user);
     }
@@ -45,7 +51,7 @@ public class AddressRepositoryTestIT {
     public void findShouldReturnAllAddressesByUser() throws Exception {
         Page<Address> result = addressRepository.findAll(address);
 
-        assertThat(result.size(), equalTo(3));
+        assertThat(result.size(), equalTo(4));
         assertTrue(result.getResult().stream().anyMatch(address -> address.getUser().getId().equals(user.getId())));
     }
 
@@ -76,7 +82,7 @@ public class AddressRepositoryTestIT {
         when(address.getPostalCode()).thenReturn(28043);
         when(address.getFloor()).thenReturn(10);
         when(address.getStairs()).thenReturn(1);
-        when(address.getUser().getId()).thenReturn(1L);
+        when(address.getLocation()).thenReturn(location);
 
         addressRepository.insert(address);
 

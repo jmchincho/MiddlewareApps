@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @Import(CowApplicationTests.class)
-@FixMethodOrder(MethodSorters.JVM)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserRepositoryTestIT {
 
     @Autowired
@@ -37,9 +37,9 @@ public class UserRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllUserByUser() throws Exception {
-        Page<User> result = userRepository.findAll(null);
+        Page<User> result = userRepository.findAll(user);
 
-        assertThat(result.size(), equalTo(6));
+        assertThat(result.size(), equalTo(7));
         assertTrue(result.getResult().stream().anyMatch(user -> user.getUsername().equals("admin1")));
     }
 
