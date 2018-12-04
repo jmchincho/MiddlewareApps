@@ -25,18 +25,10 @@ public class SubcategoryEndpoint {
     }
 
     @GET
-    public Response findAll(Integer index, Integer totalCount) {
+    public Response findAll(@QueryParam("page") Integer page, @QueryParam("per_page") Integer perPage,
+                            @QueryParam("where") String where, @QueryParam("order_by") String orderBy) {
         try {
-            return Response.ok().entity(subcategoryService.find(index, totalCount, null)).build();
-        } catch (CowException e) {
-            return Response.serverError().build();
-        }
-    }
-
-    @GET
-    public Response findAllByFilter(Integer index, Integer totalCount, Subcategory subcategory) {
-        try {
-            return Response.ok().entity(subcategoryService.find(index, totalCount, subcategory)).build();
+            return Response.ok().entity(subcategoryService.find(page, perPage, where, orderBy)).build();
         } catch (CowException e) {
             return Response.serverError().build();
         }

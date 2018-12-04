@@ -1,7 +1,8 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
+import com.middleware.app.cow.domain.Administrator;
 import com.middleware.app.cow.domain.User;
 import com.middleware.app.cow.exceptions.CowException;
 import com.middleware.app.cow.repository.UserRepository;
@@ -12,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
@@ -37,32 +40,67 @@ public class UserServiceTest {
 	@Mock
 	private User user;
 
-	@Mock
-	private Page<User> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(users);
+		when(userRepository.findAll(any(), any(), any(), any())).thenReturn(users);
 
-		when(userRepository.findAll(any())).thenReturn(page);
+		when(userRepository.findByUsername(anyString())).thenReturn(getUser());
 
 		when(userRepository.findById(anyLong())).thenReturn(user);
 
 		userService = new UserServiceImpl(userRepository);
 	}
 
+	private User getUser() {
+		User u = new User();
+
+		u.setUsername("admin1");
+		u.setPassword("password");
+		u.setAdministrator(new Administrator());
+
+		return u;
+	}
+
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<User> result = userService.find(1,1, any(User.class));
+		List<User> result = userService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(userRepository.findAll(any())).thenThrow(new Exception());
+		when(userRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		userService.find(anyInt(), anyInt(), any());
+		userService.find(anyInt(), anyInt(), anyString(), anyString());
+	}
+
+	@Test
+	public void findByUserShouldCallRepositoryFindByUsernameAndReturnResult() throws CowException {
+		User result = userService.findByUsername(anyString());
+
+		assertNotNull(result);
+	}
+
+	@Test(expected = CowException.class)
+	public void findByUserShouldCallRepositoryFindByUsernameAndReturnException() throws Exception {
+		when(userRepository.findByUsername(any())).thenThrow(new CowException());
+
+		userService.findByUsername(anyString());
+	}
+
+	@Test
+	public void findByUserShouldCallRepositoryLoadUserByUsernameAndReturnResult() throws CowException {
+		UserDetails result = userService.loadUserByUsername(anyString());
+
+		assertNotNull(result);
+	}
+
+	@Test(expected = UsernameNotFoundException.class)
+	public void findByUserShouldCallRepositoryLoadUserByUsernameAndReturnException() throws Exception {
+		when(userRepository.findByUsername(any())).thenThrow(new UsernameNotFoundException("User not found!"));
+
+		userService.loadUserByUsername(anyString());
 	}
 
 	@Test
@@ -74,9 +112,9 @@ public class UserServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(userRepository.findAll(any())).thenThrow(new Exception());
+		when(userRepository.findById(any())).thenThrow(new Exception());
 
-		userService.find(anyInt(), anyInt(), any());
+		userService.get(any());
 	}
 
 	@Test

@@ -25,18 +25,10 @@ public class VariantEndpoint {
     }
 
     @GET
-    public Response findAll(Integer index, Integer totalCount) {
+    public Response findAll(@QueryParam("page") Integer page, @QueryParam("per_page") Integer perPage,
+                            @QueryParam("where") String where, @QueryParam("order_by") String orderBy) {
         try {
-            return Response.ok().entity(variantService.find(index, totalCount, null)).build();
-        } catch (CowException e) {
-            return Response.serverError().build();
-        }
-    }
-
-    @GET
-    public Response findAllByFilter(Integer index, Integer totalCount, Variant variant) {
-        try {
-            return Response.ok().entity(variantService.find(index, totalCount, variant)).build();
+            return Response.ok().entity(variantService.find(page, perPage, where, orderBy)).build();
         } catch (CowException e) {
             return Response.serverError().build();
         }

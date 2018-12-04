@@ -1,10 +1,11 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Company;
 import com.middleware.app.cow.domain.Customer;
 import com.middleware.app.cow.domain.Subcription;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
@@ -47,22 +50,18 @@ public class SubcriptionRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllSubcription() throws Exception {
-        Page<Subcription> result = subcriptionRepository.findAll(subcription);
+        String where = "address.street='Calle Jerico'";
+        String orderBy = "address.street";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(Subcription.class.getSimpleName());
+
+        List<Subcription> result = subcriptionRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(subcription -> subcription.getCompany().getId().equals(company.getId())));
-        assertTrue(result.getResult().stream().anyMatch(subcription -> subcription.getCustomer().getId().equals(customer.getId())));
-    }
-
-    @Test
-    public void findShouldReturnSubcriptionByFilterSubcriptionAndCompanyId() throws Exception {
-        when(subcription.getCompany()).thenReturn(company);
-
-        Page<Subcription> result = subcriptionRepository.findAll(subcription);
-
-        assertThat(result.size(), equalTo(2));
-        assertTrue(result.getResult().stream().anyMatch(subcription -> subcription.getCompany().getId().equals(company.getId())));
-        assertTrue(result.getResult().stream().anyMatch(subcription -> subcription.getCustomer().getId().equals(customer.getId())));
+        assertTrue(result.stream().anyMatch(subcription -> subcription.getCompany().getId().equals(company.getId())));
+        assertTrue(result.stream().anyMatch(subcription -> subcription.getCustomer().getId().equals(customer.getId())));
     }
 
     @Test

@@ -1,28 +1,20 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Customer;
 import com.middleware.app.cow.domain.User;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface CustomerRepository {
 
-    @Select({"<script>",
-            "select c.id, c.name, c.surname, c.dni, c.telephone, u.id as user_id from customer c, user u",
-            "<where>",
-            " u.customer_id = c.id",
-            "<if test='customer != null'>",
-            "<if test='customer.name != null'>",
-            " and c.name=#{customer.name}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     @Results({
             @Result(property = "user", column = "user_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.UserRepository.findById"))
     })
-    Page<Customer> findAll(@Param("customer") Customer customer) throws Exception;
+    List<Customer> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select c.id, c.name, c.surname, c.dni, c.telephone, u.id as user_id from customer c, user u where c.id = #{id} and u.customer_id = c.id")
     @Results({

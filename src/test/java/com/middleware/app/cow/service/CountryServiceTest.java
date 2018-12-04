@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Country;
 import com.middleware.app.cow.exceptions.CowException;
@@ -37,14 +37,9 @@ public class CountryServiceTest {
 	@Mock
 	private Country country;
 
-	@Mock
-	private Page<Country> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(countries);
-
-		when(countryRepository.findAll(any())).thenReturn(page);
+		when(countryRepository.findAll(any(), any(), any(), any())).thenReturn(countries);
 
 		when(countryRepository.findById(anyLong())).thenReturn(country);
 
@@ -53,16 +48,16 @@ public class CountryServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Country> result = countryService.find(1,1, any(Country.class));
+		List<Country> result = countryService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(countryRepository.findAll(any())).thenThrow(new Exception());
+		when(countryRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		countryService.find(anyInt(), anyInt(), any());
+		countryService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +69,9 @@ public class CountryServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(countryRepository.findAll(any())).thenThrow(new Exception());
+		when(countryRepository.findById(any())).thenThrow(new Exception());
 
-		countryService.find(anyInt(), anyInt(), any());
+		countryService.get(any());
 	}
 
 	@Test

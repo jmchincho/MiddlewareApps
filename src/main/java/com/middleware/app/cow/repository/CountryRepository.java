@@ -1,29 +1,19 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Country;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface CountryRepository {
 
-    @Select({"<script>",
-            "select * from country c",
-            "<where>",
-            "<if test='country != null'>",
-            "<if test='country.name != null'>",
-            " and c.name=#{country.name}",
-            "</if>",
-            "<if test='country.state != null'>",
-            " and c.state=#{country.state}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     /*@Results({
             @Result(property = "province", column = "province_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.ProvinceRepository.findById"))
     })*/
-    Page<Country> findAll(@Param("country") Country country) throws Exception;
+    List<Country> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select * from country c where c.id = #{id}")
     /*@Results({

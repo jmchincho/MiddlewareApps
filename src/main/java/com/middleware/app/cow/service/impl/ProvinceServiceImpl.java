@@ -1,11 +1,13 @@
 package com.middleware.app.cow.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import java.util.List;
+
 import com.middleware.app.cow.domain.Province;
 import com.middleware.app.cow.exceptions.CowException;
 import com.middleware.app.cow.repository.ProvinceRepository;
 import com.middleware.app.cow.service.ProvinceService;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +22,13 @@ public class ProvinceServiceImpl implements ProvinceService {
     }
 
     @Override
-    public Page<Province> find(Integer index, Integer totalCount,Province province) throws CowException {
+    public List<Province> find(Integer page, Integer perPage, String where, String orderBy) throws CowException {
         try {
-            PageHelper.offsetPage(index, totalCount);
+            RowBounds rowBounds = new RowBounds(page, perPage);
 
-            return provinceRepository.findAll(province);
+            String table = SelectSqlBuilder.nameTable(Province.class.getSimpleName());
+
+            return provinceRepository.findAll(table, where, orderBy, rowBounds);
         } catch (Exception e) {
             throw new CowException();
         }

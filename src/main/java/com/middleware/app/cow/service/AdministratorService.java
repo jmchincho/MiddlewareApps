@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Administrator;
 import com.middleware.app.cow.exceptions.CowException;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AdministratorService {
 
-    Page<Administrator> find(Integer index, Integer totalCount,Administrator Administrator) throws CowException;
+    List<Administrator> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
     Administrator get(Long id) throws CowException;
 

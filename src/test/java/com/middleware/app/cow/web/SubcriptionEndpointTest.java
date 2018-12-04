@@ -1,6 +1,6 @@
 package com.middleware.app.cow.web;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Subcription;
 import com.middleware.app.cow.exceptions.CowException;
@@ -33,13 +33,10 @@ public class SubcriptionEndpointTest {
     @Mock
     private Response response;
 
-    @Mock
-    private Page<Subcription> page;
-
     private SubcriptionEndpoint subcriptionEndpoint;
 
     @Mock
-    private List<Subcription> subcriptiones;
+    private List<Subcription> subcriptions;
 
     @Mock
     private Subcription subcription;
@@ -48,8 +45,7 @@ public class SubcriptionEndpointTest {
     public void setUp() throws Exception {
         when(response.getStatusInfo()).thenReturn(Response.Status.OK);
 
-        when(page.getResult()).thenReturn(subcriptiones);
-        when(subcriptionService.find(anyInt(), anyInt(), any())).thenReturn(page);
+        when(subcriptionService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(subcriptions);
 
         when(subcriptionService.get(any())).thenReturn(subcription);
 
@@ -58,7 +54,7 @@ public class SubcriptionEndpointTest {
 
     @Test
     public void findAllShouldCallServiceFindAndReturnResult() {
-        Response result = subcriptionEndpoint.findAll(1, 1);
+        Response result = subcriptionEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
         assertNotNull(result.getEntity());
@@ -66,26 +62,9 @@ public class SubcriptionEndpointTest {
 
     @Test
     public void findAllShouldCallServiceFindAndReturnException() throws CowException {
-        when(subcriptionService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
+        when(subcriptionService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
-        Response result = subcriptionEndpoint.findAll(1, 5);
-        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
-    }
-
-    @Test
-    public void findAllByFilterShouldCallServiceFindAndReturnResult() {
-        Response result = subcriptionEndpoint.findAllByFilter(1, 5, subcription);
-
-        assertEquals(result.getStatus(), Response.ok().build().getStatus());
-        assertNotNull(result.getEntity());
-    }
-
-    @Test
-    public void findAllByFilterShouldCallServiceFindAndReturnException() throws CowException {
-        when(subcriptionService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
-
-        Response result = subcriptionEndpoint.findAllByFilter(1, 5, subcription);
-
+        Response result = subcriptionEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

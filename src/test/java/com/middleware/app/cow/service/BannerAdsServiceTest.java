@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.BannerAds;
 import com.middleware.app.cow.exceptions.CowException;
@@ -37,14 +37,9 @@ public class BannerAdsServiceTest {
 	@Mock
 	private BannerAds bannerAds;
 
-	@Mock
-	private Page<BannerAds> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(bannersAds);
-
-		when(bannerAdsRepository.findAll(any())).thenReturn(page);
+		when(bannerAdsRepository.findAll(any(), any(), any(), any())).thenReturn(bannersAds);
 
 		when(bannerAdsRepository.findById(anyLong())).thenReturn(bannerAds);
 
@@ -53,16 +48,16 @@ public class BannerAdsServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<BannerAds> result = bannerAdsService.find(1,1, any(BannerAds.class));
+		List<BannerAds> result = bannerAdsService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(bannerAdsRepository.findAll(any())).thenThrow(new Exception());
+		when(bannerAdsRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		bannerAdsService.find(anyInt(), anyInt(), any());
+		bannerAdsService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +69,9 @@ public class BannerAdsServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(bannerAdsRepository.findAll(any())).thenThrow(new Exception());
+		when(bannerAdsRepository.findById(any())).thenThrow(new Exception());
 
-		bannerAdsService.find(anyInt(), anyInt(), any());
+		bannerAdsService.get(any());
 	}
 
 	@Test

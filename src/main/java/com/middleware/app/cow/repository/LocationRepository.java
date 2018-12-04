@@ -1,27 +1,20 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Location;
 import com.middleware.app.cow.domain.User;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface LocationRepository {
 
-    @Select({"<script>",
-            "select * from location l",
-            "<where>",
-            "<if test='location != null'>",
-            "<if test='location.name != null'>",
-            " and l.name=#{location.name}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     /*@Results({
             @Result(property = "province", column = "province_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.ProvinceRepository.findById"))
     })*/
-    Page<Location> findAll(@Param("location") Location location) throws Exception;
+    List<Location> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select * from location l where l.id = #{id}")
     /*@Results({

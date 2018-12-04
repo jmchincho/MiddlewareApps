@@ -1,9 +1,10 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Item;
 import com.middleware.app.cow.domain.Variant;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
@@ -43,22 +45,18 @@ public class VariantRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllVariantByUser() throws Exception {
-        Page<Variant> result = variantRepository.findAll(variant);
+        String where = "address.street='Calle Jerico'";
+        String orderBy = "address.street";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(Variant.class.getSimpleName());
+
+        List<Variant> result = variantRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(variant -> variant.getPrice().equals(9.00)));
-        assertTrue(result.getResult().stream().anyMatch(variant -> variant.getItem().getId().equals(item.getId())));
-    }
-
-    @Test
-    public void findShouldReturnVariantByFilterVariantAndUser() throws Exception {
-        when(variant.getItem()).thenReturn(item);
-
-        Page<Variant> result = variantRepository.findAll(variant);
-
-        assertThat(result.size(), equalTo(2));
-        assertTrue(result.getResult().stream().anyMatch(variant -> variant.getPrice().equals(10.00)));
-        assertTrue(result.getResult().stream().anyMatch(variant -> variant.getItem().getId().equals(item.getId())));
+        assertTrue(result.stream().anyMatch(variant -> variant.getPrice().equals(9.00)));
+        assertTrue(result.stream().anyMatch(variant -> variant.getItem().getId().equals(item.getId())));
     }
 
     @Test

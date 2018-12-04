@@ -1,26 +1,19 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.BannerAds;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface BannerAdsRepository {
 
-    @Select({"<script>",
-            "select * from bannerAds ba",
-            "<where>",
-            "<if test='bannerAds != null'>",
-            "<if test='bannerAds.title != null'>",
-            " and ba.title=#{bannerAds.title}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     /*@Results({
             @Result(property = "province", column = "province_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.ProvinceRepository.findById"))
     })*/
-    Page<BannerAds> findAll(@Param("bannerAds") BannerAds bannerAds) throws Exception;
+    List<BannerAds> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select * from bannerAds ba where ba.id = #{id}")
     /*@Results({

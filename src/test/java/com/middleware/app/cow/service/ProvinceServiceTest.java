@@ -1,6 +1,5 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Province;
 import com.middleware.app.cow.exceptions.CowException;
@@ -37,14 +36,9 @@ public class ProvinceServiceTest {
 	@Mock
 	private Province province;
 
-	@Mock
-	private Page<Province> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(provinces);
-
-		when(provinceRepository.findAll(any())).thenReturn(page);
+		when(provinceRepository.findAll(any(), any(), any(), any())).thenReturn(provinces);
 
 		when(provinceRepository.findById(anyLong())).thenReturn(province);
 
@@ -53,16 +47,16 @@ public class ProvinceServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Province> result = provinceService.find(1,1, any(Province.class));
+		List<Province> result = provinceService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(provinceRepository.findAll(any())).thenThrow(new Exception());
+		when(provinceRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		provinceService.find(anyInt(), anyInt(), any());
+		provinceService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +68,9 @@ public class ProvinceServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(provinceRepository.findAll(any())).thenThrow(new Exception());
+		when(provinceRepository.findById(any())).thenThrow(new Exception());
 
-		provinceService.find(anyInt(), anyInt(), any());
+		provinceService.get(any());
 	}
 
 	@Test

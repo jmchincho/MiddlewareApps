@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Variant;
 import com.middleware.app.cow.exceptions.CowException;
@@ -37,14 +37,9 @@ public class VariantServiceTest {
 	@Mock
 	private Variant variant;
 
-	@Mock
-	private Page<Variant> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(variants);
-
-		when(variantRepository.findAll(any())).thenReturn(page);
+		when(variantRepository.findAll(any(), any(), any(), any())).thenReturn(variants);
 
 		when(variantRepository.findById(anyLong())).thenReturn(variant);
 
@@ -53,16 +48,16 @@ public class VariantServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Variant> result = variantService.find(1,1, any(Variant.class));
+		List<Variant> result = variantService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(variantRepository.findAll(any())).thenThrow(new Exception());
+		when(variantRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		variantService.find(anyInt(), anyInt(), any());
+		variantService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +69,9 @@ public class VariantServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(variantRepository.findAll(any())).thenThrow(new Exception());
+		when(variantRepository.findById(any())).thenThrow(new Exception());
 
-		variantService.find(anyInt(), anyInt(), any());
+		variantService.get(any());
 	}
 
 	@Test

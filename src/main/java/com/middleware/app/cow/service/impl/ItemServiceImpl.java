@@ -1,13 +1,15 @@
 package com.middleware.app.cow.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.middleware.app.cow.domain.Item;
 import com.middleware.app.cow.exceptions.CowException;
 import com.middleware.app.cow.repository.ItemRepository;
 import com.middleware.app.cow.service.ItemService;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -20,10 +22,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Page<Item> find(Integer index, Integer totalCount,Item item) throws CowException {
+    public List<Item> find(Integer page, Integer perPage, String where, String orderBy) throws CowException {
         try {
-            PageHelper.offsetPage(index, totalCount);
-            return itemRepository.findAll(item);
+            RowBounds rowBounds = new RowBounds(page, perPage);
+
+            String table = SelectSqlBuilder.nameTable(Item.class.getSimpleName());
+
+            return itemRepository.findAll(table, where, orderBy, rowBounds);
         } catch (Exception e) {
             throw new CowException();
         }

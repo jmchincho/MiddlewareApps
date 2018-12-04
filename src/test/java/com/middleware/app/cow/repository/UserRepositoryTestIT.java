@@ -1,8 +1,9 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.User;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
@@ -37,20 +40,36 @@ public class UserRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllUserByUser() throws Exception {
-        Page<User> result = userRepository.findAll(user);
+        String where = "address.street='Calle Jerico'";
+        String orderBy = "address.street";
 
-        assertThat(result.size(), equalTo(7));
-        assertTrue(result.getResult().stream().anyMatch(user -> user.getUsername().equals("admin1")));
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(User.class.getSimpleName());
+
+        List<User> result = userRepository.findAll(table, null, null, rowBound);
+
+        assertThat(result.size(), equalTo(5));
+        assertTrue(result.stream().anyMatch(user -> user.getUsername().equals("admin1")));
     }
 
     @Test
-    public void findShouldReturnUserByFilterUserAndUser() throws Exception {
-        when(user.getUsername()).thenReturn("admin1");
+    public void findByUsernameShouldReturnUser() throws Exception {
+        String username = "admin1";
 
-        Page<User> result = userRepository.findAll(user);
+        User result = userRepository.findByUsername(username);
 
-        assertThat(result.size(), equalTo(1));
-        assertTrue(result.getResult().stream().anyMatch(user -> user.getUsername().equals("admin1")));
+        assertNotNull(result);
+        assertTrue(result.getUsername().equals("admin1"));
+    }
+
+    @Test
+    public void findByUsernameShouldReturnNull() throws Exception {
+        String username = "aaaaaa";
+
+        User result = userRepository.findByUsername(username);
+
+        assertNull(result);
     }
 
     @Test

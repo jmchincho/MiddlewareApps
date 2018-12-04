@@ -1,31 +1,24 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Category;
 import com.middleware.app.cow.domain.Subcategory;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.mapping.FetchType;
+import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
 @Mapper
 public interface CategoryRepository {
 
-    @Select({"<script>",
-            "select * from category c",
-            "<where>",
-            "<if test='category != null'>",
-            "<if test='category.name != null'>",
-            " and c.name=#{category.name}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "subcategories", column = "id", javaType = List.class,  many = @Many(fetchType = FetchType.DEFAULT, select = "com.middleware.app.cow.repository.SubcategoryRepository.findAllSubcategoriesByCategories"))
     })
-    Page<Category> findAll(@Param("category") Category category) throws Exception;
+    List<Category> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select * from category c where c.id = #{id}")
     @Results({

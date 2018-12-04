@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Customer;
 import com.middleware.app.cow.exceptions.CowException;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CustomerService {
 
-    Page<Customer> find(Integer index, Integer totalCount,Customer customer) throws CowException;
+    List<Customer> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
     Customer get(Long id) throws CowException;
 

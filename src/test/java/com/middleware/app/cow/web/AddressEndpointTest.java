@@ -1,6 +1,6 @@
 package com.middleware.app.cow.web;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Address;
 import com.middleware.app.cow.exceptions.CowException;
@@ -33,9 +33,6 @@ public class AddressEndpointTest {
     @Mock
     private Response response;
 
-    @Mock
-    private Page<Address> page;
-
     private AddressEndpoint addressEndpoint;
 
     @Mock
@@ -48,17 +45,16 @@ public class AddressEndpointTest {
     public void setUp() throws Exception {
         when(response.getStatusInfo()).thenReturn(Response.Status.OK);
 
-        when(page.getResult()).thenReturn(addresses);
-        when(addressService.find(anyInt(), anyInt(), any())).thenReturn(page);
+        when(addressService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(addresses);
 
         when(addressService.get(any())).thenReturn(address);
 
         addressEndpoint = new AddressEndpoint(addressService);
     }
 
-    /*@Test
+    @Test
     public void findAllShouldCallServiceFindAllAndReturnResult() {
-        Response result = addressEndpoint.findAll(1, 1);
+        Response result = addressEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
         assertNotNull(result.getEntity());
@@ -66,28 +62,11 @@ public class AddressEndpointTest {
 
     @Test
     public void findAllShouldCallServiceFindAllAndReturnException() throws CowException {
-        when(addressService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
+        when(addressService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
-        Response result = addressEndpoint.findAll(1, 5);
+        Response result = addressEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
-    }*/
-
-    /*@Test
-    public void findAllByFilterShouldCallServiceFindAllByFilterAndReturnResult() {
-        Response result = addressEndpoint.findAllByFilter(1, 5, address);
-
-        assertEquals(result.getStatus(), Response.ok().build().getStatus());
-        assertNotNull(result.getEntity());
     }
-
-    @Test
-    public void findAllByFilterShouldCallServiceFindAllByFilterAndReturnException() throws CowException {
-        when(addressService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
-
-        Response result = addressEndpoint.findAllByFilter(1, 5, address);
-
-        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
-    }*/
 
     @Test
     public void getShouldCallServiceGetAndReturnResult() {

@@ -1,6 +1,6 @@
 package com.middleware.app.cow.web;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Customer;
 import com.middleware.app.cow.exceptions.CowException;
@@ -33,9 +33,6 @@ public class CustomerEndpointTest {
     @Mock
     private Response response;
 
-    @Mock
-    private Page<Customer> page;
-
     private CustomerEndpoint customerEndpoint;
 
     @Mock
@@ -48,8 +45,7 @@ public class CustomerEndpointTest {
     public void setUp() throws Exception {
         when(response.getStatusInfo()).thenReturn(Response.Status.OK);
 
-        when(page.getResult()).thenReturn(customers);
-        when(customerService.find(anyInt(), anyInt(), any())).thenReturn(page);
+        when(customerService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(customers);
 
         when(customerService.get(any())).thenReturn(customer);
 
@@ -58,7 +54,7 @@ public class CustomerEndpointTest {
 
     @Test
     public void findAllShouldCallServiceFindAndReturnResult() {
-        Response result = customerEndpoint.findAll(1, 1);
+        Response result = customerEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
         assertNotNull(result.getEntity());
@@ -66,26 +62,9 @@ public class CustomerEndpointTest {
 
     @Test
     public void findAllShouldCallServiceFindAndReturnException() throws CowException {
-        when(customerService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
+        when(customerService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
-        Response result = customerEndpoint.findAll(1, 5);
-        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
-    }
-
-    @Test
-    public void findAllByFilterShouldCallServiceFindAndReturnResult() {
-        Response result = customerEndpoint.findAllByFilter(1, 5, customer);
-
-        assertEquals(result.getStatus(), Response.ok().build().getStatus());
-        assertNotNull(result.getEntity());
-    }
-
-    @Test
-    public void findAllByFilterShouldCallServiceFindAndReturnException() throws CowException {
-        when(customerService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
-
-        Response result = customerEndpoint.findAllByFilter(1, 5, customer);
-
+        Response result = customerEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

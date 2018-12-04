@@ -1,27 +1,20 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Offer;
 import com.middleware.app.cow.domain.User;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface OfferRepository {
 
-    @Select({"<script>",
-            "select * from offer o",
-            "<where>",
-            "<if test='offer != null'>",
-            "<if test='offer.item != null'>",
-            " and o.item_id=#{offer.item.id}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     @Results({
             @Result(property = "item", column = "item_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.ItemRepository.findById"))
     })
-    Page<Offer> findAll(@Param("offer") Offer offer) throws Exception;
+    List<Offer> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select * from offer o where o.id = #{id}")
     @Results({

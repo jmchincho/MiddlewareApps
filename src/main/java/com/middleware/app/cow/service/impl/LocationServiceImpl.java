@@ -1,13 +1,15 @@
 package com.middleware.app.cow.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.middleware.app.cow.domain.Location;
 import com.middleware.app.cow.exceptions.CowException;
 import com.middleware.app.cow.repository.LocationRepository;
 import com.middleware.app.cow.service.LocationService;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -20,10 +22,13 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Page<Location> find(Integer index, Integer totalCount,Location location) throws CowException {
+    public List<Location> find(Integer page, Integer perPage, String where, String orderBy) throws CowException {
         try {
-            PageHelper.offsetPage(index, totalCount);
-            return locationRepository.findAll(location);
+            RowBounds rowBounds = new RowBounds(page, perPage);
+
+            String table = SelectSqlBuilder.nameTable(Location.class.getSimpleName());
+
+            return locationRepository.findAll(table, where, orderBy, rowBounds);
         } catch (Exception e) {
             throw new CowException();
         }

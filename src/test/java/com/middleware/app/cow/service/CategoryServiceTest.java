@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Category;
 import com.middleware.app.cow.exceptions.CowException;
@@ -37,14 +37,9 @@ public class CategoryServiceTest {
 	@Mock
 	private Category category;
 
-	@Mock
-	private Page<Category> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(categories);
-
-		when(categoryRepository.findAll(any())).thenReturn(page);
+		when(categoryRepository.findAll(any(), any(), any(), any())).thenReturn(categories);
 
 		when(categoryRepository.findById(anyLong())).thenReturn(category);
 
@@ -53,16 +48,16 @@ public class CategoryServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Category> result = categoryService.find(1,1, any(Category.class));
+		List<Category> result = categoryService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(categoryRepository.findAll(any())).thenThrow(new Exception());
+		when(categoryRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		categoryService.find(anyInt(), anyInt(), any());
+		categoryService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +69,9 @@ public class CategoryServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(categoryRepository.findAll(any())).thenThrow(new Exception());
+		when(categoryRepository.findById(any())).thenThrow(new Exception());
 
-		categoryService.find(anyInt(), anyInt(), any());
+		categoryService.get(any());
 	}
 
 	@Test

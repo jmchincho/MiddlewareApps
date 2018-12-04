@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Item;
 import com.middleware.app.cow.exceptions.CowException;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ItemService {
 
-    Page<Item> find(Integer index, Integer totalCount,Item item) throws CowException;
+    List<Item> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
     Item get(Long id) throws CowException;
 

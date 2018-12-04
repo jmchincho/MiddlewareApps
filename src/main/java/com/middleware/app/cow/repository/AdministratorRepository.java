@@ -1,28 +1,20 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Administrator;
 import com.middleware.app.cow.domain.User;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface AdministratorRepository {
 
-    @Select({"<script>",
-            "select a.id, a.name, a.surname,  u.id as user_id from administrator a, user u",
-            "<where>",
-            " u.administrator_id = a.id",
-            "<if test='administrator != null'>",
-            "<if test='administrator.name != null'>",
-            " and a.name=#{administrator.name}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     @Results({
             @Result(property = "user", column = "user_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.UserRepository.findById"))
     })
-    Page<Administrator> findAll(@Param("administrator") Administrator administrator) throws Exception;
+    List<Administrator> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select a.id, a.name, a.surname, u.id as user_id from administrator a, user u where a.id = #{id} and u.administrator_id = a.id")
     @Results({

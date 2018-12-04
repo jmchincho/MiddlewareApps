@@ -30,22 +30,14 @@ public class AddressEndpoint {
     }
 
     @GET
-    public Response findAll() {
+    public Response findAll(@QueryParam("page") Integer page, @QueryParam("per_page") Integer perPage,
+                                    @QueryParam("where") String where, @QueryParam("order_by") String orderBy) {
         try {
-            return Response.ok().entity(addressService.find(1, 1, null)).build();
+            return Response.ok().entity(addressService.find(page, perPage, where, orderBy)).build();
         } catch (CowException e) {
             return Response.serverError().build();
         }
     }
-
-    /*@GET
-    public Response findAllByFilter(Integer index, Integer totalCount, Address address) {
-        try {
-            return Response.ok().entity(addressService.find(index, totalCount, address)).build();
-        } catch (CowException e) {
-            return Response.serverError().build();
-        }
-    }*/
 
     @GET
     @Path("/{id}")

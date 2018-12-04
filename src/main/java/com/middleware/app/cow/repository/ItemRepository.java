@@ -1,30 +1,23 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Company;
 import com.middleware.app.cow.domain.Item;
 import com.middleware.app.cow.domain.Subcategory;
 import com.middleware.app.cow.domain.User;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface ItemRepository {
 
-    @Select({"<script>",
-            "select * from item i",
-            "<where>",
-            "<if test='item != null'>",
-            "<if test='item.name != null'>",
-            " and i.name=#{item.name}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     @Results({
             @Result(property = "company", column = "company_id", javaType = Company.class,  one = @One(select = "com.middleware.app.cow.repository.CompanyRepository.findById")),
             @Result(property = "subcategory", column = "subcategory_id", javaType = Subcategory.class,  one = @One(select = "com.middleware.app.cow.repository.SubcategoryRepository.findById"))
     })
-    Page<Item> findAll(@Param("item") Item item) throws Exception;
+    List<Item> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select * from item i where i.id = #{id}")
     @Results({

@@ -1,30 +1,23 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Item;
 import com.middleware.app.cow.domain.Order;
 import com.middleware.app.cow.domain.OrderDetail;
 import com.middleware.app.cow.domain.User;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface OrderDetailRepository {
 
-    @Select({"<script>",
-            "select * from orderDetail od",
-            "<where>",
-            "<if test='orderDetail != null'>",
-            "<if test='orderDetail.item != null'>",
-            " and od.item_id=#{orderDetail.item.id}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     @Results({
             @Result(property = "item", column = "item_id", javaType = Item.class,  one = @One(select = "com.middleware.app.cow.repository.ItemRepository.findById")),
             @Result(property = "order", column = "order_id", javaType = Order.class,  one = @One(select = "com.middleware.app.cow.repository.OrderRepository.findById"))
     })
-    Page<OrderDetail> findAll(@Param("orderDetail") OrderDetail orderDetail) throws Exception;
+    List<OrderDetail> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select * from orderDetail od where od.id = #{id}")
     @Results({

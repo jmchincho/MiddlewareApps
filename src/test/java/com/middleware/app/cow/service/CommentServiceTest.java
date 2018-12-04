@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Comment;
 import com.middleware.app.cow.exceptions.CowException;
@@ -37,14 +37,9 @@ public class CommentServiceTest {
 	@Mock
 	private Comment comment;
 
-	@Mock
-	private Page<Comment> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(comments);
-
-		when(commentRepository.findAll(any())).thenReturn(page);
+		when(commentRepository.findAll(any(), any(), any(), any())).thenReturn(comments);
 
 		when(commentRepository.findById(anyLong())).thenReturn(comment);
 
@@ -53,16 +48,16 @@ public class CommentServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Comment> result = commentService.find(1,1, any(Comment.class));
+		List<Comment> result = commentService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(commentRepository.findAll(any())).thenThrow(new Exception());
+		when(commentRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		commentService.find(anyInt(), anyInt(), any());
+		commentService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +69,9 @@ public class CommentServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(commentRepository.findAll(any())).thenThrow(new Exception());
+		when(commentRepository.findById(any())).thenThrow(new Exception());
 
-		commentService.find(anyInt(), anyInt(), any());
+		commentService.get(any());
 	}
 
 	@Test

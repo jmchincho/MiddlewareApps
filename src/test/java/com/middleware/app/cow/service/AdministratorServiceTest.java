@@ -1,6 +1,5 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Administrator;
 import com.middleware.app.cow.exceptions.CowException;
@@ -37,14 +36,9 @@ public class AdministratorServiceTest {
 	@Mock
 	private Administrator administrator;
 
-	@Mock
-	private Page<Administrator> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(administrators);
-
-		when(administratorRepository.findAll(any())).thenReturn(page);
+		when(administratorRepository.findAll(any(), any(), any(), any())).thenReturn(administrators);
 
 		when(administratorRepository.findById(anyLong())).thenReturn(administrator);
 
@@ -53,16 +47,16 @@ public class AdministratorServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Administrator> result = administratorService.find(1,1, any(Administrator.class));
+		List<Administrator> result = administratorService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(administratorRepository.findAll(any())).thenThrow(new Exception());
+		when(administratorRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		administratorService.find(anyInt(), anyInt(), any());
+		administratorService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +68,9 @@ public class AdministratorServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(administratorRepository.findAll(any())).thenThrow(new Exception());
+		when(administratorRepository.findById(any())).thenThrow(new Exception());
 
-		administratorService.find(anyInt(), anyInt(), any());
+		administratorService.get(any());
 	}
 
 	@Test

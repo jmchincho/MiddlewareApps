@@ -1,6 +1,6 @@
 package com.middleware.app.cow.web;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Subcategory;
 import com.middleware.app.cow.exceptions.CowException;
@@ -33,9 +33,6 @@ public class SubcategoryEndpointTest {
     @Mock
     private Response response;
 
-    @Mock
-    private Page<Subcategory> page;
-
     private SubcategoryEndpoint subcategoryEndpoint;
 
     @Mock
@@ -48,8 +45,7 @@ public class SubcategoryEndpointTest {
     public void setUp() throws Exception {
         when(response.getStatusInfo()).thenReturn(Response.Status.OK);
 
-        when(page.getResult()).thenReturn(subcategories);
-        when(subcategoryService.find(anyInt(), anyInt(), any())).thenReturn(page);
+        when(subcategoryService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(subcategories);
 
         when(subcategoryService.get(any())).thenReturn(subcategory);
 
@@ -58,7 +54,7 @@ public class SubcategoryEndpointTest {
 
     @Test
     public void findAllShouldCallServiceFindAndReturnResult() {
-        Response result = subcategoryEndpoint.findAll(1, 1);
+        Response result = subcategoryEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
         assertNotNull(result.getEntity());
@@ -66,26 +62,9 @@ public class SubcategoryEndpointTest {
 
     @Test
     public void findAllShouldCallServiceFindAndReturnException() throws CowException {
-        when(subcategoryService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
+        when(subcategoryService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
-        Response result = subcategoryEndpoint.findAll(1, 5);
-        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
-    }
-
-    @Test
-    public void findAllByFilterShouldCallServiceFindAndReturnResult() {
-        Response result = subcategoryEndpoint.findAllByFilter(1, 5, subcategory);
-
-        assertEquals(result.getStatus(), Response.ok().build().getStatus());
-        assertNotNull(result.getEntity());
-    }
-
-    @Test
-    public void findAllByFilterShouldCallServiceFindAndReturnException() throws CowException {
-        when(subcategoryService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
-
-        Response result = subcategoryEndpoint.findAllByFilter(1, 5, subcategory);
-
+        Response result = subcategoryEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

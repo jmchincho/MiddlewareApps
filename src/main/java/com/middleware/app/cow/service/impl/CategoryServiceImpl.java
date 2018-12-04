@@ -1,11 +1,13 @@
 package com.middleware.app.cow.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import java.util.List;
+
 import com.middleware.app.cow.domain.Category;
 import com.middleware.app.cow.exceptions.CowException;
 import com.middleware.app.cow.repository.CategoryRepository;
 import com.middleware.app.cow.service.CategoryService;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +22,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Page<Category> find(Integer index, Integer totalCount,Category category) throws CowException {
+    public List<Category> find(Integer page, Integer perPage, String where, String orderBy) throws CowException {
         try {
-            PageHelper.offsetPage(index, totalCount);
-            return categoryRepository.findAll(category);
+            RowBounds rowBounds = new RowBounds(page, perPage);
+
+            String table = SelectSqlBuilder.nameTable(Category.class.getSimpleName());
+
+            return categoryRepository.findAll(table, where, orderBy, rowBounds);
         } catch (Exception e) {
             throw new CowException();
         }

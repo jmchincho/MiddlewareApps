@@ -25,18 +25,10 @@ public class ProvinceEndpoint {
     }
 
     @GET
-    public Response findAll(Integer index, Integer totalCount) {
+    public Response findAll(@QueryParam("page") Integer page, @QueryParam("per_page") Integer perPage,
+                            @QueryParam("where") String where, @QueryParam("order_by") String orderBy) {
         try {
-            return Response.ok().entity(provinceService.find(index, totalCount, null)).build();
-        } catch (CowException e) {
-            return Response.serverError().build();
-        }
-    }
-
-    @GET
-    public Response findAllByFilter(Integer index, Integer totalCount, Province province) {
-        try {
-            return Response.ok().entity(provinceService.find(index, totalCount, province)).build();
+            return Response.ok().entity(provinceService.find(page, perPage, where, orderBy)).build();
         } catch (CowException e) {
             return Response.serverError().build();
         }

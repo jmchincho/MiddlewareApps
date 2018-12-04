@@ -1,10 +1,11 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Item;
 import com.middleware.app.cow.domain.Order;
 import com.middleware.app.cow.domain.OrderDetail;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
@@ -47,22 +50,18 @@ public class OrderDetailRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllOrderDetailByUser() throws Exception {
-        Page<OrderDetail> result = orderDetailRepository.findAll(orderDetail);
+        String where = "address.street='Calle Jerico'";
+        String orderBy = "address.street";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(OrderDetail.class.getSimpleName());
+
+        List<OrderDetail> result = orderDetailRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(orderDetail -> orderDetail.getPrice().equals(130.0)));
-        assertTrue(result.getResult().stream().anyMatch(orderDetail -> orderDetail.getItem().getId().equals(item.getId())));
-    }
-
-    @Test
-    public void findShouldReturnOrderDetailByFilterOrderDetailAndUser() throws Exception {
-        when(orderDetail.getItem()).thenReturn(item);
-
-        Page<OrderDetail> result = orderDetailRepository.findAll(orderDetail);
-
-        assertThat(result.size(), equalTo(2));
-        assertTrue(result.getResult().stream().anyMatch(orderDetail -> orderDetail.getPrice().equals(500.00)));
-        assertTrue(result.getResult().stream().anyMatch(orderDetail -> orderDetail.getItem().getId().equals(item.getId())));
+        assertTrue(result.stream().anyMatch(orderDetail -> orderDetail.getPrice().equals(130.0)));
+        assertTrue(result.stream().anyMatch(orderDetail -> orderDetail.getItem().getId().equals(item.getId())));
     }
 
     @Test

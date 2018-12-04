@@ -1,13 +1,13 @@
 package com.middleware.app.cow.service;
 
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Subcription;
 import com.middleware.app.cow.exceptions.CowException;
 
 public interface SubcriptionService {
 
-    Page<Subcription> find(Integer index, Integer totalCount,Subcription subcription) throws CowException;
+    List<Subcription> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
     Subcription get(Long id) throws CowException;
 

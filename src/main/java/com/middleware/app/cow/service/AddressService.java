@@ -1,13 +1,13 @@
 package com.middleware.app.cow.service;
 
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Address;
 import com.middleware.app.cow.exceptions.CowException;
 
 public interface AddressService {
 
-    Page<Address> find(Integer index, Integer totalCount, Address address) throws CowException;
+    List<Address> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
     Address get(Long id) throws CowException;
 

@@ -1,8 +1,11 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
+import com.middleware.app.cow.domain.Address;
 import com.middleware.app.cow.domain.BannerAds;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -41,20 +44,14 @@ public class BannerAdsRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllBannerAds() throws Exception {
-        Page<BannerAds> result = bannerAdsRepository.findAll(null);
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(BannerAds.class.getSimpleName());
+
+        List<BannerAds> result = bannerAdsRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(bannerAds -> bannerAds.getTitle().equals("title1")));
-    }
-
-    @Test
-    public void findShouldReturnBannerAdsByFilterBannerAds() throws Exception {
-        when(bannerAds.getTitle()).thenReturn("title1");
-
-        Page<BannerAds> result = bannerAdsRepository.findAll(bannerAds);
-
-        assertThat(result.size(), equalTo(1));
-        assertTrue(result.getResult().stream().anyMatch(bannerAds -> bannerAds.getTitle().equals("title1")));
+        assertTrue(result.stream().anyMatch(bannerAds -> bannerAds.getTitle().equals("title1")));
     }
 
     @Test

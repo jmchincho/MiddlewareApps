@@ -1,13 +1,15 @@
 package com.middleware.app.cow.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import com.middleware.app.cow.domain.Comment;
 import com.middleware.app.cow.exceptions.CowException;
 import com.middleware.app.cow.repository.CommentRepository;
 import com.middleware.app.cow.service.CommentService;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -20,10 +22,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Page<Comment> find(Integer index, Integer totalCount,Comment comment) throws CowException {
+    public List<Comment> find(Integer page, Integer perPage, String where, String orderBy) throws CowException {
         try {
-            PageHelper.offsetPage(index, totalCount);
-            return commentRepository.findAll(comment);
+            RowBounds rowBounds = new RowBounds(page, perPage);
+
+            String table = SelectSqlBuilder.nameTable(Comment.class.getSimpleName());
+
+            return commentRepository.findAll(table, where, orderBy, rowBounds);
         } catch (Exception e) {
             throw new CowException();
         }

@@ -1,27 +1,27 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Location;
 import com.middleware.app.cow.domain.Province;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.mockito.Mock;
-
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -52,20 +52,17 @@ public class LocationRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllLocationByUser() throws Exception {
-        Page<Location> result = locationRepository.findAll(null);
+        String where = "address.street='Calle Jerico'";
+        String orderBy = "address.street";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(Location.class.getSimpleName());
+
+        List<Location> result = locationRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(location -> location.getName().equals("Utrera")));
-    }
-
-    @Test
-    public void findShouldReturnLocationByFilterLocation() throws Exception {
-        when(location.getName()).thenReturn("Madrid");
-
-        Page<Location> result = locationRepository.findAll(location);
-
-        assertThat(result.size(), equalTo(1));
-        assertTrue(result.getResult().stream().anyMatch(location -> location.getName().equals("Madrid")));
+        assertTrue(result.stream().anyMatch(location -> location.getName().equals("Utrera")));
     }
 
     @Test

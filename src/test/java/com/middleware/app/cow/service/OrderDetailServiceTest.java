@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.OrderDetail;
 import com.middleware.app.cow.exceptions.CowException;
@@ -38,13 +38,11 @@ public class OrderDetailServiceTest {
 	private OrderDetail orderDetail;
 
 	@Mock
-	private Page<OrderDetail> page;
+	private List<OrderDetail> page;
 
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(orderDetails);
-
-		when(orderDetailRepository.findAll(any())).thenReturn(page);
+		when(orderDetailRepository.findAll(any(), any(), any(), any())).thenReturn(orderDetails);
 
 		when(orderDetailRepository.findById(anyLong())).thenReturn(orderDetail);
 
@@ -53,16 +51,16 @@ public class OrderDetailServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<OrderDetail> result = orderDetailService.find(1,1, any(OrderDetail.class));
+		List<OrderDetail> result = orderDetailService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(orderDetailRepository.findAll(any())).thenThrow(new Exception());
+		when(orderDetailRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		orderDetailService.find(anyInt(), anyInt(), any());
+		orderDetailService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +72,9 @@ public class OrderDetailServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(orderDetailRepository.findAll(any())).thenThrow(new Exception());
+		when(orderDetailRepository.findById(any())).thenThrow(new Exception());
 
-		orderDetailService.find(anyInt(), anyInt(), any());
+		orderDetailService.get(any());
 	}
 
 	@Test

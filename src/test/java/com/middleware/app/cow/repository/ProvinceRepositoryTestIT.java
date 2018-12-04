@@ -1,26 +1,26 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Country;
 import com.middleware.app.cow.domain.Province;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.mockito.Mock;
-
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -44,20 +44,17 @@ public class ProvinceRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllProvinceByUser() throws Exception {
-        Page<Province> result = provinceRepository.findAll(null);
+        String where = "address.street='Calle Jerico'";
+        String orderBy = "address.street";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(Province.class.getSimpleName());
+
+        List<Province> result = provinceRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(province -> province.getName().equals("Sevilla")));
-    }
-
-    @Test
-    public void findShouldReturnProvinceByFilterProvinceAndUser() throws Exception {
-        when(province.getName()).thenReturn("Sevilla");
-
-        Page<Province> result = provinceRepository.findAll(province);
-
-        assertThat(result.size(), equalTo(1));
-        assertTrue(result.getResult().stream().anyMatch(province -> province.getName().equals("Sevilla")));
+        assertTrue(result.stream().anyMatch(province -> province.getName().equals("Sevilla")));
     }
 
     @Test

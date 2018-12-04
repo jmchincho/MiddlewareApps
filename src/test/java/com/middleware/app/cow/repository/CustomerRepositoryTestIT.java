@@ -1,8 +1,9 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Customer;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -38,22 +41,19 @@ public class CustomerRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllCustomerByUser() throws Exception {
-        Page<Customer> result = customerRepository.findAll(null);
+        String where = "address.street='Calle Jerico'";
+        String orderBy = "address.street";
 
-        assertThat(result.size(), equalTo(2));
-        assertTrue(result.getResult().stream().anyMatch(customer -> customer.getName().equals("nameCustomer1")));
-        assertTrue(result.getResult().stream().anyMatch(customer -> customer.getUser().getUsername().equals("customer1")));
-    }
+        RowBounds rowBound = new RowBounds(0, 5);
 
-    @Test
-    public void findShouldReturnCustomerByFilterCustomerAndUser() throws Exception {
-        when(customer.getName()).thenReturn("nameCustomer1");
+        String table = SelectSqlBuilder.nameTable(Customer.class.getSimpleName());
 
-        Page<Customer> result = customerRepository.findAll(customer);
 
-        assertThat(result.size(), equalTo(1));
-        assertTrue(result.getResult().stream().anyMatch(customer -> customer.getName().equals("nameCustomer1")));
-        assertTrue(result.getResult().stream().anyMatch(customer -> customer.getUser().getUsername().equals("customer1")));
+        List<Customer> result = customerRepository.findAll(table, null, null, rowBound);
+
+        assertThat(result.size(), equalTo(3));
+        assertTrue(result.stream().anyMatch(customer -> customer.getName().equals("nameCustomer1")));
+        //assertTrue(result.stream().anyMatch(customer -> customer.getUser().getUsername().equals("customer1")));
     }
 
     @Test

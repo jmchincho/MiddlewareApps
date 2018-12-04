@@ -1,9 +1,10 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Item;
 import com.middleware.app.cow.domain.Offer;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
@@ -43,22 +45,18 @@ public class OfferRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllOfferByUser() throws Exception {
-        Page<Offer> result = offerRepository.findAll(offer);
+        String where = "address.street='Calle Jerico'";
+        String orderBy = "address.street";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(Offer.class.getSimpleName());
+
+        List<Offer> result = offerRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(address -> address.getPrice().equals(10.00)));
-        assertTrue(result.getResult().stream().anyMatch(address -> address.getItem().getId().equals(item.getId())));
-    }
-
-    @Test
-    public void findShouldReturnOfferByFilterOfferAndUser() throws Exception {
-        when(offer.getItem()).thenReturn(item);
-
-        Page<Offer> result = offerRepository.findAll(offer);
-
-        assertThat(result.size(), equalTo(2));
-        assertTrue(result.getResult().stream().anyMatch(address -> address.getPrice().equals(130.00)));
-        assertTrue(result.getResult().stream().anyMatch(address -> address.getItem().getId().equals(item.getId())));
+        assertTrue(result.stream().anyMatch(address -> address.getPrice().equals(10.00)));
+        assertTrue(result.stream().anyMatch(address -> address.getItem().getId().equals(item.getId())));
     }
 
     @Test

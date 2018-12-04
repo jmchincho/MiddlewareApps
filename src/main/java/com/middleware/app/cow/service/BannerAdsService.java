@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.BannerAds;
 import com.middleware.app.cow.exceptions.CowException;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface BannerAdsService {
 
-    Page<BannerAds> find(Integer index, Integer totalCount,BannerAds bannerAds) throws CowException;
+    List<BannerAds> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
     BannerAds get(Long id) throws CowException;
 

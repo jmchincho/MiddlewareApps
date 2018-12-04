@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Address;
 import com.middleware.app.cow.exceptions.CowException;
@@ -32,19 +32,14 @@ public class AddressServiceTest {
 	private AddressRepository addressRepository;
 
 	@Mock
-	private List<Address> addresses;
-
-	@Mock
 	private Address address;
 
 	@Mock
-	private Page<Address> page;
+	private List<Address> addresses;
 
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(addresses);
-
-		when(addressRepository.findAll(any())).thenReturn(page);
+		when(addressRepository.findAll(any(), any(), any(), any())).thenReturn(addresses);
 
 		when(addressRepository.findById(anyLong())).thenReturn(address);
 
@@ -53,16 +48,16 @@ public class AddressServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAllAndReturnResult() throws CowException {
-		Page<Address> result = addressService.find(1,1, any(Address.class));
+		List<Address> result = addressService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAllAndReturnException() throws Exception {
-		when(addressRepository.findAll(any())).thenThrow(new Exception());
+		when(addressRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		addressService.find(anyInt(), anyInt(), any());
+		addressService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +69,9 @@ public class AddressServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindByIdAndReturnException() throws Exception {
-		when(addressRepository.findAll(any())).thenThrow(new Exception());
+		when(addressRepository.findById(any())).thenThrow(new Exception());
 
-		addressService.find(anyInt(), anyInt(), any());
+		addressService.get(any());
 	}
 
 	@Test

@@ -1,6 +1,5 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Location;
 import com.middleware.app.cow.exceptions.CowException;
@@ -37,14 +36,9 @@ public class LocationServiceTest {
 	@Mock
 	private Location location;
 
-	@Mock
-	private Page<Location> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(locations);
-
-		when(locationRepository.findAll(any())).thenReturn(page);
+		when(locationRepository.findAll(any(), any(), any(), any())).thenReturn(locations);
 
 		when(locationRepository.findById(anyLong())).thenReturn(location);
 
@@ -53,16 +47,16 @@ public class LocationServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Location> result = locationService.find(1,1, any(Location.class));
+		List<Location> result = locationService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(locationRepository.findAll(any())).thenThrow(new Exception());
+		when(locationRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		locationService.find(anyInt(), anyInt(), any());
+		locationService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +68,9 @@ public class LocationServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(locationRepository.findAll(any())).thenThrow(new Exception());
+		when(locationRepository.findById(any())).thenThrow(new Exception());
 
-		locationService.find(anyInt(), anyInt(), any());
+		locationService.get(any());
 	}
 
 	@Test

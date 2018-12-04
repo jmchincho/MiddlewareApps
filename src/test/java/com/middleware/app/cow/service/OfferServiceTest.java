@@ -1,6 +1,5 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Offer;
 import com.middleware.app.cow.exceptions.CowException;
@@ -37,14 +36,9 @@ public class OfferServiceTest {
 	@Mock
 	private Offer offer;
 
-	@Mock
-	private Page<Offer> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(offers);
-
-		when(offerRepository.findAll(any())).thenReturn(page);
+		when(offerRepository.findAll(any(), any(), any(), any())).thenReturn(offers);
 
 		when(offerRepository.findById(anyLong())).thenReturn(offer);
 
@@ -53,16 +47,16 @@ public class OfferServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Offer> result = offerService.find(1,1, any(Offer.class));
+		List<Offer> result = offerService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(offerRepository.findAll(any())).thenThrow(new Exception());
+		when(offerRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		offerService.find(anyInt(), anyInt(), any());
+		offerService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +68,9 @@ public class OfferServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(offerRepository.findAll(any())).thenThrow(new Exception());
+		when(offerRepository.findById(any())).thenThrow(new Exception());
 
-		offerService.find(anyInt(), anyInt(), any());
+		offerService.get(any());
 	}
 
 	@Test

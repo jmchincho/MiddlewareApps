@@ -1,6 +1,5 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Subcription;
 import com.middleware.app.cow.exceptions.CowException;
@@ -32,19 +31,14 @@ public class SubcriptionServiceTest {
 	private SubcriptionRepository subcriptionRepository;
 
 	@Mock
-	private List<Subcription> subcriptiones;
+	private List<Subcription> subcriptions;
 
 	@Mock
 	private Subcription subcription;
 
-	@Mock
-	private Page<Subcription> page;
-
 	@Before
 	public void setUp() throws Exception {
-		when(page.getResult()).thenReturn(subcriptiones);
-
-		when(subcriptionRepository.findAll(any())).thenReturn(page);
+		when(subcriptionRepository.findAll(any(), any(), any(), any())).thenReturn(subcriptions);
 
 		when(subcriptionRepository.findById(anyLong())).thenReturn(subcription);
 
@@ -53,16 +47,16 @@ public class SubcriptionServiceTest {
 
 	@Test
 	public void findShouldCallRepositoryFindAndReturnResult() throws CowException {
-		Page<Subcription> result = subcriptionService.find(1,1, any(Subcription.class));
+		List<Subcription> result = subcriptionService.find(anyInt(), anyInt(), anyString(), anyString());
 
-		assertNotNull(result.getResult());
+		assertNotNull(result);
 	}
 
 	@Test(expected = CowException.class)
 	public void findShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(subcriptionRepository.findAll(any())).thenThrow(new Exception());
+		when(subcriptionRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
-		subcriptionService.find(anyInt(), anyInt(), any());
+		subcriptionService.find(anyInt(), anyInt(), anyString(), anyString());
 	}
 
 	@Test
@@ -74,9 +68,9 @@ public class SubcriptionServiceTest {
 
 	@Test(expected = CowException.class)
 	public void getShouldCallRepositoryFindAndReturnException() throws Exception {
-		when(subcriptionRepository.findAll(any())).thenThrow(new Exception());
+		when(subcriptionRepository.findById(any())).thenThrow(new Exception());
 
-		subcriptionService.find(anyInt(), anyInt(), any());
+		subcriptionService.get(any());
 	}
 
 	@Test

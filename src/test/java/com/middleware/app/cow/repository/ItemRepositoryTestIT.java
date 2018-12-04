@@ -1,10 +1,11 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Company;
 import com.middleware.app.cow.domain.Item;
 import com.middleware.app.cow.domain.Subcategory;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -16,8 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
@@ -50,21 +51,17 @@ public class ItemRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllItem() throws Exception {
-        Page<Item> result = itemRepository.findAll(item);
+        String where = "a.user.id=1";
+        String orderBy = "a.street asc";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(Item.class.getSimpleName());
+
+        List<Item> result = itemRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(item -> item.getCompany().getId().equals(company.getId())));
-    }
-
-    @Test
-    public void findShouldReturnItemByFilterItemByName() throws Exception {
-        when(item.getName()).thenReturn("item1");
-
-        Page<Item> result = itemRepository.findAll(item);
-
-        assertThat(result.size(), equalTo(1));
-        assertTrue(result.getResult().stream().anyMatch(item -> item.getCompany().getId().equals(company.getId())));
-        assertTrue(result.getResult().stream().anyMatch(item -> item.getName().equals("item1")));
+        assertTrue(result.stream().anyMatch(item -> item.getCompany().getId().equals(company.getId())));
     }
 
     @Test

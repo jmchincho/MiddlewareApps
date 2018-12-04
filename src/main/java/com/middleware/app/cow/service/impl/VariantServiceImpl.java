@@ -1,11 +1,13 @@
 package com.middleware.app.cow.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import java.util.List;
+
 import com.middleware.app.cow.domain.Variant;
 import com.middleware.app.cow.exceptions.CowException;
 import com.middleware.app.cow.repository.VariantRepository;
 import com.middleware.app.cow.service.VariantService;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +22,13 @@ public class VariantServiceImpl implements VariantService {
     }
 
     @Override
-    public Page<Variant> find(Integer index, Integer totalCount,Variant variant) throws CowException {
+    public List<Variant> find(Integer page, Integer perPage, String where, String orderBy) throws CowException {
         try {
-            PageHelper.offsetPage(index, totalCount);
+            RowBounds rowBounds = new RowBounds(page, perPage);
 
-            return variantRepository.findAll(variant);
+            String table = SelectSqlBuilder.nameTable(Variant.class.getSimpleName());
+
+            return variantRepository.findAll(table, where, orderBy, rowBounds);
         } catch (Exception e) {
             throw new CowException();
         }

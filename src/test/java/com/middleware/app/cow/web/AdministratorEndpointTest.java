@@ -1,6 +1,6 @@
 package com.middleware.app.cow.web;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Administrator;
 import com.middleware.app.cow.exceptions.CowException;
@@ -33,9 +33,6 @@ public class AdministratorEndpointTest {
     @Mock
     private Response response;
 
-    @Mock
-    private Page<Administrator> page;
-
     private AdministratorEndpoint administratorEndpoint;
 
     @Mock
@@ -48,8 +45,7 @@ public class AdministratorEndpointTest {
     public void setUp() throws Exception {
         when(response.getStatusInfo()).thenReturn(Response.Status.OK);
 
-        when(page.getResult()).thenReturn(administrators);
-        when(administratorService.find(anyInt(), anyInt(), any())).thenReturn(page);
+        when(administratorService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(administrators);
 
         when(administratorService.get(any())).thenReturn(administrator);
 
@@ -58,7 +54,7 @@ public class AdministratorEndpointTest {
 
     @Test
     public void findAllShouldCallServiceFindAndReturnResult() {
-        Response result = administratorEndpoint.findAll(1, 1);
+        Response result = administratorEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
         assertNotNull(result.getEntity());
@@ -66,26 +62,9 @@ public class AdministratorEndpointTest {
 
     @Test
     public void findAllShouldCallServiceFindAndReturnException() throws CowException {
-        when(administratorService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
+        when(administratorService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
-        Response result = administratorEndpoint.findAll(1, 5);
-        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
-    }
-
-    @Test
-    public void findAllByFilterShouldCallServiceFindAndReturnResult() {
-        Response result = administratorEndpoint.findAllByFilter(1, 5, administrator);
-
-        assertEquals(result.getStatus(), Response.ok().build().getStatus());
-        assertNotNull(result.getEntity());
-    }
-
-    @Test
-    public void findAllByFilterShouldCallServiceFindAndReturnException() throws CowException {
-        when(administratorService.find(anyInt(), anyInt(), any())).thenThrow(new CowException());
-
-        Response result = administratorEndpoint.findAllByFilter(1, 5, administrator);
-
+        Response result = administratorEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

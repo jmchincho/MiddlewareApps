@@ -1,28 +1,21 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.domain.Item;
-import com.middleware.app.cow.domain.User;
 import com.middleware.app.cow.domain.Variant;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
 
 @Mapper
 public interface VariantRepository {
 
-    @Select({"<script>",
-            "select * from variant v",
-            "<where>",
-            "<if test='variant != null'>",
-            "<if test='variant.item != null'>",
-            " and v.item_id=#{variant.item.id}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     @Results({
             @Result(property = "item", column = "item_id", javaType = Item.class,  one = @One(select = "com.middleware.app.cow.repository.ItemRepository.findById"))
     })
-    Page<Variant> findAll(@Param("variant") Variant Variant) throws Exception;
+    List<Variant> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select * from variant v where v.id = #{id}")
     @Results({

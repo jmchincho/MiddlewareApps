@@ -1,6 +1,6 @@
 package com.middleware.app.cow.service;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Company;
 import com.middleware.app.cow.exceptions.CowException;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CompanyService {
 
-    Page<Company> find(Integer index, Integer totalCount,Company company) throws CowException;
+    List<Company> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
     Company get(Long id) throws CowException;
 

@@ -1,10 +1,13 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Address;
 import com.middleware.app.cow.domain.Location;
 import com.middleware.app.cow.domain.User;
+import com.middleware.app.cow.utils.Select;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -49,21 +52,17 @@ public class AddressRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllAddressesByUser() throws Exception {
-        Page<Address> result = addressRepository.findAll(address);
+        String where = "address.user_id=1";
+        String orderBy = "address.street";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(Address.class.getSimpleName());
+
+        List<Address> result = addressRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(4));
-        assertTrue(result.getResult().stream().anyMatch(address -> address.getUser().getId().equals(user.getId())));
-    }
-
-    @Test
-    public void findShouldReturnAddressByFilterAddressAndUser() throws Exception {
-        when(address.getStreet()).thenReturn("Calle Jerico");
-
-        Page<Address> result = addressRepository.findAll(address);
-
-        assertThat(result.size(), equalTo(1));
-        assertTrue(result.getResult().stream().anyMatch(address -> address.getUser().getId().equals(user.getId())));
-        assertTrue(result.getResult().stream().anyMatch(address -> address.getStreet().equals("Calle Jerico")));
+        assertTrue(result.stream().anyMatch(address -> address.getUser().getId().equals(user.getId())));
     }
 
     @Test
@@ -84,7 +83,7 @@ public class AddressRepositoryTestIT {
         when(address.getStairs()).thenReturn(1);
         when(address.getLocation()).thenReturn(location);
 
-        addressRepository.insert(address);
+        Long id = addressRepository.insert(address);
 
         Address addressInsert = addressRepository.findById(4L);
 

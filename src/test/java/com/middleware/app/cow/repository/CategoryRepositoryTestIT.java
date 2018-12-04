@@ -1,8 +1,11 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
+import com.middleware.app.cow.domain.Address;
 import com.middleware.app.cow.domain.Category;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -37,20 +40,17 @@ public class CategoryRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllCategoryByUser() throws Exception {
-        Page<Category> result = categoryRepository.findAll(null);
+        String where = "a.user.id=1";
+        String orderBy = "a.street asc";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(Category.class.getSimpleName());
+
+        List<Category> result = categoryRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(category -> category.getName().equals("Deportes")));
-    }
-
-    @Test
-    public void findShouldReturnCategoryByFilterCategory() throws Exception {
-        when(category.getName()).thenReturn("Deportes");
-
-        Page<Category> result = categoryRepository.findAll(category);
-
-        assertThat(result.size(), equalTo(1));
-        assertTrue(result.getResult().stream().anyMatch(category -> category.getName().equals("Deportes")));
+        assertTrue(result.stream().anyMatch(category -> category.getName().equals("Deportes")));
     }
 
     @Test

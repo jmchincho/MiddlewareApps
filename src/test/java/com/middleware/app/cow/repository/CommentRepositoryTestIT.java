@@ -1,10 +1,11 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
 import com.middleware.app.cow.CowApplicationTests;
 import com.middleware.app.cow.domain.Comment;
 import com.middleware.app.cow.domain.Customer;
 import com.middleware.app.cow.domain.Item;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
@@ -47,24 +50,19 @@ public class CommentRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllComment() throws Exception {
-        Page<Comment> result = commentRepository.findAll(comment);
+        String where = "a.user.id=1";
+        String orderBy = "a.street asc";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(Comment.class.getSimpleName());
+
+        List<Comment> result = commentRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(comment -> comment.getName().equals("name1")));
-        assertTrue(result.getResult().stream().anyMatch(comment -> comment.getItem().getId().equals(item.getId())));
-        assertTrue(result.getResult().stream().anyMatch(comment -> comment.getCustomer().getId().equals(customer.getId())));
-    }
-
-    @Test
-    public void findShouldReturnCommentByFilterCommentAndUser() throws Exception {
-        when(comment.getItem()).thenReturn(item);
-
-        Page<Comment> result = commentRepository.findAll(comment);
-
-        assertThat(result.size(), equalTo(2));
-        assertTrue(result.getResult().stream().anyMatch(comment -> comment.getName().equals("name1")));
-        assertTrue(result.getResult().stream().anyMatch(comment -> comment.getItem().getId().equals(item.getId())));
-        assertTrue(result.getResult().stream().anyMatch(comment -> comment.getCustomer().getId().equals(customer.getId())));
+        assertTrue(result.stream().anyMatch(comment -> comment.getName().equals("name1")));
+        assertTrue(result.stream().anyMatch(comment -> comment.getItem().getId().equals(item.getId())));
+        assertTrue(result.stream().anyMatch(comment -> comment.getCustomer().getId().equals(customer.getId())));
     }
 
     @Test

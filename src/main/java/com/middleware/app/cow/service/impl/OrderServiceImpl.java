@@ -1,11 +1,13 @@
 package com.middleware.app.cow.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import java.util.List;
+
 import com.middleware.app.cow.domain.Order;
 import com.middleware.app.cow.exceptions.CowException;
 import com.middleware.app.cow.repository.OrderRepository;
 import com.middleware.app.cow.service.OrderService;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +22,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Page<Order> find(Integer index, Integer totalCount,Order order) throws CowException {
+    public List<Order> find(Integer page, Integer perPage, String where, String orderBy) throws CowException {
         try {
-            PageHelper.offsetPage(index, totalCount);
+            RowBounds rowBounds = new RowBounds(page, perPage);
 
-            return orderRepository.findAll(order);
+            String table = SelectSqlBuilder.nameTable(Order.class.getSimpleName());
+
+            return orderRepository.findAll(table, where, orderBy, rowBounds);
         } catch (Exception e) {
             throw new CowException();
         }

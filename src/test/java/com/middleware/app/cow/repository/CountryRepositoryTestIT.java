@@ -1,8 +1,11 @@
 package com.middleware.app.cow.repository;
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.CowApplicationTests;
+import com.middleware.app.cow.domain.Address;
 import com.middleware.app.cow.domain.Country;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
+import org.apache.ibatis.session.RowBounds;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -37,20 +40,17 @@ public class CountryRepositoryTestIT {
 
     @Test
     public void findShouldReturnAllCountry() throws Exception {
-        Page<Country> result = countryRepository.findAll(null);
+        String where = "a.user.id=1";
+        String orderBy = "a.street asc";
+
+        RowBounds rowBound = new RowBounds(0, 5);
+
+        String table = SelectSqlBuilder.nameTable(Country.class.getSimpleName());
+
+        List<Country> result = countryRepository.findAll(table, null, null, rowBound);
 
         assertThat(result.size(), equalTo(3));
-        assertTrue(result.getResult().stream().anyMatch(country -> country.getName().equals("España")));
-    }
-
-    @Test
-    public void findShouldReturnCountryByFilterCountry() throws Exception {
-        when(country.getState()).thenReturn("disabled");
-
-        Page<Country> result = countryRepository.findAll(country);
-
-        assertThat(result.size(), equalTo(1));
-        assertTrue(result.getResult().stream().anyMatch(country -> country.getName().equals("Francia")));
+        assertTrue(result.stream().anyMatch(country -> country.getName().equals("España")));
     }
 
     @Test

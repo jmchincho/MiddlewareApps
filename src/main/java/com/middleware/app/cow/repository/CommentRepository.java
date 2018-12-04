@@ -1,29 +1,22 @@
 package com.middleware.app.cow.repository;
 
 
-import com.github.pagehelper.Page;
+import java.util.List;
 import com.middleware.app.cow.domain.Comment;
 import com.middleware.app.cow.domain.User;
+import com.middleware.app.cow.utils.SelectSqlBuilder;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
 
 @Mapper
 public interface CommentRepository {
 
-    @Select({"<script>",
-            "select * from comment c",
-            "<where>",
-            "<if test='comment != null'>",
-            "<if test='comment.item != null'>",
-            " and c.item_id=#{comment.item.id}",
-            "</if>",
-            "</if>",
-            "</where>",
-            "</script>"})
+    @SelectProvider(type = SelectSqlBuilder.class, method = "build")
     @Results({
             @Result(property = "item", column = "item_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.ItemRepository.findById")),
             @Result(property = "customer", column = "customer_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.CustomerRepository.findById"))
     })
-    Page<Comment> findAll(@Param("comment") Comment comment) throws Exception;
+    List<Comment> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
     @Select("select * from comment c where c.id = #{id}")
     @Results({
