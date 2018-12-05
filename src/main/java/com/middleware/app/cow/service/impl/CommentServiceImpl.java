@@ -35,6 +35,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public Comment get(Long id) throws CowException {
         try {
             return commentRepository.findById(id);

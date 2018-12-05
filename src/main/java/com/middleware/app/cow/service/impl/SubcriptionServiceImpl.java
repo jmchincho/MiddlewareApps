@@ -35,6 +35,11 @@ public class SubcriptionServiceImpl implements SubcriptionService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public Subcription get(Long id) throws CowException {
         try {
             return subcriptionRepository.findById(id);

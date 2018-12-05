@@ -9,6 +9,8 @@ public interface SubcriptionService {
 
     List<Subcription> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Subcription get(Long id) throws CowException;
 
     void create(Subcription subcription) throws CowException;

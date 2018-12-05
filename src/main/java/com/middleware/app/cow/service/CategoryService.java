@@ -10,6 +10,8 @@ public interface CategoryService {
 
     List<Category> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Category get(Long id) throws CowException;
 
     void create(Category category) throws CowException;

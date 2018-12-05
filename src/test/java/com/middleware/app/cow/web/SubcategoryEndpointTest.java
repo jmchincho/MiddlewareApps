@@ -30,9 +30,6 @@ public class SubcategoryEndpointTest {
     @Mock
     private SubcategoryService subcategoryService;
 
-    @Mock
-    private Response response;
-
     private SubcategoryEndpoint subcategoryEndpoint;
 
     @Mock
@@ -43,9 +40,9 @@ public class SubcategoryEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
-
         when(subcategoryService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(subcategories);
+
+        when(subcategoryService.countAll()).thenReturn(2L);
 
         when(subcategoryService.get(any())).thenReturn(subcategory);
 
@@ -65,6 +62,22 @@ public class SubcategoryEndpointTest {
         when(subcategoryService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
         Response result = subcategoryEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnResult() {
+        Response result = subcategoryEndpoint.countAll();
+
+        assertEquals(result.getStatus(), Response.ok().build().getStatus());
+        assertNotNull(result.getEntity());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnException() throws CowException {
+        when(subcategoryService.countAll()).thenThrow(new CowException());
+
+        Response result = subcategoryEndpoint.countAll();
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

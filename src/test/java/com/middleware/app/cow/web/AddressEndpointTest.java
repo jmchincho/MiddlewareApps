@@ -30,9 +30,6 @@ public class AddressEndpointTest {
     @Mock
     private AddressService addressService;
 
-    @Mock
-    private Response response;
-
     private AddressEndpoint addressEndpoint;
 
     @Mock
@@ -43,9 +40,9 @@ public class AddressEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
-
         when(addressService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(addresses);
+
+        when(addressService.countAll()).thenReturn(2L);
 
         when(addressService.get(any())).thenReturn(address);
 
@@ -65,6 +62,22 @@ public class AddressEndpointTest {
         when(addressService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
         Response result = addressEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnResult() {
+        Response result = addressEndpoint.countAll();
+
+        assertEquals(result.getStatus(), Response.ok().build().getStatus());
+        assertNotNull(result.getEntity());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnException() throws CowException {
+        when(addressService.countAll()).thenThrow(new CowException());
+
+        Response result = addressEndpoint.countAll();
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

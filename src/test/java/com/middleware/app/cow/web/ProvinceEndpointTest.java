@@ -30,8 +30,6 @@ public class ProvinceEndpointTest {
     @Mock
     private ProvinceService provinceService;
 
-    @Mock
-    private Response response;
     private ProvinceEndpoint provinceEndpoint;
 
     @Mock
@@ -42,9 +40,9 @@ public class ProvinceEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
-
         when(provinceService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(provinces);
+
+        when(provinceService.countAll()).thenReturn(2L);
 
         when(provinceService.get(any())).thenReturn(province);
 
@@ -64,6 +62,22 @@ public class ProvinceEndpointTest {
         when(provinceService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
         Response result = provinceEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnResult() {
+        Response result = provinceEndpoint.countAll();
+
+        assertEquals(result.getStatus(), Response.ok().build().getStatus());
+        assertNotNull(result.getEntity());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnException() throws CowException {
+        when(provinceService.countAll()).thenThrow(new CowException());
+
+        Response result = provinceEndpoint.countAll();
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

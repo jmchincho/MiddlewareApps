@@ -35,6 +35,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public Item get(Long id) throws CowException {
         try {
             return itemRepository.findById(id);

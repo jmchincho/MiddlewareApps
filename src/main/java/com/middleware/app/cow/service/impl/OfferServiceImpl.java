@@ -35,6 +35,11 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public Offer get(Long id) throws CowException {
         try {
             return offerRepository.findById(id);

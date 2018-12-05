@@ -9,6 +9,8 @@ public interface AddressService {
 
     List<Address> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Address get(Long id) throws CowException;
 
     void create(Address address) throws CowException;

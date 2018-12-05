@@ -36,6 +36,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public Administrator get(Long id) throws CowException {
         try {
             return administratorRepository.findById(id);

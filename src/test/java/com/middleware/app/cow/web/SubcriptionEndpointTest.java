@@ -30,9 +30,6 @@ public class SubcriptionEndpointTest {
     @Mock
     private SubcriptionService subcriptionService;
 
-    @Mock
-    private Response response;
-
     private SubcriptionEndpoint subcriptionEndpoint;
 
     @Mock
@@ -43,9 +40,9 @@ public class SubcriptionEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
-
         when(subcriptionService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(subcriptions);
+
+        when(subcriptionService.countAll()).thenReturn(2L);
 
         when(subcriptionService.get(any())).thenReturn(subcription);
 
@@ -65,6 +62,22 @@ public class SubcriptionEndpointTest {
         when(subcriptionService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
         Response result = subcriptionEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnResult() {
+        Response result = subcriptionEndpoint.countAll();
+
+        assertEquals(result.getStatus(), Response.ok().build().getStatus());
+        assertNotNull(result.getEntity());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnException() throws CowException {
+        when(subcriptionService.countAll()).thenThrow(new CowException());
+
+        Response result = subcriptionEndpoint.countAll();
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

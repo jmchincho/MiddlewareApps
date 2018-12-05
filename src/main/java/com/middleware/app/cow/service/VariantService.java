@@ -10,6 +10,8 @@ public interface VariantService {
 
     List<Variant> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Variant get(Long id) throws CowException;
 
     void create(Variant variant) throws CowException;

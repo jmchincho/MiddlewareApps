@@ -35,6 +35,11 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public Country get(Long id) throws CowException {
         try {
             return countryRepository.findById(id);

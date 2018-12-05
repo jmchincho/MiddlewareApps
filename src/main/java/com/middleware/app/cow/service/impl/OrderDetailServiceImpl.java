@@ -35,6 +35,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public OrderDetail get(Long id) throws CowException {
         try {
             return orderDetailRepository.findById(id);

@@ -30,9 +30,6 @@ public class CommentEndpointTest {
     @Mock
     private CommentService commentService;
 
-    @Mock
-    private Response response;
-
     private CommentEndpoint commentEndpoint;
 
     @Mock
@@ -43,9 +40,9 @@ public class CommentEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
-
         when(commentService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(comments);
+
+        when(commentService.countAll()).thenReturn(2L);
 
         when(commentService.get(any())).thenReturn(comment);
 
@@ -65,6 +62,22 @@ public class CommentEndpointTest {
         when(commentService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
         Response result = commentEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnResult() {
+        Response result = commentEndpoint.countAll();
+
+        assertEquals(result.getStatus(), Response.ok().build().getStatus());
+        assertNotNull(result.getEntity());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnException() throws CowException {
+        when(commentService.countAll()).thenThrow(new CowException());
+
+        Response result = commentEndpoint.countAll();
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

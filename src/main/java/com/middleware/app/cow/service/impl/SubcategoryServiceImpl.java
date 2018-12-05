@@ -35,6 +35,11 @@ public class SubcategoryServiceImpl implements SubcategoryService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public Subcategory get(Long id) throws CowException {
         try {
             return subcategoryRepository.findById(id);

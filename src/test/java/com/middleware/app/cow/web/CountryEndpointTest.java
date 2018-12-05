@@ -28,33 +28,30 @@ import static org.mockito.Mockito.*;
 public class CountryEndpointTest {
 
     @Mock
-    private CountryService countryService;
+    private CountryService countAllryService;
+
+    private CountryEndpoint countAllryEndpoint;
 
     @Mock
-    private Response response;
-
-    private CountryEndpoint countryEndpoint;
+    private List<Country> countAllries;
 
     @Mock
-    private List<Country> countries;
-
-    @Mock
-    private Country country;
+    private Country countAllry;
 
     @Before
     public void setUp() throws Exception {
-        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
+        when(countAllryService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(countAllries);
 
-        when(countryService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(countries);
+        when(countAllryService.countAll()).thenReturn(2L);
 
-        when(countryService.get(any())).thenReturn(country);
+        when(countAllryService.get(any())).thenReturn(countAllry);
 
-        countryEndpoint = new CountryEndpoint(countryService);
+        countAllryEndpoint = new CountryEndpoint(countAllryService);
     }
 
     @Test
     public void findAllShouldCallServiceFindAndReturnResult() {
-        Response result = countryEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        Response result = countAllryEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
         assertNotNull(result.getEntity());
@@ -62,15 +59,31 @@ public class CountryEndpointTest {
 
     @Test
     public void findAllShouldCallServiceFindAndReturnException() throws CowException {
-        when(countryService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
+        when(countAllryService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
-        Response result = countryEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        Response result = countAllryEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnResult() {
+        Response result = countAllryEndpoint.countAll();
+
+        assertEquals(result.getStatus(), Response.ok().build().getStatus());
+        assertNotNull(result.getEntity());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnException() throws CowException {
+        when(countAllryService.countAll()).thenThrow(new CowException());
+
+        Response result = countAllryEndpoint.countAll();
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 
     @Test
     public void getShouldCallServiceFindAndReturnResult() {
-        Response result = countryEndpoint.get(any());
+        Response result = countAllryEndpoint.get(any());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
         assertNotNull(result.getEntity());
@@ -78,60 +91,60 @@ public class CountryEndpointTest {
 
     @Test
     public void getShouldCallServiceFindAndReturnException() throws CowException {
-        when(countryService.get(any())).thenThrow(new CowException());
+        when(countAllryService.get(any())).thenThrow(new CowException());
 
-        Response result = countryEndpoint.get(any());
+        Response result = countAllryEndpoint.get(any());
 
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 
     @Test
     public void postAllShouldCallServiceFindAndReturnResult() throws CowException {
-        Response result = countryEndpoint.post(any());
+        Response result = countAllryEndpoint.post(any());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
-        verify(countryService, times(1)).create(any());
+        verify(countAllryService, times(1)).create(any());
     }
 
     @Test
     public void postAllShouldCallServiceFindAndReturnException() throws CowException {
-        doThrow(new CowException()).when(countryService).create(any());
+        doThrow(new CowException()).when(countAllryService).create(any());
 
-        Response result = countryEndpoint.post(any());
+        Response result = countAllryEndpoint.post(any());
 
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 
     @Test
     public void putAllShouldCallServiceFindAndReturnResult() throws CowException {
-        Response result = countryEndpoint.put(any());
+        Response result = countAllryEndpoint.put(any());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
-        verify(countryService, times(1)).update(any());
+        verify(countAllryService, times(1)).update(any());
     }
 
     @Test
     public void putAllShouldCallServiceFindAndReturnException() throws CowException {
-        doThrow(new CowException()).when(countryService).update(any());
+        doThrow(new CowException()).when(countAllryService).update(any());
 
-        Response result = countryEndpoint.put(any());
+        Response result = countAllryEndpoint.put(any());
 
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 
     @Test
     public void deleteShouldCallServiceFindAndReturnResult() throws CowException {
-        Response result = countryEndpoint.delete(anyLong());
+        Response result = countAllryEndpoint.delete(anyLong());
 
         assertEquals(result.getStatus(), Response.ok().build().getStatus());
-        verify(countryService, times(1)).delete(any());
+        verify(countAllryService, times(1)).delete(any());
     }
 
     @Test
     public void deleteShouldCallServiceFindAndReturnException() throws CowException {
-        doThrow(new CowException()).when(countryService).delete(any());
+        doThrow(new CowException()).when(countAllryService).delete(any());
 
-        Response result = countryEndpoint.delete(anyLong());
+        Response result = countAllryEndpoint.delete(anyLong());
 
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }

@@ -10,6 +10,8 @@ public interface CompanyService {
 
     List<Company> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Company get(Long id) throws CowException;
 
     Long create(Company company) throws CowException;

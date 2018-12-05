@@ -10,6 +10,8 @@ public interface OrderService {
 
     List<Order> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Order get(Long id) throws CowException;
 
     void create(Order order) throws CowException;

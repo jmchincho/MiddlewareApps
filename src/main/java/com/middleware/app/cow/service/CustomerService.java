@@ -10,6 +10,8 @@ public interface CustomerService {
 
     List<Customer> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Customer get(Long id) throws CowException;
 
     Long create(Customer customer) throws CowException;

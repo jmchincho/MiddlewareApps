@@ -10,6 +10,8 @@ public interface BannerAdsService {
 
     List<BannerAds> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     BannerAds get(Long id) throws CowException;
 
     void create(BannerAds bannerAds) throws CowException;

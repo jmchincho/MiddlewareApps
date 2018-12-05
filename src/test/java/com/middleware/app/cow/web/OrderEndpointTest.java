@@ -30,9 +30,6 @@ public class OrderEndpointTest {
     @Mock
     private OrderService orderService;
 
-    @Mock
-    private Response response;
-
     private OrderEndpoint orderEndpoint;
 
     @Mock
@@ -43,9 +40,9 @@ public class OrderEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
-
         when(orderService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(orders);
+
+        when(orderService.countAll()).thenReturn(2L);
 
         when(orderService.get(any())).thenReturn(order);
 
@@ -65,6 +62,22 @@ public class OrderEndpointTest {
         when(orderService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
         Response result = orderEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnResult() {
+        Response result = orderEndpoint.countAll();
+
+        assertEquals(result.getStatus(), Response.ok().build().getStatus());
+        assertNotNull(result.getEntity());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnException() throws CowException {
+        when(orderService.countAll()).thenThrow(new CowException());
+
+        Response result = orderEndpoint.countAll();
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

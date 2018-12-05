@@ -35,6 +35,11 @@ public class ProvinceServiceImpl implements ProvinceService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public Province get(Long id) throws CowException {
         try {
             return provinceRepository.findById(id);

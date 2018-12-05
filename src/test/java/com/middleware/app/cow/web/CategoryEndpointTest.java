@@ -30,9 +30,6 @@ public class CategoryEndpointTest {
     @Mock
     private CategoryService categoryService;
 
-    @Mock
-    private Response response;
-
     private CategoryEndpoint categoryEndpoint;
 
     @Mock
@@ -43,9 +40,9 @@ public class CategoryEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
-
         when(categoryService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(categories);
+
+        when(categoryService.countAll()).thenReturn(2L);
 
         when(categoryService.get(any())).thenReturn(category);
 
@@ -65,6 +62,22 @@ public class CategoryEndpointTest {
         when(categoryService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
         Response result = categoryEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnResult() {
+        Response result = categoryEndpoint.countAll();
+
+        assertEquals(result.getStatus(), Response.ok().build().getStatus());
+        assertNotNull(result.getEntity());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnException() throws CowException {
+        when(categoryService.countAll()).thenThrow(new CowException());
+
+        Response result = categoryEndpoint.countAll();
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

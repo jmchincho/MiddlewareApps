@@ -37,6 +37,11 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public Address get(Long id) throws CowException {
         try {
             return addressRepository.findById(id);

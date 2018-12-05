@@ -35,6 +35,11 @@ public class BannerAdsServiceImpl implements BannerAdsService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public BannerAds get(Long id) throws CowException {
         try {
             return bannerAdsRepository.findById(id);

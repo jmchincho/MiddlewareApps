@@ -35,6 +35,11 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    public Long countAll() throws CowException {
+        return null;
+    }
+
+    @Override
     public Location get(Long id) throws CowException {
         try {
             return locationRepository.findById(id);

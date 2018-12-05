@@ -35,6 +35,16 @@ public class OfferEndpoint {
     }
 
     @GET
+    @Path("/countAll")
+    public Response countAll() {
+        try {
+            return Response.ok().entity(offerService.countAll()).build();
+        } catch (CowException e) {
+            return Response.serverError().build();
+        }
+    }
+
+    @GET
     @Path("/{id}")
     public Response get(@PathVariable Long id) {
         try {

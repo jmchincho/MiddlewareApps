@@ -30,9 +30,6 @@ public class LocationEndpointTest {
     @Mock
     private LocationService locationService;
 
-    @Mock
-    private Response response;
-
     private LocationEndpoint locationEndpoint;
 
     @Mock
@@ -43,9 +40,9 @@ public class LocationEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
-
         when(locationService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(locations);
+
+        when(locationService.countAll()).thenReturn(2L);
 
         when(locationService.get(any())).thenReturn(location);
 
@@ -65,6 +62,22 @@ public class LocationEndpointTest {
         when(locationService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
         Response result = locationEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnResult() {
+        Response result = locationEndpoint.countAll();
+
+        assertEquals(result.getStatus(), Response.ok().build().getStatus());
+        assertNotNull(result.getEntity());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnException() throws CowException {
+        when(locationService.countAll()).thenThrow(new CowException());
+
+        Response result = locationEndpoint.countAll();
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

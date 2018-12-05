@@ -11,6 +11,8 @@ public interface UserService extends UserDetailsService {
 
     List<User> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     User get(Long id) throws CowException;
 
     User findByUsername(String username) throws CowException;

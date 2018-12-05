@@ -10,6 +10,8 @@ public interface LocationService {
 
     List<Location> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Location get(Long id) throws CowException;
 
     void create(Location location) throws CowException;

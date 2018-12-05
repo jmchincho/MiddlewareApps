@@ -10,6 +10,8 @@ public interface CountryService {
 
     List<Country> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Country get(Long id) throws CowException;
 
     void create(Country country) throws CowException;

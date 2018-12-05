@@ -10,6 +10,8 @@ public interface AdministratorService {
 
     List<Administrator> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Administrator get(Long id) throws CowException;
 
     Long create(Administrator Administrator) throws CowException;

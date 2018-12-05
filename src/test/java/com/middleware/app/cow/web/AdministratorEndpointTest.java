@@ -30,9 +30,6 @@ public class AdministratorEndpointTest {
     @Mock
     private AdministratorService administratorService;
 
-    @Mock
-    private Response response;
-
     private AdministratorEndpoint administratorEndpoint;
 
     @Mock
@@ -43,9 +40,9 @@ public class AdministratorEndpointTest {
 
     @Before
     public void setUp() throws Exception {
-        when(response.getStatusInfo()).thenReturn(Response.Status.OK);
-
         when(administratorService.find(anyInt(), anyInt(), anyString(), anyString())).thenReturn(administrators);
+
+        when(administratorService.countAll()).thenReturn(2L);
 
         when(administratorService.get(any())).thenReturn(administrator);
 
@@ -65,6 +62,22 @@ public class AdministratorEndpointTest {
         when(administratorService.find(anyInt(), anyInt(), anyString(), anyString())).thenThrow(new CowException());
 
         Response result = administratorEndpoint.findAll(anyInt(), anyInt(), anyString(), anyString());
+        assertEquals(result.getStatus(), Response.serverError().build().getStatus());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnResult() {
+        Response result = administratorEndpoint.countAll();
+
+        assertEquals(result.getStatus(), Response.ok().build().getStatus());
+        assertNotNull(result.getEntity());
+    }
+
+    @Test
+    public void countAllShouldCallServiceCountAndReturnException() throws CowException {
+        when(administratorService.countAll()).thenThrow(new CowException());
+
+        Response result = administratorEndpoint.countAll();
         assertEquals(result.getStatus(), Response.serverError().build().getStatus());
     }
 

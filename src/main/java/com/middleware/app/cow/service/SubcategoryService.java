@@ -10,6 +10,8 @@ public interface SubcategoryService {
 
     List<Subcategory> find(Integer page, Integer perPage, String where, String orderBy) throws CowException;
 
+    Long countAll() throws CowException;
+
     Subcategory get(Long id) throws CowException;
 
     void create(Subcategory subcategory) throws CowException;
