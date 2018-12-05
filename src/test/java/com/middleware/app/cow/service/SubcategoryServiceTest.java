@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -41,6 +42,8 @@ public class SubcategoryServiceTest {
 	public void setUp() throws Exception {
 		when(subcategoryRepository.findAll(any(), any(), any(), any())).thenReturn(subcategories);
 
+		when(subcategoryRepository.count()).thenReturn(2L);
+
 		when(subcategoryRepository.findById(anyLong())).thenReturn(subcategory);
 
 		subcategoryService = new SubcategoryServiceImpl(subcategoryRepository);
@@ -58,6 +61,21 @@ public class SubcategoryServiceTest {
 		when(subcategoryRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
 		subcategoryService.find(anyInt(), anyInt(), anyString(), anyString());
+	}
+
+	@Test
+	public void countAllShouldCallRepositoryCountAndReturnResult() throws CowException {
+		Long result = subcategoryService.countAll();
+
+		assertNotNull(result);
+		assertEquals(result, Long.valueOf(2L));
+	}
+
+	@Test(expected = CowException.class)
+	public void countAllShouldCallRepositoryCountAndReturnException() throws Exception {
+		when(subcategoryRepository.count()).thenThrow(new Exception());
+
+		subcategoryService.countAll();
 	}
 
 	@Test

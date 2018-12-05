@@ -15,6 +15,8 @@ public interface BannerAdsRepository {
     })*/
     List<BannerAds> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from bannerAds ba where ba.id = #{id}")
     /*@Results({
             @Result(property = "user", column = "user_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.UserRepository.findById"))

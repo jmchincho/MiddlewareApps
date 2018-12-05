@@ -36,7 +36,11 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return offerRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

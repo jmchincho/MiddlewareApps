@@ -19,6 +19,8 @@ public interface ItemRepository {
     })
     List<Item> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from item i where i.id = #{id}")
     @Results({
             @Result(property = "company", column = "company_id", javaType = Company.class,  one = @One(select = "com.middleware.app.cow.repository.CompanyRepository.findById")),

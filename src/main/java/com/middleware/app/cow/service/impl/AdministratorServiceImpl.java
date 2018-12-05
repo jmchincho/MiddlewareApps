@@ -37,7 +37,11 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return administratorRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

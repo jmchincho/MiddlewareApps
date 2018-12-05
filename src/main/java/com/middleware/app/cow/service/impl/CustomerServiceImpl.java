@@ -36,7 +36,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return customerRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

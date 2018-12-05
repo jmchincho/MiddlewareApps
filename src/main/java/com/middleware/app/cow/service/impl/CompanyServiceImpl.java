@@ -36,7 +36,11 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return companyRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

@@ -18,6 +18,8 @@ public interface CommentRepository {
     })
     List<Comment> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from comment c where c.id = #{id}")
     @Results({
             @Result(property = "item", column = "item_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.ItemRepository.findById")),

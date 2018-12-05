@@ -36,7 +36,11 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return countryRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

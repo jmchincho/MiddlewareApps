@@ -36,7 +36,11 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return itemRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

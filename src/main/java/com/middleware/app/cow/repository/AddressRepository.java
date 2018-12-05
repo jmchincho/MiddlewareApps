@@ -19,6 +19,8 @@ public interface AddressRepository {
     })
     List<Address> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from address a where a.id = #{id}")
     @Results({
             @Result(property = "user", column = "user_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.UserRepository.findById")),

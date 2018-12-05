@@ -19,6 +19,8 @@ public interface SubcriptionRepository {
     })
     List<Subcription> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from subcription s where s.id = #{id}")
     @Results({
             @Result(property = "customer", column = "customer_id", javaType = Customer.class,  one = @One(select = "com.middleware.app.cow.repository.CustomerRepository.findById")),

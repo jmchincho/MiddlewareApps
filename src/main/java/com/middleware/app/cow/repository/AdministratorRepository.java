@@ -16,6 +16,8 @@ public interface AdministratorRepository {
     })
     List<Administrator> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select a.id, a.name, a.surname, u.id as user_id from administrator a, user u where a.id = #{id} and u.administrator_id = a.id")
     @Results({
             @Result(property = "user", column = "user_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.UserRepository.findById"))

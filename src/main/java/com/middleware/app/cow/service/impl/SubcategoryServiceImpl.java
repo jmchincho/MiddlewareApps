@@ -36,7 +36,11 @@ public class SubcategoryServiceImpl implements SubcategoryService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return subcategoryRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

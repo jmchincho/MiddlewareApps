@@ -17,6 +17,8 @@ public interface SubcategoryRepository {
     })
     List<Subcategory> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from subcategory sc where sc.id = #{id}")
     @Results({
             @Result(property = "category", column = "category_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.CategoryRepository.findById"))

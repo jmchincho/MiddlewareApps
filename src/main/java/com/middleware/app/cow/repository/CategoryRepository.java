@@ -20,6 +20,8 @@ public interface CategoryRepository {
     })
     List<Category> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from category c where c.id = #{id}")
     @Results({
             @Result(property = "id", column = "id"),

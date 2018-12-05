@@ -16,6 +16,8 @@ public interface ProvinceRepository {
     })*/
     List<Province> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from province p where p.id = #{id}")
     /*@Results({
             @Result(property = "country", column = "country_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.CountryRepository.findById"))

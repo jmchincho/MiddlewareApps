@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -41,6 +42,8 @@ public class BannerAdsServiceTest {
 	public void setUp() throws Exception {
 		when(bannerAdsRepository.findAll(any(), any(), any(), any())).thenReturn(bannersAds);
 
+		when(bannerAdsRepository.count()).thenReturn(2L);
+
 		when(bannerAdsRepository.findById(anyLong())).thenReturn(bannerAds);
 
 		bannerAdsService = new BannerAdsServiceImpl(bannerAdsRepository);
@@ -58,6 +61,21 @@ public class BannerAdsServiceTest {
 		when(bannerAdsRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
 		bannerAdsService.find(anyInt(), anyInt(), anyString(), anyString());
+	}
+
+	@Test
+	public void countAllShouldCallRepositoryCountAndReturnResult() throws CowException {
+		Long result = bannerAdsService.countAll();
+
+		assertNotNull(result);
+		assertEquals(result, Long.valueOf(2L));
+	}
+
+	@Test(expected = CowException.class)
+	public void countAllShouldCallRepositoryCountAndReturnException() throws Exception {
+		when(bannerAdsRepository.count()).thenThrow(new Exception());
+
+		bannerAdsService.countAll();
 	}
 
 	@Test

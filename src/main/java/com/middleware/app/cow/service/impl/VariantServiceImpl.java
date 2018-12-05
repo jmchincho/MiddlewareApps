@@ -36,7 +36,11 @@ public class VariantServiceImpl implements VariantService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return variantRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

@@ -16,6 +16,8 @@ public interface CustomerRepository {
     })
     List<Customer> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select c.id, c.name, c.surname, c.dni, c.telephone, u.id as user_id from customer c, user u where c.id = #{id} and u.customer_id = c.id")
     @Results({
             @Result(property = "user", column = "user_id", javaType = User.class,  one = @One(select = "com.middleware.app.cow.repository.UserRepository.findById"))

@@ -17,6 +17,8 @@ public interface OrderRepository {
     })
     List<Order> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from purchaseOrder o where o.id = #{id}")
     @Results({
             @Result(property = "address", column = "address_id", javaType = Address.class,  one = @One(select = "com.middleware.app.cow.repository.AddressRepository.findById"))

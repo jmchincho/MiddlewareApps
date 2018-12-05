@@ -38,7 +38,11 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return addressRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

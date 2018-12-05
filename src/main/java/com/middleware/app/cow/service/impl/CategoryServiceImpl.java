@@ -36,7 +36,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return categoryRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -41,6 +42,8 @@ public class AddressServiceTest {
 	public void setUp() throws Exception {
 		when(addressRepository.findAll(any(), any(), any(), any())).thenReturn(addresses);
 
+		when(addressRepository.count()).thenReturn(2L);
+
 		when(addressRepository.findById(anyLong())).thenReturn(address);
 
 		addressService = new AddressServiceImpl(addressRepository);
@@ -58,6 +61,21 @@ public class AddressServiceTest {
 		when(addressRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
 		addressService.find(anyInt(), anyInt(), anyString(), anyString());
+	}
+
+	@Test
+	public void countAllShouldCallRepositoryCountAndReturnResult() throws CowException {
+		Long result = addressService.countAll();
+
+		assertNotNull(result);
+		assertEquals(result, Long.valueOf(2L));
+	}
+
+	@Test(expected = CowException.class)
+	public void countAllShouldCallRepositoryCountAndReturnException() throws Exception {
+		when(addressRepository.count()).thenThrow(new Exception());
+
+		addressService.countAll();
 	}
 
 	@Test

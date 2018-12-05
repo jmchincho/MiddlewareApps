@@ -47,7 +47,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return userRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

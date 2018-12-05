@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -40,6 +41,8 @@ public class SubcriptionServiceTest {
 	public void setUp() throws Exception {
 		when(subcriptionRepository.findAll(any(), any(), any(), any())).thenReturn(subcriptions);
 
+		when(subcriptionRepository.count()).thenReturn(2L);
+
 		when(subcriptionRepository.findById(anyLong())).thenReturn(subcription);
 
 		subcriptionService = new SubcriptionServiceImpl(subcriptionRepository);
@@ -57,6 +60,21 @@ public class SubcriptionServiceTest {
 		when(subcriptionRepository.findAll(any(), any(), any(), any())).thenThrow(new Exception());
 
 		subcriptionService.find(anyInt(), anyInt(), anyString(), anyString());
+	}
+
+	@Test
+	public void countAllShouldCallRepositoryCountAndReturnResult() throws CowException {
+		Long result = subcriptionService.countAll();
+
+		assertNotNull(result);
+		assertEquals(result, Long.valueOf(2L));
+	}
+
+	@Test(expected = CowException.class)
+	public void countAllShouldCallRepositoryCountAndReturnException() throws Exception {
+		when(subcriptionRepository.count()).thenThrow(new Exception());
+
+		subcriptionService.countAll();
 	}
 
 	@Test

@@ -36,7 +36,11 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return locationRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

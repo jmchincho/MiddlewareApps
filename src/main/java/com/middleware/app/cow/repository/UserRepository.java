@@ -20,6 +20,8 @@ public interface UserRepository {
     })
     List<User> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from user u where u.id = #{id}")
     User findById(@Param("id") Long id) throws Exception;
 

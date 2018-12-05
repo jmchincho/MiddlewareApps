@@ -36,7 +36,11 @@ public class SubcriptionServiceImpl implements SubcriptionService {
 
     @Override
     public Long countAll() throws CowException {
-        return null;
+        try {
+            return subcriptionRepository.count();
+        } catch (Exception e) {
+            throw new CowException();
+        }
     }
 
     @Override

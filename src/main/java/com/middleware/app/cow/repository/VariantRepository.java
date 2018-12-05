@@ -17,6 +17,8 @@ public interface VariantRepository {
     })
     List<Variant> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    Long count() throws Exception;
+
     @Select("select * from variant v where v.id = #{id}")
     @Results({
             @Result(property = "item", column = "item_id", javaType = Item.class,  one = @One(select = "com.middleware.app.cow.repository.ItemRepository.findById"))
