@@ -58,7 +58,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         try {
             administratorRepository.insert(administrator);
 
-            return administratorRepository.countAll();
+            return administratorRepository.count();
         } catch (Exception e) {
             throw new CowException();
         }

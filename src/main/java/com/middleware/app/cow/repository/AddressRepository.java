@@ -19,6 +19,7 @@ public interface AddressRepository {
     })
     List<Address> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from address")
     Long count() throws Exception;
 
     @Select("select * from address a where a.id = #{id}")

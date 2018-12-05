@@ -16,6 +16,7 @@ public interface CustomerRepository {
     })
     List<Customer> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from customer")
     Long count() throws Exception;
 
     @Select("select c.id, c.name, c.surname, c.dni, c.telephone, u.id as user_id from customer c, user u where c.id = #{id} and u.customer_id = c.id")
@@ -34,8 +35,5 @@ public interface CustomerRepository {
 
     @Update("update user set deleted = 1 where customer_id = #{id}")
     void delete(@Param("id") Long id) throws Exception;
-
-    @Select("select count(*) from customer")
-    long countAll();
 
 }

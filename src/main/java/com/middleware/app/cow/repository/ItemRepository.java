@@ -19,6 +19,7 @@ public interface ItemRepository {
     })
     List<Item> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from item")
     Long count() throws Exception;
 
     @Select("select * from item i where i.id = #{id}")

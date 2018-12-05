@@ -65,6 +65,13 @@ public class OrderDetailRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = orderDetailRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnOrderDetailById1() throws Exception {
         OrderDetail result = orderDetailRepository.findById(1L);
 

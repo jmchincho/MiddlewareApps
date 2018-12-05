@@ -54,6 +54,13 @@ public class CategoryRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = categoryRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnCategoryById1() throws Exception {
         Category result = categoryRepository.findById(1L);
 

@@ -55,6 +55,13 @@ public class BannerAdsRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = bannerAdsRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnBannerAdsById1() throws Exception {
         BannerAds result = bannerAdsRepository.findById(2L);
 

@@ -54,6 +54,13 @@ public class CountryRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = countryRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnCountryById1() throws Exception {
         Country result = countryRepository.findById(1L);
 

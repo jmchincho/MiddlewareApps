@@ -60,6 +60,13 @@ public class OfferRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = offerRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnOfferById1() throws Exception {
         Offer result = offerRepository.findById(2L);
 

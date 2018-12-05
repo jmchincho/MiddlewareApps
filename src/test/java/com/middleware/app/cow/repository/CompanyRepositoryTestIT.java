@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
@@ -56,8 +57,10 @@ public class CompanyRepositoryTestIT {
     }
 
     @Test
-    public void countAllShouldReturn2() {
-        assertTrue(companyRepository.countAll() != 0L);
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = companyRepository.count();
+
+        assertNotNull(result);
     }
 
     @Test
@@ -78,7 +81,7 @@ public class CompanyRepositoryTestIT {
 
         companyRepository.insert(company);
 
-        Long result = companyRepository.countAll();
+        Long result = companyRepository.count();
 
         assertTrue(result.equals(3L));
     }

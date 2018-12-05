@@ -66,6 +66,13 @@ public class CommentRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = commentRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnCommentById1() throws Exception {
         Comment result = commentRepository.findById(2L);
 

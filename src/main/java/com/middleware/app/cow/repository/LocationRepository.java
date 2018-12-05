@@ -16,6 +16,7 @@ public interface LocationRepository {
     })*/
     List<Location> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from location")
     Long count() throws Exception;
 
     @Select("select * from location l where l.id = #{id}")

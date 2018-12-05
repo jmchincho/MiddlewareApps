@@ -73,6 +73,13 @@ public class UserRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = userRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnUserById1() throws Exception {
         User result = userRepository.findById(1L);
 

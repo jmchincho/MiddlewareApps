@@ -66,6 +66,13 @@ public class LocationRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = locationRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnLocationById1() throws Exception {
         Location result = locationRepository.findById(2L);
 

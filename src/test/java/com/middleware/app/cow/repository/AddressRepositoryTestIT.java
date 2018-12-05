@@ -75,6 +75,13 @@ public class AddressRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = addressRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void createAllShouldInsertNewAddress() throws Exception {
         when(address.getStreet()).thenReturn("Calle Belianes");
         when(address.getNumber()).thenReturn(30);

@@ -57,7 +57,7 @@ public class CompanyServiceImpl implements CompanyService {
         try {
             companyRepository.insert(company);
 
-            return companyRepository.countAll();
+            return companyRepository.count();
         } catch (Exception e) {
             throw new CowException();
         }

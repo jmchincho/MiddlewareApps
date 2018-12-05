@@ -65,6 +65,13 @@ public class ItemRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = itemRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnItemById1() throws Exception {
         Item result = itemRepository.findById(1L);
 

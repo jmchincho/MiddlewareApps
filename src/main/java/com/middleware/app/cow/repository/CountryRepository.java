@@ -15,6 +15,7 @@ public interface CountryRepository {
     })*/
     List<Country> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from country")
     Long count() throws Exception;
 
     @Select("select * from country c where c.id = #{id}")

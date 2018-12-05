@@ -17,6 +17,7 @@ public interface SubcategoryRepository {
     })
     List<Subcategory> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from subcategory")
     Long count() throws Exception;
 
     @Select("select * from subcategory sc where sc.id = #{id}")

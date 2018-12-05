@@ -16,6 +16,7 @@ public interface AdministratorRepository {
     })
     List<Administrator> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from administrator")
     Long count() throws Exception;
 
     @Select("select a.id, a.name, a.surname, u.id as user_id from administrator a, user u where a.id = #{id} and u.administrator_id = a.id")
@@ -32,8 +33,5 @@ public interface AdministratorRepository {
 
     @Update("update user set deleted = 1 where administrator_id = #{id}")
     void delete(@Param("id") Long id) throws Exception;
-
-    @Select("select count(*) from administrator")
-    long countAll();
 
 }

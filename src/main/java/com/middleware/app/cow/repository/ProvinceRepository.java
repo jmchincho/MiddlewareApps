@@ -16,6 +16,7 @@ public interface ProvinceRepository {
     })*/
     List<Province> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from province")
     Long count() throws Exception;
 
     @Select("select * from province p where p.id = #{id}")

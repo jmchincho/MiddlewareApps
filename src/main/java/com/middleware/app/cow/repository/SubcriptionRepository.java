@@ -19,6 +19,7 @@ public interface SubcriptionRepository {
     })
     List<Subcription> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from subcription")
     Long count() throws Exception;
 
     @Select("select * from subcription s where s.id = #{id}")

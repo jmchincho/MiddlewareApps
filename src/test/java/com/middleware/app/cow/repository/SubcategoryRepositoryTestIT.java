@@ -58,6 +58,13 @@ public class SubcategoryRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = subcategoryRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnSubcategoryById1() throws Exception {
         Subcategory result = subcategoryRepository.findById(1L);
 

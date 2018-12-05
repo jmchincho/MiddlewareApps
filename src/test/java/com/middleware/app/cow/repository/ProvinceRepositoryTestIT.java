@@ -58,6 +58,13 @@ public class ProvinceRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = provinceRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnProvinceById1() throws Exception {
         Province result = provinceRepository.findById(2L);
 

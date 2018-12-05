@@ -15,6 +15,7 @@ public interface BannerAdsRepository {
     })*/
     List<BannerAds> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from bannerAds")
     Long count() throws Exception;
 
     @Select("select * from bannerAds ba where ba.id = #{id}")

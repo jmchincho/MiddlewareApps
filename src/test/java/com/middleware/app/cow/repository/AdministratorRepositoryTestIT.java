@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
@@ -53,8 +54,10 @@ public class AdministratorRepositoryTestIT {
     }
 
     @Test
-    public void countAllShouldReturn2() {
-        assertTrue(administratorRepository.countAll() != 0L);
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = administratorRepository.count();
+
+        assertNotNull(result);
     }
 
     @Test
@@ -72,7 +75,7 @@ public class AdministratorRepositoryTestIT {
 
         administratorRepository.insert(administrator);
 
-        Long result = administratorRepository.countAll();
+        Long result = administratorRepository.count();
 
         assertTrue(result.equals(3L));
     }

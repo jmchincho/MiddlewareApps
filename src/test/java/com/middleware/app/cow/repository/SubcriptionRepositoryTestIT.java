@@ -65,6 +65,13 @@ public class SubcriptionRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = subcriptionRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnSubcriptionById1() throws Exception {
         Subcription result = subcriptionRepository.findById(1L);
 

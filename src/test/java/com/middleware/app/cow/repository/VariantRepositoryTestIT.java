@@ -60,6 +60,13 @@ public class VariantRepositoryTestIT {
     }
 
     @Test
+    public void countShouldReturnCountAll() throws Exception {
+        Long result = variantRepository.count();
+
+        assertNotNull(result);
+    }
+
+    @Test
     public void getShouldReturnVariantById1() throws Exception {
         Variant result = variantRepository.findById(1L);
 

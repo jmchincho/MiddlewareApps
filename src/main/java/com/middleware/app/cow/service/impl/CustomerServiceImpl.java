@@ -57,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             customerRepository.insert(customer);
 
-            return customerRepository.countAll();
+            return customerRepository.count();
         } catch (Exception e) {
             throw new CowException();
         }

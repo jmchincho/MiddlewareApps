@@ -16,6 +16,7 @@ public interface CompanyRepository {
     })
     List<Company> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from company")
     Long count() throws Exception;
 
     @Select("select c.id, c.name, c.logo, c.cif, c.url, c.urlState, c.telephone, u.id as user_id from company c, user u where c.id = #{id} and u.company_id = c.id")
@@ -35,8 +36,5 @@ public interface CompanyRepository {
 
     @Update("update user set deleted = 1 where company_id = #{id}")
     void delete(@Param("id") Long id) throws Exception;
-
-    @Select("select count(*) from company")
-    long countAll();
 
 }

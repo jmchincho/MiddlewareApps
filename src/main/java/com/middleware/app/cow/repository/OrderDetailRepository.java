@@ -19,6 +19,7 @@ public interface OrderDetailRepository {
     })
     List<OrderDetail> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from orderDetail")
     Long count() throws Exception;
 
     @Select("select * from orderDetail od where od.id = #{id}")

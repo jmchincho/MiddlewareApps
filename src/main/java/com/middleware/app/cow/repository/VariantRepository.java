@@ -17,6 +17,7 @@ public interface VariantRepository {
     })
     List<Variant> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from variant")
     Long count() throws Exception;
 
     @Select("select * from variant v where v.id = #{id}")

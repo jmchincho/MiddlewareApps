@@ -16,6 +16,7 @@ public interface OfferRepository {
     })
     List<Offer> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from offer")
     Long count() throws Exception;
 
     @Select("select * from offer o where o.id = #{id}")

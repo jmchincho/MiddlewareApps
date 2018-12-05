@@ -18,6 +18,7 @@ public interface CommentRepository {
     })
     List<Comment> findAll(String table, String conditions, String orderByColumn, RowBounds rowBounds) throws Exception;
 
+    @Select("select count(*) from comment")
     Long count() throws Exception;
 
     @Select("select * from comment c where c.id = #{id}")
