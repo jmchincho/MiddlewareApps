@@ -24,7 +24,7 @@ public class SelectSqlBuilder {
         if(table.equals("Order")) {
             return PURCHASE_ORDER + SPACE + table.toLowerCase().substring(0, 1);
         } else {
-            return table + SPACE + table.toLowerCase();
+            return table.toLowerCase() + SPACE + table.toLowerCase();
         }
     }
 }

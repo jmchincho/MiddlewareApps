@@ -1,0 +1,32 @@
+version: '3'
+
+networks:
+  networkcow:
+    driver: bridge
+
+volumes:
+  nexus-data:
+  jenkins-data:
+
+services:
+  #nexus:
+  #  image: sonatype/nexus3
+  #  volumes:
+  #    - "nexus-data:/nexus-data"
+  #  ports:
+  #    - 8081:8081
+  #  networks:
+  #    - cursosnetwork
+  #  container_name: cursos-nexus
+  mysql:
+    image: mysql
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: cow2019
+      MYSQL_DATABASE: cow
+      MYSQL_USER: cow
+      MYSQL_PASSWORD: capi2019
+    container_name: cow-mysql
