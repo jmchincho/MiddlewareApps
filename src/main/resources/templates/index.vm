@@ -1,0 +1,12 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <div>
+          #parse("./src/main/resources/templates/header.vm")
+        </div>
+        <div class="red" style="color: red;">
+            $name
+        </div>
+    </body>
+</html>

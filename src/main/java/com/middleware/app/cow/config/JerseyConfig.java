@@ -11,7 +11,7 @@ import javax.ws.rs.ApplicationPath;
 public class JerseyConfig extends ResourceConfig {
 
 	public JerseyConfig() {
-		register(CorsFilter.class);
+		register(CORSResponseFilter.class);
 		register(AddressEndpoint.class);
 		register(AdministratorEndpoint.class);
 		register(BannerAdsEndpoint.class);

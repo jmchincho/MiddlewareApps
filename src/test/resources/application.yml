@@ -23,3 +23,11 @@ endpoints:
     url: /oauth/**
 
 logging.level.org.springframework: DEBUG
+
+# Mailing
+mail.protocol: smtp
+mail.smtp.host: smtp.capitanoferta.com
+mail.smtp.port: 587
+mail.support.username: no-reply@capitanoferta.com
+mail.support.password: coweb2018
+mail.default.encoding: UTF-8
