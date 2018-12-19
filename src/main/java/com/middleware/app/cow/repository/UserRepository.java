@@ -27,6 +27,11 @@ public interface UserRepository {
     User findById(@Param("id") Long id) throws Exception;
 
     @Select("select * from user u where u.username = #{username} or u.mail = #{username}")
+    @Results({
+            @Result(property = "customer", column = "customer_id", javaType = Customer.class,  one = @One(select = "com.middleware.app.cow.repository.CustomerRepository.findById")),
+            @Result(property = "administrator", column = "administrator_id", javaType = Administrator.class,  one = @One(select = "com.middleware.app.cow.repository.AdministratorRepository.findById")),
+            @Result(property = "company", column = "company_id", javaType = Company.class,  one = @One(select = "com.middleware.app.cow.repository.CompanyRepository.findById"))
+    })
     User findByUsername(@Param("username") String username) throws Exception;
     
     @Insert("insert into user(deleted, username, password ,mail ,state) values "
