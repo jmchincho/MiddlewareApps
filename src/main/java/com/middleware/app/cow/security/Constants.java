@@ -6,6 +6,8 @@ public class Constants {
     public static final String LOGIN_URL = "/login";
     public static final String HEADER_AUTHORIZACION_KEY = "Authorization";
     public static final String TOKEN_BEARER_PREFIX = "Bearer ";
+    public static final String ROLES = "roles";
+    public static final String ACCESS_CONTROL_EXPOSE_HEADERS = "access-control-expose-headers";
 
     // JWT
 

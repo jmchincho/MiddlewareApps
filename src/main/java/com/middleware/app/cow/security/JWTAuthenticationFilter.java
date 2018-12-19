@@ -1,9 +1,4 @@
 package com.middleware.app.cow.security;
-import static com.middleware.app.cow.security.Constants.HEADER_AUTHORIZACION_KEY;
-import static com.middleware.app.cow.security.Constants.ISSUER_INFO;
-import static com.middleware.app.cow.security.Constants.SUPER_SECRET_KEY;
-import static com.middleware.app.cow.security.Constants.TOKEN_BEARER_PREFIX;
-import static com.middleware.app.cow.security.Constants.TOKEN_EXPIRATION_TIME;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +26,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import static com.middleware.app.cow.security.Constants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -65,10 +62,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = Jwts.builder().setIssuedAt(new Date()).setIssuer(ISSUER_INFO)
                 .setSubject(username)
                 //.claim("name", name(username))
-                .claim("roles", ((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getAuthorities())
+                .claim(ROLES, ((org.springframework.security.core.userdetails.User)auth.getPrincipal()).getAuthorities())
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY).compact();
-        response.addHeader(HEADER_AUTHORIZACION_KEY, TOKEN_BEARER_PREFIX + " " + token);
+        response.addHeader(ACCESS_CONTROL_EXPOSE_HEADERS , HEADER_AUTHORIZACION_KEY);
+        response.addHeader(HEADER_AUTHORIZACION_KEY, TOKEN_BEARER_PREFIX + token);
     }
 
     protected String name(String username) {
